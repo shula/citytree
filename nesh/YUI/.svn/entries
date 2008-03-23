@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="38"
+   name=""
+   committed-date="2006-09-26T08:58:47.303124Z"
+   url="svn://trac.studioquattro.biz/django-utils/trunk/nesh/YUI"
+   last-author="nesh"
+   kind="dir"
+   uuid="e3d54399-ea17-0410-b588-9e8e34331349"
+   repos="svn://trac.studioquattro.biz/django-utils"
+   revision="47"/>
+<entry
+   committed-rev="35"
+   name="views.py"
+   text-time="2006-11-15T19:25:16.000000Z"
+   committed-date="2006-08-29T10:30:51.839478Z"
+   checksum="ad656aaabae09dc285884ad38d889ef9"
+   last-author="nesh"
+   kind="file"
+   prop-time="2006-11-15T19:25:16.000000Z"/>
+<entry
+   committed-rev="35"
+   name="__init__.py"
+   text-time="2006-11-15T19:25:16.000000Z"
+   committed-date="2006-08-29T10:30:51.839478Z"
+   checksum="d41d8cd98f00b204e9800998ecf8427e"
+   last-author="nesh"
+   kind="file"
+   prop-time="2006-11-15T19:25:16.000000Z"/>
+<entry
+   name="templatetags"
+   kind="dir"/>
+<entry
+   committed-rev="35"
+   name="models.py"
+   text-time="2006-11-15T19:25:16.000000Z"
+   committed-date="2006-08-29T10:30:51.839478Z"
+   checksum="8c4eb991c6dca757bdd77f539092e29b"
+   last-author="nesh"
+   kind="file"
+   prop-time="2006-11-15T19:25:16.000000Z"/>
+</wc-entries>

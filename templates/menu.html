@@ -1,0 +1,192 @@
+﻿{% load citytree_tags %}
+
+<div class="menu">
+    
+	<div class="l1menuFold">
+	    <ul class="menuList closedMenu">
+            <li class="title1Fold">
+            &nbsp;ענפים
+            </li>
+            
+            {% for blog in blogs  %}
+	            {% if forloop.counter0|lessthan:"3" %}
+					{% if blog.display_in_menu %}
+						<li class="list1Fold">
+			                &nbsp;{{blog.name}}
+			             </li>
+					{% endif %}         
+	            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+	<div class="l1menu">
+	    <ul class="menuList closedMenu">
+	        <li class="title1">
+	        &nbsp;ענפים
+	        </li>
+	
+			{% for blog in blogs  %}
+				{% if blog.display_in_menu %}
+                <li class="list1">
+                &nbsp;<a href="{{blog.get_absolute_url}}">{{blog.name}}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+	    </ul>
+	</div>
+	
+	
+	<div class="l2menuFold">
+	    <ul class="menuList closedMenu">
+	        <li class="title2Fold">
+	        &nbsp;נושאים בעץ
+	        </li>
+	
+			{% for subject in subjects %}
+          	  {% if forloop.counter0|lessthan:"3" %}
+					<li class="list2Fold">
+			        &nbsp;{{subject.name}}
+			        </li>
+	            {% endif %}
+            {% endfor %}
+	    </ul>
+	</div>
+	
+	<div class="l2menu">
+	    <ul class="menuList closedMenu">
+	        <li class="title2">
+	        &nbsp;נושאים בעץ
+	        </li>
+	
+			{% for subject in subjects %}
+                <li class="list2">
+                	&nbsp;<a href="{{subject.get_absolute_url}}">{{subject.name}}</a>
+                </li>
+            {% endfor %}
+	    </ul>
+	</div>
+
+	<div class="l3menuFold">
+	    <ul class="menuList closedMenu">
+	        <li class="title3Fold">
+	        &nbsp;המרכז לאקולוגיה עירונית
+	        </li>
+		<li class="list3Fold">
+	        &nbsp;חזון ומטרות
+	        </li>
+		<li class="list3Fold">
+	        &nbsp;הגננים של עץ בעיר
+	        </li>
+		<li class="list3Fold">
+	        &nbsp;שיתופי פעולה
+	        </li>
+	    </ul>
+	</div>
+
+	<div class="l3menu">
+	    <ul class="menuList closedMenu">
+	        <li class="title3">
+	        &nbsp;המרכז לאקולוגיה עירונית
+	        </li>
+		<li class="list3">
+	        &nbsp;<a href="/blogs/about/">חזון ומטרות</a>
+	        </li>
+		<li class="list3">
+	        &nbsp;<a href="/blogs/who/">הגננים של העץ</a>
+	        </li>
+<li class="list3">
+	          &nbsp;<a href="/blogs/partners/">שיתופי פעולה</a>
+	        </li>
+<li class="list3">
+	          &nbsp;<a href="/blogs/initiative/">היוזמות שלנו</a>
+	        </li>
+	        <li class="list3">
+	          &nbsp;<a href="/contact/">צרו איתנו קשר</a>
+	        </li>
+	           
+		<li class="list3">
+	        &nbsp;<a href="/blogs/faq/">הענף לפניות הציבור </a>
+	        </li>
+	    </ul>
+	</div>
+
+	<div class="l4menuFold">
+	    <ul class="menuList closedMenu">
+	        <li class="title4Fold">
+	        &nbsp;לא בחינם
+	        </li>
+	        <li class="list4Fold">
+	        &nbsp;קומפוסט עד הבית
+	        </li>
+	        <li class="list4Fold">
+	        &nbsp;מוצרים שמשנים
+	        </li>
+	        <li class="list4Fold">
+	        &nbsp;סדנאות והרצאות
+	        </li>
+
+	    </ul>
+	</div>
+
+	<div class="l4menu">
+	    <ul class="menuList closedMenu">
+	        <li class="title4">
+	        &nbsp;לא בחינם
+	        </li>
+	        <li class="list4">
+	        &nbsp;<a href="/blogs/compostToGo/">קומפוסט עד הבית</a>
+	        </li>
+	        <li class="list4">
+	        &nbsp;<a href="/blogs/thingsMatter/">מוצרים שמשנים</a>
+	        </li>
+	        <li class="list4">
+	        &nbsp;<a href="/blogs/workshops/"> סדנאות והרצאות</a>
+	        </li>
+		<li class="list4">
+	        &nbsp;<a href="/blogs/consult/">ייעוץ ירוק</a>
+	        </li>
+	    </ul>
+	</div>
+
+	<div class="l5menuFold">
+	    <ul class="menuList closedMenu">
+	        <li class="title5Fold">
+	        &nbsp;עוד
+	        </li>
+		<li class="list5Fold">
+	        &nbsp;מדירה קיימת לדירה מקיימת
+	        </li>
+	        <li class="list5Fold">
+	        &nbsp;ליקוט בתל אביב
+	        </li>
+	        <li class="list5Fold">
+	        &nbsp;גינות קהילתיות בת"א
+	        </li>
+	    </ul>
+	</div>
+
+	<div class="l5menu">
+	    <ul class="menuList closedMenu">
+	        <li class="title5">
+	        &nbsp;עוד
+	        </li>
+	        <li class="list5">
+	        &nbsp;<a href="/blogs/bialik/">מדירה קיימת לדירה מקיימת</a>
+	        </li>
+		<li class="list5">
+	        &nbsp;<a href="/blogs/keren/">ליקוט בתל אביב</a>
+	        </li>
+	        <li class="list5">
+	       &nbsp;<a href="/blogs/ginot/">גינות קהילתיות בת"א</a>
+	        </li>
+	   	<li class="list5">
+	        &nbsp;<a href="/blogs/howMuch/">כמה עולה אורגני?</a>
+	        </li>
+	        <li class="list5">
+	        &nbsp;<a href="/blogs/bestToday/">מה הכי שווה עכשיו</a>
+	        </li>
+	        </li>
+	    </ul>
+	</div>
+</div>

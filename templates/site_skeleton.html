@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="copyright" content="Princess Zero">
+<meta name="keywords" content="
+אקולוגיה, אקולוגיה עירונית, ירוק, טבע בעיר, דירה אקולוגית, גינה קהילתית, סביבה ירוקה, קומפוסט, קיימות, טיפים אקולוגיים, קהילה אורגנית, חשיבה סביבתית, תזונה מתחשבת, צרכנות אחראית, הפחתה, שימוש מחדש, מיחזור, חקלאות ביתית, גינת מרפסת, טבע בעיר, חיים בני-קיימא, פרמהקלצ'ר, אקולוגיה מעשית, מיחזור מים, גידול ירקות, איכות סביבה, בריאות הגוף והסביבה">
+<meta name="description" content="
+האתר מרכז מידע מעשי על אקולוגיה עירונית וחיים ירוקים בעיר. אנחנו משתפים מניסיוננו האישי בתזונה מתחשבת, צרכנות אחראית, הכנת קומפוסט, הפחתה, שימוש בחומרי ניקוי וטיפוח ידידותיים לגוף ולסביבה, טיפוח גינות קהילתיות ועציצים במרפסת, שימוש מחדש ומיחזור, ניידות ידידותית ושאר נושאים ירוקים. בואו נחזיר את הטבע לעיר ונלמד איך לעבוד איתו!">
+<script src="{{ media_url }}/js/jquery.js" type="text/javascript"></script>
+<script src="{{ media_url }}/js/tooltip.js" type="text/javascript"></script>
+
+{% block thickbox %}
+<script src="{{ media_url }}/js/thickbox.js" type="text/javascript"></script>
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/thickbox.css">	
+{% endblock %}
+
+<script type="text/javascript">
+$(function() {
+
+$('img').Tooltip({
+	delay: 0,
+	showURL: false,
+	track: true,
+	showBody: " - "
+});
+
+});
+</script>
+
+{% block scripts %}
+{% endblock %}
+
+{% block stylesheets %}
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/citytree.css">
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/calen.css">
+{% endblock %}
+
+{% comment %}
+<script language="JavaScript" type="text/javascript" src="/pphlogger/pphlogger.js.php?id=citytree"></script>
+{% endcomment %}
+
+<title>
+{% block title %}
+עץ בעיר -- האתר שלך לאקולוגיה עירונית
+{% endblock %}
+</title>
+
+</head>
+
+<body style="background-color: #B6E3AB;">
+<div id="wrapper">
+
+{% block top %}
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+<div class="bottom">
+עץ-בעיר, פרויקט האקולוגיה העירונית של 
+<a href="http://www.princesszero.com" target="blank">Princess Zero</a>
+. כל הזכויות שמורות.
+</div>
+
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript"> 
+_uacct = "UA-1322484-1";
+urchinTracker();
+</script>
+</body>
+
+
+

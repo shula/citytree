@@ -1,0 +1,50 @@
+{% extends "base_short_menu.html" %}
+
+{% block calendar %}
+{% endblock %}
+
+{% comment %} BreadCrumbs Not Displayed in comment preview {% endcomment %}
+{% block breadcrumbs %}
+&nbsp;
+<a href="/">‎
+דף בית
+</a>
+>
+<a href="{{object.blog.get_absolute_url}}"> 
+{{object.blog.name}}
+</a>
+>‏
+<a href="{{object.get_absolute_url}}">
+{{object.title}}
+</a>
+>‏
+תגובה נשלחה בהצלחה
+{% endblock %}
+
+{% comment %} Header Image must come from comment object {% endcomment %}
+{% block  headerImage%}
+<img src="{{object.blog.get_header_image_url}}" 
+		width="{{object.blog.header_image_width}}px" 
+		height="{{object.blog.header_image_height}}px" 
+		alt="{{object.blog.header_image_label}}" title="{{object.blog.header_image_label}}">
+{% endblock %}
+
+
+{% block central_area %}
+
+<div class="addcomm">
+    <h1>התגובה שלך עלתה בהצלחה!</h1>
+
+    <h3>עץ-בעיר מודה לך מאוד על התרומה לאתר. המילים שלך הן קומפוסט מעולה. לחיצה על "חזרה" תוביל לעמוד שבו מופיעה עכשיו התגובה.</h3><br />
+
+    <div class="buttContainer">
+        <form>
+        <input class="button" type="button" name="post" value="חזרה" onClick="document.location.href='{{ object.get_absolute_url }}';" />
+        </form>
+    </div><br />
+
+    <div class="leafspace"></div>
+</div>
+
+{% endblock %}
+

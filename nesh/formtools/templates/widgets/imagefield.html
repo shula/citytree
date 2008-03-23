@@ -1,0 +1,19 @@
+{% if FORM_field.errors %}{{ FORM_field.html_error_list }}{% endif %}
+<label class="{% if FORM_field.formfield.is_required %}required{% else %}optional{% endif %}" for="{{ FORM_field.get_id }}">{{ FORM_label|title }}:</label>
+{% if not FORM_readonly %}
+<!-- TODO: VALUE!?!?! -->
+<input type="file"
+	class="vImageUploadField{% if FORM_field.formfield.is_required %} required{% endif %}{% if FORM_readonly %} readonly{% endif %}"
+	id="{{ FORM_field.get_id }}_file"
+	name="{{ FORM_field.field_name }}_file"
+	size="{{ FORM_size }}"
+	value=""
+	maxlength="{{ FORM_maxlength }}"
+/>
+<input type="hidden" id="{{ FORM_field.get_id }}" name="{{ FORM_field.field_name }}" value="{{ FORM_value }}" />
+{% else %}
+<img src="{{ FORM_DBFIELD.get_image_url }}" alt="{{ FORM_DBFIELD.get_image_url }}" />
+{% endif %}
+{% if FORM_help_text %}
+<p class="help">{{ FORM_help_text }}</p>
+{% endif %}

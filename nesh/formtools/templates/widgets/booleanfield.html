@@ -1,0 +1,34 @@
+{% load i18n %}
+{% if FORM_field.errors %}{{ FORM_field.html_error_list }}{% endif %}
+
+<label class="{% if FORM_field.formfield.is_required %}required{% else %}optional{% endif %}" for="{{ FORM_field.get_id }}">{{ FORM_label|title }}:</label>
+{% comment %}
+<input type="radio" id="{{ FORM_field.get_id }}_on"
+	class="vBooleanField{% if FORM_field.formfield.is_required %} required{% endif %}{% if FORM_readonly %} readonly{% endif %}"
+	name="{{ FORM_field.field_name }}"{% if FORM_readonly %} readonly="set"{% endif %}
+	value="on"
+	{% if FORM_value %}checked="checked"{% endif %}
+/> {% trans 'Yes' %}
+
+<input type="radio" id="{{ FORM_field.get_id }}_off"
+	class="vBooleanField{% if FORM_field.formfield.is_required %} required{% endif %}{% if FORM_readonly %} readonly{% endif %}"
+	name="{{ FORM_field.field_name }}"{% if FORM_readonly %} readonly="set"{% endif %}
+	value="off"
+	{% if not FORM_value %}checked="checked"{% endif %}
+/> {% trans 'No' %}
+{% endcomment %}
+
+{% if not FORM_readonly %}
+	<input type="checkbox" dojoType="Checkbox" id="{{ FORM_field.get_id }}_on"
+		class="vBooleanField{% if FORM_field.formfield.is_required %} required{% endif %}"
+		name="{{ FORM_field.field_name }}"
+		{% if FORM_value %}checked="checked"{% endif %}
+		{% if FORM_field.formfield.is_required %}required="true"{% endif %}
+	/>
+	
+	{% if FORM_help_text %}
+	<p class="help">{{ FORM_help_text }}</p>
+	{% endif %}
+{% else %}
+	{{ FORM_label|title }}: {% if FORM_value %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}
+{% endif %}

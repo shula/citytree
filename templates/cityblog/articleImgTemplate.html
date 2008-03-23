@@ -1,0 +1,12 @@
+{% load thumbnail %}
+
+<div class="capImg">
+    
+    
+    <a href="{{imgUrl}}" class="thickbox" title="{{imgCaption}}" rel="gallery">
+    <img src="{{imgUrl|thumbnail:"width=156"}}" width="{{imgUrl|thumbnail:"width=156"|image_width}}px" height="{{imgUrl|thumbnail:"width=156"|image_height}}px" border="0" alt="{{imgLabel|escape}}" title="{{imgLabel|escape}}" ></a>
+
+    <div class="caption">
+        {{imgCaption}}
+    </div>
+</div>

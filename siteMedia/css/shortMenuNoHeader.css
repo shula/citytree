@@ -1,0 +1,316 @@
+/* Menus are numbered from right to left */
+
+/* In the case of the short menu pages, the breadcrumbs provide the spacing between the main content area and the
+  text.
+  */
+div.mainWrapper {
+	margin: 0  auto;
+	padding: 0 0 0 0;
+	width: 808px;
+}
+
+div.menu {
+	position: relative; left: 0px; top: 0px;
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	padding: 0px;
+	height:  22px;
+	width:   808px;
+}
+
+div.main { 
+	padding: 0px;
+	background-color:#E6F4F3;
+	position: relative; left: 0px; top: 0px;
+	background-repeat: repeat-y;
+	width: 808px;
+	text-align: right;
+	}
+
+/* Menus -- Opened up */
+div.l1menu {
+    position: absolute;
+    right: 0px;
+    top 0px;
+    margin: 0 8px 0 0;
+  	border-left: 1px solid #AA8A27;
+  	visibility: hidden;
+}
+
+div.l2menu {
+    position: absolute;
+    top 0px;
+    right: 168px;
+    margin: 0;
+    border-left: 1px solid #E04500;
+    visibility: hidden;
+}
+
+div.l3menu {
+    position: absolute;
+    top 0px;
+    right: 328px;
+    margin: 0;
+    border-left: 1px solid #B92C51;
+    visibility: hidden;
+}
+
+div.l4menu {
+    position: absolute;
+    top 0px;
+    right: 488px;
+    margin: 0;
+    border-left: 1px solid #6F4685;
+    visibility: hidden;
+}
+
+div.l5menu {
+    position: absolute;
+    top 0px;
+    right: 648px;
+    margin: 0;
+    border-left: 1px solid #316ED2; 
+    visibility: hidden;
+}
+
+
+/* Menu Items in top menu */
+ul.menuList {
+	list-style: none;
+	width: 159px;
+	margin: 0;
+		padding: 0;
+		font-family: arial, helvetica, sans-serif;
+		font-weight: bold;
+		font-size: 9pt;
+		line-height: 16pt;
+}
+
+/* Writers menu */
+
+li.title1 {
+    background-image: url("writersTitle.gif");
+    background-repeat: no-repeat;
+    border-top: 1px solid #9C8602;
+    border-right: 8px solid #898F01;
+    border-bottom: 1px solid #9C8B03;
+    color: #475800;
+     height: 20px;
+}
+
+li.list1 {
+    background-color: #FFDA7F;
+    border-right: 8px solid #A2B635;
+    border-bottom: 1px solid #D3AF00;
+    height: 20px;
+}
+
+/* Subjects menu */
+
+li.title2 {
+    background-color: #FF875D;
+    border-top: 1px solid #9D3000;
+    border-right: 8px solid #F46816;
+    border-bottom: 1px solid #F35D35;
+    height: 20px;
+    color: #802801;
+}
+
+li.list2 {
+ 		background-color: #FFC39A;
+    border-right: 8px solid #FB9E41;
+    border-bottom: 1px solid #FF8F54;
+    height: 20px;
+}
+
+/* Center menu */
+
+li.title3 {
+    background-color: #FF798E;
+    border-top: 1px solid #AC0506;
+    border-right: 8px solid #DF384D;
+    border-bottom: 1px solid #EF4A4A;
+    height: 20px;
+    color: #840018;
+}
+
+li.list3 {
+ 		background-color: #FFBEC7;
+    border-right: 8px solid #FF7969;
+    border-bottom: 1px solid #FF8261;
+    height: 20px;
+}
+
+/* Shop menu */
+
+li.title4 {
+    background-image: url("shopTitle.gif");
+    background-repeat: no-repeat;
+    border-top: 1px solid #770660;
+    border-right: 8px solid #AD3AC9;
+    border-bottom: 1px solid #9449C2;
+    height: 20px;
+    color: #5C0084;
+}
+
+li.list4 {
+ 		background-color: #BEC7FF;
+    border-right: 8px solid #CB75E3;
+    border-bottom: 1px solid #B679E8;
+    height: 20px;
+}
+
+/* About menu */
+
+li.title5 {
+    background-image: url("aboutTitle.gif");
+    background-repeat: no-repeat;
+    border-top: 1px solid #093378;
+    border-bottom: 1px solid #2D85CA;
+    height: 20px;
+    color: #024071;
+   	padding-right: 8px;
+}
+
+li.list5 {
+ 		background-color: #98EDFA;
+    border-right: 8px solid #75A5FD;
+    border-bottom: 1px solid #6CAFFF;
+    height: 20px;
+}
+
+
+
+/* Rest of the menu code */
+
+div.menuholder {
+	position: absolute; left: 0; top: 160px;
+}
+
+div.menu {
+	position: relative;
+	margin: 0 auto;
+	padding: 0px;
+	height:  22px;
+	width:   808px;
+	z-index: 1;
+}
+
+/* Menus -- FOLDED */
+
+div.l1menuFold {
+    position: absolute;
+    right: 0px;
+    top 0px;
+    margin: 0 8px 0 0;
+    width: 160px;
+		padding-right: 8px;
+		padding-top: 1px;
+}
+
+div.l2menuFold {
+    position: absolute;
+    top 0px;
+    right: 168px;
+    margin: 0;
+    width: 160px;
+    padding-right: 8px;
+   	padding-top: 1px;
+}
+
+div.l3menuFold {
+    position: absolute;
+    top 0px;
+    right: 328px;
+    margin: 0;
+    width: 160px;
+  	padding-right: 8px;
+  	padding-top: 1px;
+}
+
+div.l4menuFold {
+    position: absolute;
+    top 0px;
+    right: 488px;
+    margin: 0;
+    width: 160px;
+    padding-right: 8px;
+    padding-top: 1px;
+}
+
+div.l5menuFold {
+    position: absolute;
+    top 0px;
+    right: 648px;
+    margin: 0;
+    width: 160px;
+    padding-right: 8px;
+    padding-top: 1px;
+}
+
+/* Writers menu */
+
+li.title1Fold {
+    color: #475800;
+     height: 20px;
+}
+
+li.list1Fold {
+    height: 20px;
+    color: #676A3E;
+    display: none;
+}
+
+/* Subjects menu */
+
+li.title2Fold {
+    height: 20px;
+    color: #802801;
+}
+
+li.list2Fold {
+    height: 20px;
+    color: #A95321;
+    display: none;
+}
+
+/* Center menu */
+
+li.title3Fold {
+    height: 20px;
+    color: #840018;
+}
+
+li.list3Fold {
+    height: 20px;
+    color: #AB4C4C;
+    display: none;
+}
+
+/* Shop menu */
+
+li.title4Fold {
+    height: 20px;
+    color: #5C0084;
+}
+
+li.list4Fold {
+    height: 20px;
+    color: #834892;
+    display: none;
+}
+
+/* About menu */
+
+li.title5Fold {
+    height: 20px;
+    color: #024071;
+}
+
+li.list5Fold {
+    height: 20px;
+    color: #3E737D;
+    display: none;
+}
+
+

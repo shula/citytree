@@ -1,0 +1,27 @@
+{% if is_paginated %}
+	<div class="nav">
+	
+		{% if has_next %}	
+		<a href="?page={{pages}}">&lt;&lt;</a> &nbsp;
+		<a href="?page={{next}}"> &lt; </a>
+		{% else %}
+		&lt; &nbsp; &lt;&lt;
+		{% endif %}
+
+	
+	
+			{{page}}
+			מתוך
+			{{pages}}
+	
+		
+	
+		{% if has_previous %}
+		<a href="?page={{previous}}"> &gt; </a> &nbsp;
+		<a href="?page=1">&gt;&gt;</a>
+		{% else %}
+		&gt; &nbsp; &gt;&gt;
+		{% endif %}
+			
+	</div>
+{% endif %}

@@ -1,0 +1,90 @@
+.calendarContainer{
+        position: relative; right: 20px; top: 0px;
+        float:  right;
+    	margin: 0 0 0 0;
+    	background-repeat: no-repeat;
+    	width:  160px;
+    	height: 180px;
+    
+}
+
+.calendarHolder{
+	width: 138px;
+	height: 180px;
+}
+
+table.calen{
+   margin: 0 5px 0 5px; 
+}
+
+.cellday
+{
+	width:18px;
+	height: 19px;
+	text-align: center;
+	font-size: 7pt;
+	font-weight: bold;
+	color: #1A0080;
+}
+
+div.cellday
+{
+	width:16px;
+	height: 16px;
+	text-align: center;
+	font-size: 7pt;
+	font-weight: bold;
+	color: #1A0080;
+}
+
+
+td.cell
+{
+	width:18px;
+	height: 19px;
+	text-align: center;
+	font-size: 8pt;
+	font-weight: normal;
+	opacity: 0.6;
+	filter: alpha(opacity = 60);
+	color: #1A0080;
+}
+
+div.cell
+{
+	width:16px;
+	height: 17px;
+	text-align: center;
+	font-size: 8pt;
+	font-weight: normal;
+	color: #1A0080;
+}
+
+
+.cellmonth
+{
+	width:126px;
+	height:19px;
+	text-align: center;
+	font-size: 8pt;
+	font-weight: bold;
+	color: #1A0080;
+}
+
+.cellmoon1
+{
+	text-align: left;
+	font-size: 7pt;
+	font-weight: normal;
+	color: #1A0080;
+}
+
+.cellmoon2
+{
+	text-align: right;
+	font-size: 7pt;
+	font-weight: normal;
+	color: #1A0080;
+}
+
+

@@ -1,0 +1,37 @@
+{% if display_form %}
+
+<div class="addcomm">
+<h1>
+הוספת תגובה
+</h1>
+<form action="/comments/postfree/" method="post">				
+{% comment %}				
+				<input id="eng" type="text" id="id_image_label" class="vTextField" name="image_label" size="40" value="http://" maxlength="200" />
+	<h3>
+				קישור לשם (לא חייבים)
+				</h3>
+{% endcomment %}
+				<textarea id="id_comment" class="vLargeTextField required" name="comment" rows="8" cols="60">בבקשה רק הערות שקשורות לנושא, בלי שטויות</textarea>
+				<h3>
+    				תגובה (אפשר להוסיף תגי html)
+    				</h3><br>
+
+    				<input type="text" id="id_person_name" class="vTextField" name="person_name" size="40" value="" maxlength="200" />
+    				<h3>
+    				שם אמיתי או בדוי 
+    				</h3><br>
+                	
+
+
+				<input type="hidden" name="options" value="{{ options }}" />
+				<input type="hidden" name="target" value="{{ target }}" />
+				<input type="hidden" name="gonzo" value="{{ hash }}" />
+				<input type="submit" name="preview" value="Preview comment" />
+</form>				
+					</div>
+					
+					</div>
+				
+		<div class="leafspace">
+		</div>
+{% endif %}

@@ -1,0 +1,76 @@
+{% extends "base_short_menu.html" %}
+{% load thumbnail %}
+
+{% load comments.comments %}
+
+
+{% block calendar %}
+{% endblock %}
+
+{% block customStyleSheets %}
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/citytree.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/shortMenu.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/calen.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/links.css">
+
+<style type="text/css">
+div.menu { background-image: url('{{media_url}}/cityblog/menu_s.png'); }
+
+* html .menu {
+background-image:none;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/cityblog/menu_s.png', sizingMethod='image');
+}
+
+</style>
+{% endblock %}
+
+
+{% block breadcrumbs %}
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+ >
+ <a href="{{post.blog.get_absolute_url}}"> 
+ {{post.blog.name}}
+ </a>
+ >‏
+ {{post.title}}
+{% endblock %}
+
+
+{% block central_area %}
+	<div class="leafcontainer">
+<div class="capImg" style="clear: none;">
+		<a href="{{post.get_image_url}}" class="thickbox" rel="gallery">
+			<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
+		   width="{{post.get_image_url|thumbnail:"width=156"|image_width}}px"
+		   height="{{post.get_image_url|thumbnail:"width=156"|image_height}}px"
+		   title="{{post.image_label|escape}}"
+		   border="0"></a><br>
+		<font id="caption">
+		{{post.image_caption}}
+		</font>
+				
+				</div>
+
+		<h1>
+		<div class="date">{{post.post_date|date:"d/m/y"}}</div>
+
+		{{post.title}}
+		</h1>
+
+		<p class="leaf">
+		{{post.teaser_rendered_text}}
+		</p>
+		
+		<p class="leaf">
+		{{post.rendered_text}}
+		</p>
+			
+		<div class="leafspace">
+		</div>
+
+        {% include "cityblog/blog_add_comment_section.html" %}
+
+{% endblock %}

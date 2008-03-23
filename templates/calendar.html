@@ -1,0 +1,72 @@
+{% load citytree_tags %}
+
+	<script type="text/javascript">
+		$(document).ready( function() { 
+		    $('#calIndicator').hide();
+		} )
+	</script>
+
+    <table width="126" border="0" cellspacing="0" cellpadding=""  align="center">
+    <tr>
+    
+    <td class="cellmonth" colspan="7">
+    <img src ="{{media_url}}/calendar/indicator.gif" id="calIndicator" alt="indicator">
+    	 
+    {% if hasPrevMonth %}
+    <a href="#" onclick="gotoDate({{prevMonth}},{{prevYear}},{{urlType}})">&lt;</a>
+    {% endif %}
+		{{hebMonth|nthitem:"תשרי,חשון,כסלו,טבת,שבט,אדר,ניסן,אייר,סיון,תמוז,אב,אלול,אדר א,אדר ב"}}
+	{% if hasNextMonth %}    
+    <a href="#" onclick="gotoDate({{nextMonth}},{{nextYear}},{{urlType}})">&gt;</a>
+    {% endif %}
+    
+    </td>
+    </tr>
+    <tr>
+    <td class="cellday"><div class="cellday">א</div></td>
+    <td class="cellday"><div class="cellday">ב</div></td>
+    <td class="cellday"><div class="cellday">ג</div></td>
+    <td class="cellday"><div class="cellday">ד</div></td>
+    <td class="cellday"><div class="cellday">ה</div></td>
+    <td class="cellday"><div class="cellday">ו</div></td>
+    <td class="cellday"><div class="cellday">ש</div></td>
+    
+    </tr>
+
+    {% for day in days %}
+    	{% spaceless %}
+    	{% if forloop.first %}<tr>{% else %}
+			{% if forloop.counter0|divisibleby:7 %}</tr><tr>{% endif %}
+		{% endif %}
+		{% endspaceless %}
+			{% if day.isValid %}<td class="cell" 
+				{% if day.getHasBGColor %}
+				style="background-color: {{day.bgColor}}; "
+				{% endif %}
+				>
+				<div class="cell">
+					{% if day.hasLink %}<a href="{{day.getUrl}}">
+					{{day.getNum|nthitem:"א,ב,ג,ד,ה,ו,ז,ח,ט,י,יא,יב,יג,יד,טו,טז,יז,יח,יט,כ,כא,כב,כג,כד,כה,כו,כז,כח,כט,ל,לא"}}
+					</a>
+					{% else %}
+					{{day.getNum|nthitem:"א,ב,ג,ד,ה,ו,ז,ח,ט,י,יא,יב,יג,יד,טו,טז,יז,יח,יט,כ,כא,כב,כג,כד,כה,כו,כז,כח,כט,ל,לא"}}
+					{% endif %}
+				</div>
+			</td>
+			{% else %}
+			<td class="cell" ><div class="cell"></div></td>
+			{% endif %}		
+		{% if forloop.last %}</tr>{% endif %}    	
+    {% endfor %}
+    
+    <tr>
+    <td colspan="7" height="6"></td>
+    </tr>
+    <tr>
+    <td colspan="3" class="cellmoon1">הירח&nbsp;</td>
+    <td style="background-image: url('{{moonImageUrl}}'); background-repeat: no-repeat;" height="18px" width="18px"></td>
+    <td colspan="3" class="cellmoon2">&nbsp;הלילה</td>
+    
+    </tr>
+    </table>
+    

@@ -1,0 +1,30 @@
+{% extends "base_short_noheaderimg.html" %}
+
+{% load citytree_tags %}
+
+{% block calendar %}
+{% endblock %}
+
+{% block logo %}
+{% endblock %}
+
+{% block left_subject_menu %}
+{% include "leftmenu.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+&nbsp;
+<a href="http://www.citytree.net">‎
+דף בית
+</a>
+>
+{{ flatpage.title }}
+{% endblock %}
+
+{% block title %}
+{{ flatpage.title }}
+{% endblock %}
+
+{% block central_area %}
+		{{flatpage.content|replaceMediaUrl:"flatpages/images"}}
+{% endblock %}

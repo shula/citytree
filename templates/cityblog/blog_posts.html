@@ -1,0 +1,57 @@
+{% extends "base_short_menu.html" %}
+
+{% load thumbnail %}
+{% load comments.comments %}
+
+{% block thickbox %}
+{% endblock %}
+
+{% block breadcrumbs %}
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+ > {{blog.name}}
+{% endblock %}
+
+{% block central_area %}
+	
+	{% for post in post_list %}
+	
+	{% get_free_comment_count for cityblog.post post.id as comment_count %}
+<div class="leafcontainer">
+		<div class="blogListImage">
+		<a href="{{post.get_absolute_url}}">
+		<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
+		width='{{post.get_image_url|thumbnail:"width=156"|image_width}}px'
+		height='{{post.get_image_url|thumbnail:"width=156"|image_height}}px' 
+		border="0" alt=""  class="blog" title="{{post.image_label|escape}}"></a>
+		</div>
+
+		<h1>
+		<div class="date"><a href="{{post.get_absolute_url}}">{{post.post_date|date:"d/m/y"}}</a></div>
+		<a href="{{post.get_absolute_url}}">
+			{{post.title}}
+		</a>	
+		</h1>
+		
+	<p class="leaf">
+		{{post.teaser_rendered_text}}
+		</p>
+			<div class="commentnumber">
+			    <a href="{{post.get_absolute_url}}">
+			{% ifequal comment_count 0 %}
+			אין כרגע תגובות...
+			{% else %}
+				‎...יש {{comment_count}} תגובות
+			{% endifequal %}			
+			</a>
+			</div>
+			
+			<div class="leafspace">
+	
+			</div>
+</div>
+	{% endfor %}	
+	
+{% endblock %}

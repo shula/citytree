@@ -1,0 +1,448 @@
+/* This CSS contains all styles common to all pages on CityTree */
+
+
+body {
+	margin-top: 0;
+	margin-left: 0;
+	font-family: arial, helvetica, sans-serif;
+	min-width: 808px;
+}
+
+#wrapper {
+	margin:0 auto;
+	width:808px;
+	direction: rtl;
+}
+
+div.top { 
+	position: relative; left: 0px; top: 0px;
+    margin:0 auto;
+    padding: 0;
+    border: 0;
+	width: 808px;
+	height: 160px;
+    overflow: hidden;
+}
+
+img.top_pic { 
+	position: relative; left: 0px; top: 0px;
+}
+
+#logo { 
+	position: relative; left: 0px; top: -130px;
+    width: 139px;
+}
+
+div.mainWrapper {
+	margin: 0  auto;
+	padding: 16px 0 0 0;
+	width: 808px;
+}
+
+
+	
+div.bottom { 
+	clear: both;
+	margin: 0 auto;
+	padding: 8px 0 8px 0;
+	font-weight: normal;
+	color: #61775B;
+	font-size: 8pt;
+	direction: rtl;
+	text-align: center;
+	}
+	
+div.commentnumber { 
+	margin-top: 8px;
+		margin-left: 8px;
+	font-weight: normal;
+	color: #61775B;
+	font-size: 8pt;
+	direction: rtl;
+	text-align: left;
+	}
+	
+div.centralContentWrapper {
+  margin: 0 auto; 
+	width: 480px;
+	min-height: 230px;
+	border-left: 1px dashed #4521CF;
+	border-right: 1px dashed #4521CF;
+	}	
+	
+	
+/*  Goes inside centralContentWrapper
+    Div for places like main page that have a margin all around the main area
+*/
+div.centralAreaMargins {
+    	margin: 0 8px 0 8px;
+}
+
+/*
+    Style text in central content area 
+*/
+div.centralContentWrapper p {
+	font-size: 10pt;
+	font-weight: normal;
+	color: #160066;
+	line-height: 13pt;
+	margin: 4px 8px 8px 8px;
+}
+
+	
+div.leafspace { 
+	background-image: url("images/leaf.png");
+	background-repeat: no-repeat;
+	margin: 4px 170px 6px 0;
+	width: 161px;
+	height: 28px;
+	clear: both;
+	}
+	
+div.date { 
+  float: left;
+  padding: 2px 0 0 8px;
+	color: #160066;
+	font-size: 9pt;
+	font-weight: bold;
+	}
+
+	
+
+#eng {
+	direction: ltr;
+		text-align: left;
+}
+
+div.caption{
+	font-family: sans-serif;
+	direction: rtl;
+	font-weight: normal;
+	color: #493B7D;
+	font-size: 8pt;
+	width: 156px;
+}
+
+/* Caption text for gallery images */
+
+div.galleryCaption{
+  color: #493B7D;
+	font-size: 8pt;
+	text-align: right;
+	width: 156px;
+	overflow: hidden;
+	margin: 0 3px 3px 0;
+}
+
+div.gallery{
+  margin: 0 3px 20px 0;             
+}
+
+	
+div.comm {
+ 	margin: 14px 0 20px 2px;
+	}
+	
+
+	
+.comm	p {
+	font-size: 10pt;
+	font-weight: normal;
+	color: #493B7D;
+	line-height: 12pt;
+	padding-top: 2px;
+	margin: 0 30px 0 8px;
+}
+	
+div.sig { 
+  margin: 0 0 10px 8px;
+	color: #493D73;
+	font-size: 9pt;
+	font-weight: normal;
+	text-align: left;
+	}
+	
+#sigdate	{ 
+	color: #493B7D;
+	font-size: 8pt;
+	font-weight: normal;
+}
+	
+div.capImg { 
+  float: right;
+  padding: 2px 0 0 8px;
+  color: #160066;
+  font-size: 9pt;
+  font-weight: normal;	
+  margin: 4px 6px 0 4px;
+  clear: right;
+}
+
+div.blogListImage {
+    float: right;
+    padding: 2px 0 0 8px;
+    color: #160066;
+    font-size: 9pt;
+    font-weight: normal;	
+    margin: 4px 6px 0 4px;    
+}
+
+div.icImg { 
+  float: right;
+  padding-top: 6px;	
+	margin: 0 6px 0 0;
+}
+
+div.subImg { 
+  float: right;
+  padding-top: 6px;	
+	margin: 0 6px 0 6px;
+}
+
+h1 {
+	font-weight: bold;
+	color: #160066;
+	font-size: 11pt;
+	padding: 0px;
+	margin: 0px 8px 8px 0;
+}
+
+h2 {
+	font-weight: bold;
+	color: #160066;
+	font-size: 11pt;
+	padding: 0px;
+	margin: 12px 8px 4px 0;
+}
+
+h3 {
+	font-weight: normal;
+	color: #61775B;
+	font-size: 8pt;
+	padding: 0px;
+	margin: 0 0 4px 0;
+}
+
+h5 {
+	font-weight: bold;
+	color: #61775B;
+	font-size: 12pt;
+	padding: 0px;
+	margin: 0 0 8px 0;
+	padding-left: auto;
+}
+
+
+.leafcontainer p {
+	font-size: 10pt;
+	font-weight: normal;
+	color: #160066;
+	line-height: 12pt;
+	margin: 4px 8px 8px 8px;
+}
+
+div.leafteaser	{
+	margin: 0 0 12px 0;
+}
+
+div.leafteaser p {
+	font-size: 10pt;
+	font-weight: bold;
+	color: #160066;
+	line-height: 12pt;
+	margin: 4px 8px 12px 8px;
+}
+
+div.subcontainer	{
+    padding-top: 6px;
+	margin-bottom: 12px;
+	overflow: hidden;
+	height: 93px;
+}
+
+.subcontainer H1{
+	font-weight: bold;
+	color: #160066;
+	font-size: 11pt;
+	padding: 0px;
+	margin: 0px 8px 2px 0;
+}
+
+
+div.addcomm { 
+	margin: 0 30px 0 16px;
+	direction: rtl;
+	text-align: right;
+	}
+	
+.addcomm h1 {
+	font-weight: bold;
+	color: #46693C;
+	font-size: 11pt;
+	padding: 0px;
+	margin: 0px 0 8px 0;
+}
+
+.addcomm	p {
+	font-size: 10pt;
+	font-weight: normal;
+	color: #493B7D;
+	line-height: 12pt;
+	padding-top: 2px;
+	margin: 0 30px 0 8px;
+}
+
+input, select, textarea {
+	background-color: #FFFFFF;
+	font-family: sans-serif;
+	direction: rtl;
+	font-weight: normal;
+	color: #525733;
+	font-size: 10pt;
+}
+
+.buttContainer {
+	margin: 0 0 22px 0;
+	direction: rtl;
+}
+
+.button {
+	font-family: sans-serif;
+	font-weight: bold;
+	color: #527845;
+	font-size: 10pt;
+}
+
+div.nav { 
+	color: #61775B;
+	font-weight: bold;
+	font-size: 10pt;
+	font-family: arial, helvetica, sans-serif;
+	direction: rtl;
+	text-align: center;
+	padding-bottom: 4px;
+	}
+ 
+div.teaser { 
+	margin: 0 auto;
+	clear: both;
+	width: 808px;
+	} 
+	
+.teaser p {
+	line-height: 11pt;
+	font-weight: normal;
+	color: #1A0080;
+	font-size: 9pt;	
+} 
+	
+div.teaserunit { 
+	padding-top: 0;
+	width: 143px;
+	} 	
+ 
+img.teaser { 
+	display: inline;
+	float: right;
+	}
+	
+
+div.teaserline {
+ 	top: 0;
+	border-top: 1px dashed #6044D0;
+	width: 160px;
+ }
+ 
+ div.teaserlinebott {
+ 	top: 20px;
+	border-top: 1px dashed #6044D0;
+	width: 144px;
+ }
+
+div.rightnav {
+ 	float:right;
+ 	margin: 0 auto; 
+ 	width: 146px;
+ 	font-weight: normal;
+ 	color: #493B7D;
+ 	font-size: 9pt;
+ 	font-size: 9pt;
+ 	line-height: 9pt;
+ 	}
+
+
+
+div.leftnav {
+	float:left;
+	margin: 0 auto; 
+	width: 146px;
+	font-weight: normal;
+	color: #493B7D;
+	font-size: 9pt;
+	font-size: 9pt;
+	line-height: 9pt;
+	}
+	
+div.lineleft {
+	border-top: 1px dashed #493B7D;
+	position: relative; left: 2px;
+	width: 144px;
+ }
+ 
+.leftnav td {
+	width: 146px;
+	height: 20px;
+	}
+	
+div.crumbs { 
+	position: relative; right: 8px; top: 0px;
+	direction: rtl;
+	width: 808px;
+	margin: 0 0 8px 0;
+	color: #61775B;
+	font-size: 8pt;
+	font-weight: bold;
+	line-height: 16pt;
+	text-align: right;
+	}	
+	
+/* For Tooltip */
+#tooltip {
+	border: 1px solid #B6E3AB;
+	background-color: #DAFDD1;
+	opacity: 0.85;
+	padding: 5px;
+}
+#tooltip h3, #tooltip p { 
+margin: 0;
+color: #61775B;
+	font-size: 8pt;
+	direction: rtl;
+	font-weight: bold;
+ }
+
+#tooltip p.body{ 
+background-color: #DAFDD1;
+font-weight: normal;
+color: #61775B;
+	font-size: 8pt;
+	direction: rtl;
+ }
+ 
+ div.ident { 
+	direction: rtl;
+	margin: 0 12px 0 0;
+	color: #61775B;
+	font-size: 8pt;
+	font-weight: normal;
+	text-align: right;
+	width: 430px;
+}
+	
+/* For Pagination  */
+.paginator { padding: .25em .25em .6em .25em; }
+.paginate-pages { padding: 2px 3px; border: 1px solid #ddd; cursor: pointer; text-decoration: underline; }
+.paginate-first, .paginate-last { padding: 2px 6px; border: 1px solid #ddd; font-weight: bold; }
+.paginate-previous, .paginate-next { padding: 2px 3px; border: 1px solid #ddd; }
+.paginate-link { padding: 2px 4px; border: 1px solid #ddd; }
+.paginate-current { padding: 2px 4px; border: 1px solid #ddd; font-weight: bold; background:#417690; color:#f4f379; }

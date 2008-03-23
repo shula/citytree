@@ -1,0 +1,10 @@
+{% if FORM_field.errors %}{{ FORM_field.html_error_list }}{% endif %}
+<!-- TODO tiny_mce -->
+<label class="{% if FORM_field.formfield.is_required %}required{% else %}optional{% endif %}" for="{{ FORM_field.get_id }}">{{ FORM_label|title }}:</label>
+<textarea id="{{ FORM_field.get_id }}"
+	class="vTextField{% if FORM_field.formfield.is_required %} required{% endif %}{% if FORM_readonly %} readonly{% endif %}"
+	name="{{ FORM_field.field_name }}_file"{% if FORM_readonly %} readonly="set"{% endif %}
+>{{ FORM_value }}</textarea>
+{% if FORM_help_text %}
+<p class="help">{{ FORM_help_text }}</p>
+{% endif %}

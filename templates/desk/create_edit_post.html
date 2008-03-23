@@ -1,0 +1,389 @@
+{% extends "base_desk.html" %}
+
+{% load thumbnail %}
+
+{% block crumbs %}
+	<a href="/desk/">‎כניסה</a> > <a href="{{blog.get_edit_absolute_url}}">{{blog.name}}</a> > 
+	
+	{% if post %}
+		עריכת עלה קיים
+		{% else %}
+	יצירת עלה חדש
+		{% endif %}
+{% endblock %}
+
+
+{% block messages %}
+	{% ifequal message 3 %}
+	<div class="gotit">
+						העלה צמח בהצלחה על האתר! אפשר להמשיך לערוך אותו.
+						
+						</div>
+	{% endifequal %}
+	
+	{% ifequal message 4 %}
+	<div class="gotit">
+						העלה צמח בהצלחה על האתר! עכשיו אפשר לערוך עלה חדש.
+						
+						</div>
+	{% endifequal %}
+	
+	{% if form.has_errors %}
+	<div class="gotit">
+בבקשה לשים לב לשדות שפוספסו.
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block contents %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#id_post_style').addClass("must");
+		$('#id_title').addClass("must");
+		$('#id_teaser_text').addClass("must");
+		$('#id_draft').addClass("must");
+		
+		$('#id_image_file').attr('size', '50px');
+		
+		$('#id_teaser_text').attr({ 'cols': '60', 'rows': '6' } );
+		
+		$('#id_image_label').attr({ 'cols': '60','rows': '6' } );
+		
+		$('#id_text').attr({ 'cols': '100','rows': '30' } );
+	});
+</script>
+
+<div class="widecontent">
+
+
+<!-- New and/or Small leaf -->
+<div class="widecontent1">
+
+				<form action="." method="post" enctype="multipart/form-data">
+						<h1>
+							{% if post %}
+								עריכת עלה קיים
+								{% else %}
+							יצירת עלה חדש
+								{% endif %}
+							
+						</h1>
+		<p>
+		זה המקום להצמיח עלה חדש על הענף ואפילו לסדר זר פרחים. לא להיבהל מאורך הדף - לא כל השדות הכרחיים. אלה שכן - מסומנים בבהיר.
+		</p>
+		<table class="formtab"><tr>
+				<td width="50px" valign="top">			
+					<label for="id_post_style">סוג עלה:</label> 
+				</td>
+				<td>
+									{{ form.post_style }}
+				{% if form.post_style.errors %}*** {{ form.post_style.errors|join:", " }}{% endif %}
+
+				<h3>
+				יש כרגע 
+				<a href="http://citytree.net/plantea/index.php?title=%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA#.D7.91.D7.9C.D7.95.D7.92.D7.99.D7.9D_.28.22.D7.A2.D7.A0.D7.A4.D7.99.D7.9D.22.29http://citytree.net/guides/sprouting01_june01.php">
+				שלושה פורמאטים של עלים על האתר
+				</a>
+				.
+				 נסו אותם. אפשר להחליף ביניהם.
+				</h3>
+
+				</td>
+			</tr>
+		
+			<tr>
+				<td valign="top">
+					<label for="id_title">כותרת:</label> 
+				</td>
+				<td>
+					{{ form.title }}
+					{% if form.title.errors %}*** {{ form.title.errors|join:", " }}{% endif %}
+					<h3>
+				תנו לעלה כותרת יפה
+				</h3>
+				</td>
+			</tr>
+			
+			{% if post %}
+			<tr>
+				<td valign="top">
+				<label for="id_post_date">תאריך:</label> 
+				</td>
+				<td>
+				{{ form.post_date_date }}
+				{% if form.post_date_date.errors %}*** {{ form.post_date_date.errors|join:", " }}{% endif %}
+				{{ form.post_date_time }}
+				{% if form.post_date_time.errors %}*** {{ form.post_date_time.errors|join:", " }}{% endif %}				<h3>
+				תנו לעלה תאריך וזמן -- הזמן לא מופיע כרגע באתר, אבל עלול להיות שימושי בעריכה. התאריך מופיע באתר. אפשר לתת איזה תאריך שרוצים (לא צריך להיצמד להיום).
+				</h3>
+				
+				</td>
+			</tr>
+			{% endif %}
+			
+			<tr>
+			<td valign="top">			
+				<label for="id_teaser_text">בקיצור:</label> 
+			</td>
+			<td>
+								{{ form.teaser_text }}
+				{% if form.teaser_text.errors %}*** {{ form.teaser_text.errors|join:", " }}{% endif %}
+
+				<h3>
+				הבקיצור יופיע בעמוד הראשי של הבלוג, ויכול גם להוות את העלה כולו (במקרב של "עלה קטן").
+				</h3>
+			</td>
+			</tr>	
+			
+			<tr>
+		   <td valign="top">			
+				<label for="id_image">תמונה:</label> 
+			</td>
+			<td>
+{{ form.image }}{{ form.image_file }}
+{% if form.image.errors %}*** {{ form.image.errors|join:", " }}{% endif %}
+	<h3>
+				איתור תמונה שמתאימה לעלה באמצעות מקש "Browse". לא חייבים תמונה, אבל זה ממש מומלץ. התמונה חייבת להיות ברוחב 160 פיקסלים וקלה מ-20K. הגובה יכול להשתנות. 
+				<a href="http://citytree.net/plantea/index.php?title=%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA">
+				עוד ב"עריכת עלים"</a> התמונה תופיע כאן, במקום העצים שלנו:
+				</h3>
+				
+				{% if post.image %}
+				<img src="{{post.get_image_url}}" width={{post.image_width}}px height={{post.image_height}}px title="{{post.image_label}}">
+				{% else %}				
+				<img src="{{media_url}}desk/trees.jpg" width="156" height="120" border="0" alt="pic example">
+				{% endif %}
+				<br>
+
+			</td>
+			</tr>
+			
+			<br>
+			
+				<tr>
+		   <td valign="top">			
+				<label for="id_image_label">הערה צפה:</label> 
+			</td>
+			<td>
+			{{ form.image_label }}
+         {% if form.image_label.errors %}*** {{ form.image_label.errors|join:", " }}{% endif %}</p>
+
+
+<h3>
+					חהערה הצפה אכן תצוף מעל התמונה כשעכבר עובר בסביבה! היא יכולה להיות באיזה אורך שבא, והיא צריכה לשפוך אור על התמונה.
+				</h3>
+			</td>
+			</tr>
+			
+			<tr>
+		   <td valign="top">			
+				<label for="id_image_caption">הערת משנה:</label> 
+			</td>
+			<td>
+			{{ form.image_caption }}
+         {% if form.image_caption.errors %}*** {{ form.image_caption.errors|join:", " }}{% endif %}</p>
+
+<h3>
+הערת המשנה תופיע מתחת לתמונה וצריכה להיות קצרצרה - יש הגבלה של 25 תווים. אם שדה זה נשאר ריק, המערכת משתמשת אוטומאטית ב-25 התווים הראשונים מההערה הצפה.
+				</h3>
+			</td>
+			</tr>
+			
+			</table>
+			</div>
+<br clear="all">
+
+
+
+<!-- Longv Leaf -->
+<div class="widecontent2">
+
+	
+<h2>
+הרחבת העלה ל"עלה רחב" (טקסט ארוך משתי פסקאות)
+</h2>
+<h3>
+העלה המורחב מכיל טקסט שארוך מההגבלה ל-2 פיסקאות שחלה על עלה קטן. הוא יכול להיות קצת יותר ארוך, או המון יותר ארוך (מאמר). העלה המורחב מופיע בדף נפרד שמוקדש לעלה הספציפי. 
+<a href="http://citytree.net/plantea/index.php?title=%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA#.D7.92.D7.99.D7.93.D7.95.D7.9C_.D7.A2.D7.9C.D7.99.D7.9D_.D7.95.D7.A1.D7.99.D7.93.D7.95.D7.A8_.D7.A4.D7.A8.D7.97.D7.99.D7.9D">
+עוד ב"גידול עלים וסידור פרחים"</a>. 
+				</h3>
+
+			<table class="formtab"><tr>
+			<td valign="top">			
+				<label for="id_text">תוכן:</label> 
+			</td>
+			<td>
+				{{ form.text }}
+				{% if form.text.errors %}*** {{ form.text.errors|join:", " }}{% endif %}
+				<h3>
+				התוכן המלא יופיע בדף של העלה. 
+				<a href="http://citytree.net/plantea/index.php?title=%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA">
+				פרטים בנוגע לאפשרויות עריכת עלים</a>
+				</h3>
+			</td>
+			</tr>
+			<tr>
+				<td valign="top">			
+					<label for="id_flags">דגלים:</label> 
+				</td>
+				<td>
+						<select id="id_flags" class="vSelectMultipleField" name="flags" size="5" multiple="multiple">
+							
+						{% for flag in blogFlags  %}
+							{% if flag.selected %}
+								<option value="{{flag.id}}" selected="selected">{{flag.name}}</option>
+							{% else	%}
+								<option value="{{flag.id}}">{{flag.name}}</option>
+							{% endif %}						
+						{% endfor %}
+							
+						</select>
+
+				{% if form.flags.errors %}*** {{ form.flags.errors|join:", " }}{% endif %}
+				<h3>
+				הדגלים משייכים את העלה לנושאים שהגדרנו. להוספת נושאים פנו לעורכת.
+				</h3>
+
+				</td>
+			</tr>
+						</table>
+
+</div>
+
+<div class="widecontent2">
+	
+<table class="formtab"><tr>
+				<td valign="top" align="left" width="200">			
+				<label for="id_draft">מצב התוכן:</label>
+				</td>
+				<td colspan="2">
+					{{ form.draft }}
+					{% if form.draft.errors %}*** {{ form.draft.errors|join:", " }}{% endif %}
+					
+	<h3>
+			במצב "טיוטה", התוכן שמור אך לא מופיע על האתר. אפשר לחזור אליו, לערוך ולאשר מתי שבא. במצב "מאושר" העלה המאושר מופיע על האתר..
+				</h3>
+	</td>
+			</tr>
+			<tr>
+				<td>&nbsp;	</td>
+	<td>
+	</td>
+
+	<td>
+	<input class="boldbutt" type="submit" value="שמירה והמשך עריכה">
+	&nbsp;&nbsp;
+	<input class="boldbutt" type="submit" name="create_new_item_after_edit" value="שמירה ויצירת עלה חדש">
+	</td>
+			</tr>
+						</table>
+</div>
+
+
+<!-- Gallery -->
+<div class="widecontent2">
+
+<h2>
+סידור זר פרחים (הוספת גלריית תמונות)
+</h2>
+<h3>
+הזר יכול להכיל עד 12 תמונות. התמונות יכולות להיות בכל גודל שהוא, אבל לא יותר כבדות מ 90K. התמונה בזר היא תמיד בגודל 156X120 פיקסלים. תצוגה מוקטנת שלהן מופיעה כאן. לכל תמונה הערת משנה והערה צפה שעובדות בדיוק כמו ההערות של עלה קטן.
+				</h3>
+
+<table class="formtabgal" border="1px"><tr>
+<td class="formtabgal">	
+	מס'
+</td>
+<td class="formtabgal" width="200px">
+איתור תמונה 
+</td>
+<td class="formtabgal" width="68px">
+התמונה
+</td>
+<td class="formtabgal" width="200px">
+הערה צפה (באורך בלתי מוגבל)
+</td>
+<td class="formtabgal" width="140px">
+הערת משנה (רק 25 תווים)
+</td>
+
+<td class="formtabgal" width="140px">
+מחיקה
+</td>
+</tr>
+
+{% for postImage in postImages  %}
+<tr>
+	<td style="text-align: center;">
+		{{forloop.counter0}}
+	</td>
+    <td class="formtabgal">
+					<input type="hidden" id="id_image" name="gallery_image_indx{{forloop.counter0}}" value="{{postImage.index}}">
+					
+    				<input type="hidden" id="id_image" name="gallery_image{{forloop.counter0}}" value="{{postImage.image}}" />
+    				<input type="file"class="vImageUploadField" name="gallery_image_file{{forloop.counter0}}" size="20" />
+    </td>
+    <td class="formtabgal">
+            <a href="{{postImage.get_image_url}}" class="thickbox">
+    		<img src="{{postImage.get_image_url|thumbnail:"width=65"}}" width="{{postImage.get_image_url|thumbnail:"width=65"|image_width}}px" height="{{postImage.get_image_url|thumbnail:"width=65"|image_height}}px" border="0" alt="{{postImage.label|escape}}" title="{{postImage.label|escape}}" ></a>
+    </td>
+    <td class="formtabgal">
+    <textarea id="id_teaser_text" class="vLargeTextField required" name="gallery_image_label{{forloop.counter0}}" rows="6" cols="34">
+        {{postImage.label}}
+    </textarea>
+    </td>
+    <td class="formtabgal">
+    <input type="text" id="id_image_label" class="vTextField" name="gallery_teaser_text{{forloop.counter0}}"" size="20" maxlength="25" value="{{postImage.caption}}"/>
+    </td>
+	<td style="text-align: center;">
+		<input type="checkbox" name="gallery_image_delete{{forloop.counter0}}" value="{{postImage.id}}">
+	</td>
+</tr>    
+{% endfor %}
+
+{% for img in nullImages  %}
+    <tr>
+	<td></td>
+    <td class="formtabgal">
+    				<input type="hidden" id="gallery_image{{img}}" name="gallery_image{{img}}" value="" />
+					<input type="hidden" id="id_image" name="gallery_image_indx{{img}}" value="{{img}}">
+    				<input type="file" id="gallery_image_file{{img}}" class="vImageUploadField" name="gallery_image_file{{img}}" size="20" />
+    </td>
+    <td class="formtabgal">
+    		<img src="{{media_url}}/desk/trees_s.jpg" width="65" height="50" border="0" alt="trees">
+    </td>
+    <td class="formtabgal">
+    <textarea id="id_teaser_text" class="vLargeTextField required" name="gallery_image_label{{img}}" rows="6" cols="34"></textarea>
+    </td>
+    <td class="formtabgal">
+    <input type="text" id="id_image_label" class="vTextField" name="gallery_teaser_text{{img}}" size="20" value="" maxlength="25" />
+    </td>
+    </tr>
+    
+{% endfor %}
+
+</table>
+</div>
+
+<br clear="all">
+
+<br clear="all">
+<div class="widecontent2">	
+	<input class="boldbutt" type="submit" value="שמירה והמשך עריכה">
+	&nbsp;&nbsp;
+	<input class="boldbutt" type="submit" name="create_new_item_after_edit" value="שמירה ויצירת עלה חדש">
+</div>
+</form>
+<br clear="all">
+<br clear="all">
+
+<div class= "bottom"> 
+<div class= "nav"> 
+{% include "desk/navigation_bar.html" %}
+</div>
+<br clear="all"><br clear="all"><br clear="all">
+</div>
+
+
+</div>
+{% endblock %}

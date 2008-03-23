@@ -1,0 +1,261 @@
+/* This CSS contains only teh links styles */
+
+.centralContentWrapper a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #3E19CF;
+}
+
+.centralContentWrapper a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #3E19CF;
+}
+
+.centralContentWrapper a:hover{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #8568F8;
+}
+	
+.nav a:link{
+	text-decoration: none;		
+	color: #567E3F;
+	}
+	
+.nav a:visited, a:active{
+	text-decoration: none;		
+	color: #567E3F;
+	}
+	
+.nav a:hover{;
+	text-decoration: none;		
+	color: #8AAE49;
+	}	
+	
+.leftnav a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #56439F;
+	}
+	
+.leftnav a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #56439F;
+	}
+	
+.leftnav a:hover{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #9E88F0;
+	}
+
+.teaser a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #3E19CF;
+	}
+
+.teaser a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #3E19CF;
+	}
+	
+.teaser a:hover{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #8568F8;
+	}
+.crumbs a:link{ 
+	color: #5A7635;
+	text-decoration: none;
+	}
+
+.crumbs a:visited, a:active{ 
+	color: #5A7635;
+	text-decoration: none;
+}
+
+.crumbs a:hover{ 
+	color: #75AD2C;
+	text-decoration: none;
+}
+
+.menuwriters a:link{ 
+	font-weight: bold;
+	color: #356602;
+	text-decoration: none;
+	}
+
+.menuwriters a:visited, a:active{ 
+	font-weight: bold;
+	color: #356602;
+	text-decoration: none;
+}
+
+.menuwriters a:hover{ 
+	color: #4E9104;
+}
+
+.menuback a:link{
+	font-weight: bold;
+	color: #961930;
+	text-decoration: none;	
+}
+
+.menuback a:visited, a:active{ 
+	font-weight: bold;
+	color: #961930;
+	text-decoration: none;	
+}
+
+.menuback a:hover{
+	color: #B80526;	
+}
+
+.menuabout a:link{
+	font-weight: bold;
+	color: #006D8A;
+	text-decoration: none;		
+}
+
+.menuabout a:visited, a:active{ 
+	font-weight: bold;
+	color: #006D8A;
+	text-decoration: none;		
+}
+
+.menuabout a:hover{
+	font-weight: bold;
+	color: #078DB1;
+	text-decoration: none;		
+}
+
+.sig a:link{
+	font-weight: normal;
+	text-decoration: none;		
+	color: #3E19CF;
+}
+
+.sig a:visited, a:active{
+	font-weight: normal;
+	text-decoration: none;		
+	color: #3E19CF;
+}
+
+.sig a:hover{
+	font-weight: normal;
+	text-decoration: none;		
+	color: #8568F8;
+}
+
+.bottom a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #5A7635;
+	}
+	
+.bottom a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #5A7635;
+	}
+	
+.bottom a:hover{;
+	font-weight: bold;
+	text-decoration: none;		
+	color: #75AD2C;
+	}	
+	
+li.list1 a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #717600;
+	}
+	
+li.list1 a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #698203;
+	}
+	
+li.list1 a:hover{;
+	font-weight: bold;
+	text-decoration: none;		
+	color: #A9B701;
+	}	
+	
+li.list2 a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #C24800;
+	}
+	
+li.list2 a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #C24800;
+	}
+	
+li.list2 a:hover{;
+	font-weight: bold;
+	text-decoration: none;		
+	color: #F8A125;
+	}	
+	
+li.list3 a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #BB2828;
+	}
+	
+li.list3 a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #BB2828;
+	}
+	
+li.list3 a:hover{;
+	font-weight: bold;
+	text-decoration: none;		
+	color: #FB7F50;
+	}	
+
+li.list4 a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #9236AA;
+	}
+	
+li.list4 a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #9236AA;
+	}
+	
+li.list4  a:hover{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #D06BEC;
+	}	
+	
+li.list5  a:link{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #087587;
+	}
+	
+li.list5  a:visited, a:active{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #087587;
+	}
+	
+li.list5 a:hover{
+	font-weight: bold;
+	text-decoration: none;		
+	color: #6A92FF;
+	}	
+	

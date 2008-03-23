@@ -1,0 +1,87 @@
+{% extends "base_desk.html" %}
+
+{% block messages %}
+	{% if message %}
+	<div class="gotit">
+	{% ifequal message 1 %}
+						אין עדיין עלים על הענף! <br>לחיצה על "הצמחת עלה חדש" היא הדבר הנכון לעשות.
+						
+	{% else %}
+	‎העלה נמחק בהצלחה!
+	{% endifequal %}
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block crumbs %}
+<a href="/desk/">‎כניסה</a> > {{blog.name}}
+{% endblock %}
+
+{% block contents %}
+<div class="content">
+<script type="text/javascript">
+
+	function doDelete( post_id, post_name ) {
+		 doDelete = confirm("בטוח למחוק את " + post_name + "?");
+		 if( doDelete )
+		 	window.location="/desk/deletePost/"+post_id+"/"
+	}
+</script>
+
+<H1>
+עלים ב"{{blog.name}}"
+
+</H1>
+<p>
+להלן רשימת העלים שבענף. אפשר ליצור עלה חדש, לערוך עלה קיים ע"י לחיצה על כפתור העיפרון או למחוק עלה ע"י כפתור האיקס. העלים שבמצב טיוטה מסומנים בקישקוש והעלים המאושרים מופיעים באתר ומסומנים כאן בווי. אפשר לעבור בין המצבים ע"י לחיצה על קישקוש/ווי. 
+</p>
+
+<div class="space">
+<div class="buttonright"><a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
+&nbsp;&nbsp; הצמחת עלה חדש &nbsp;&nbsp;
+</font></a></div></div>
+
+{% if object_list %}
+<table width="420px">
+
+{% for post in object_list %}
+
+<tr>
+	<td class="desk">
+	{% if post.draft %}
+	<div class="draft" ><a href="/desk/editPost/{{post.id}}" style="background: url('{{media_url}}/desk/draft.gif');">&nbsp;</a></div>
+	{% else %}
+	<div class="approve" ><a href="/desk/editPost/{{post.id}}" style="background: url('{{media_url}}/desk/approved.gif');">&nbsp;</a></div>
+	{% endif %}
+	</td>
+   
+   <td class="desk" width="400px"
+   {% cycle bgcolor="#E7ECC7",a="" %} 
+   >
+   <a href="/desk/editPost/{{post.id}}">
+		<font id="date">
+		{{post.post_date|date:"d/m/y"}}
+		</font> 
+		{{post.title}}
+		</a></td>
+<td><div class="edit"><a href="/desk/editPost/{{post.id}}" style="background: url('{{media_url}}/desk/edit.gif');">&nbsp;</a></div></td>
+<td><div class="edit"><a href="{{post.get_absolute_preview_url}}" style="background: url('{{media_url}}/desk/eye.gif');">&nbsp;</a></div></td>
+<td><div class="delete"><a href="#" onClick="doDelete({{post.id}},'{{post.title}}')" style="background: url('{{media_url}}/desk/delete.gif');">&nbsp;</a></div></td
+</tr>
+{% endfor %}
+</table>
+{% else %}
+אין עדיין עלים על הענף!
+{% endif %}
+
+
+<div class="buttonright">
+<a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
+&nbsp;&nbsp; הצמחת עלה חדש &nbsp;&nbsp;
+
+</font></a>
+</div>
+
+{% include "desk/desk_pagination.html" %}
+</div>
+{% endblock %}

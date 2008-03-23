@@ -1,0 +1,109 @@
+{% extends "base_short_menu.html" %}
+
+{% load citytree_tags %}
+{% load comments.comments %}
+{% load thumbnail %}
+
+{% block calendar %}
+{% endblock %}
+
+{% block left_subject_menu %}
+{% include "leftmenu.html" %}
+{% endblock %}
+
+{% block pagination %}
+{% if is_paginated %}
+	<div class="nav">
+	{% if is_paginated %}<div class="paginator">{% paginator 4 %}</div>{% endif %}
+	</div>
+{% else %}
+	<br>
+{% endif %}
+{% endblock %}
+
+
+{% block  headerImage%}
+<img src="{{theSubject.get_image_url}}" width="{{theSubject.image_width}}px" height="{{theSubject.image_height}}px" title="{{theSubject.label|escape}}" alt="{{theSubject.label|escape}}">
+{% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="crumbs">
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+ > {{theSubject.name}}
+ </div>
+{% endblock %}
+
+{% block central_area %}
+
+
+<div class="content">
+    <h5>
+    		&nbsp;
+
+נושא:
+{{theSubject.name}}
+    		</h5>
+</div>
+	
+	{% for post in post_list %}
+	{% get_free_comment_count for cityblog.post post.id as comment_count %}
+	
+<div class="subcontainer">
+
+	<h1><div class="date">
+		<a href="{{post.blog.get_absolute_url}}">
+			
+	{% comment %}########## Short Post ############{% endcomment %}
+	{% ifequal post.post_style 1 %}
+	<img src="{{media_url}}/cityblog/leaf.gif" width="12px" height="13px" border="0" alt="branch">&nbsp;
+
+	עלה בענף 
+	{% endifequal %}
+	
+	
+	{% comment %}########## Article ############{% endcomment %}
+	{% ifequal post.post_style 2 %}
+	<img src="{{media_url}}/cityblog/article.gif" width="11px" height="13px" border="0" alt="branch">&nbsp;
+
+מאמר בענף
+	{% endifequal %}
+	
+	{% comment %}########## Gallery ############{% endcomment %}
+	{% ifequal post.post_style 3 %}
+	<img src="{{media_url}}/cityblog/gallery.gif" width="12px" height="13px" border="0" alt="branch">&nbsp;
+
+זר תמונות בענף
+	{% endifequal %}
+	
+	"{{post.blog.name}}"
+	</a></div>
+	<a href="{{post.get_absolute_url}}">
+{{post.title}}
+	</a></h1>
+
+	<div class="subImg">
+	        <a href="{{post.get_absolute_url}}">	<img src="{{post.get_image_url|thumbnail:"width=65"}}" width="{{post.get_image_url|thumbnail:"width=65"|image_width}}px" height="{{post.get_image_url|thumbnail:"width=65"|image_height}}px" border="0" alt=""  class="blog" title="{{post.image_label}}"></a>
+	</div>
+
+	<p class="leaf">
+		{{post.teaser_rendered_text}}
+	</p>
+	
+	<div class="commentnumber">
+	{% ifequal comment_count 0 %}
+	אין כרגע תגובות...
+	{% else %}
+		‎...יש {{comment_count}} תגובות
+	{% endifequal %}			
+	</div>
+</div>
+	{% endfor %}	
+	
+	<div class="leafspace">
+			</div>
+			
+{% endblock %}

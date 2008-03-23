@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>
+{% block title %}
+CityTree -- The Desk
+{% endblock %}
+</title>
+<meta name="copyright" content="Princess Zero">
+<meta name="keywords" content="CityTree, Urban, Ecology, Permaculture, Sustainability, Reuse, Recycle, Reduce, Home, Garden, Roof, Urban gardening, community">
+<meta name="description" content="Cityree">
+<meta http-equiv="Expires" content="City Tree">
+<link rel=stylesheet type="text/css" href="{{ media_url }}/desk/desk.css">
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/thickbox.css">
+<script src="{{ media_url }}/js/jquery.js" type="text/javascript"></script>
+<script src="{{ media_url }}/js/tooltip.js" type="text/javascript"></script>
+<script src="{{ media_url }}/js/thickbox.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(function() {
+
+$('img').Tooltip({
+	delay: 0,
+	showURL: false,
+	track: true,
+	showBody: " - "
+});
+
+});
+</script>
+
+
+{% comment %}
+<script language="JavaScript" type="text/javascript" src="/pphlogger/pphlogger.js.php?id=citytree"></script>
+{% endcomment %}
+
+<style type="text/css">
+	ul.star {
+		list-style-image: url("{{media_url}}/desk/star.gif");
+	}
+</style>
+
+
+</head>
+<body>
+
+
+<div class="leaf" style="background-image: url('{{media_url}}/desk/deskleaf.gif');">
+
+<div class= "top">
+	<div class= "nav"> 
+	{% block navigation %}
+	{%include "desk/navigation_bar.html" %}
+	{% endblock %}
+	</div>
+	<div class="crumbs">
+	{% block crumbs %}
+	{% endblock %}
+	</div>
+</div>
+
+
+<div class="logo">
+<a href="/desk/"><img src="{{media_url}}/desk/desklogo.gif" width="138" height="115" border="0" alt=""></a></div>
+
+{% block messages %}
+{% endblock %}
+
+{% block menu %}
+<div class="rightmenu">
+	<div class="nav">
+		<h2>
+		&nbsp;&nbsp;הענפים שלי 
+		</h2>
+	</div>
+
+	<div class="rightmenulines">
+	{% for blog in user_blogs %}
+	<a href="{{blog.get_edit_absolute_url}}">
+		{{blog.name}}
+	</a><br>
+	{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+{% block contents %}
+{% endblock %}
+</body>

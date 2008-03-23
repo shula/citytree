@@ -1,0 +1,108 @@
+{% extends "site_skeleton.html" %}
+
+{% block top %}
+{% endblock %}
+
+{% block stylesheets %}
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/citytree.css">
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/fullMenu.css">
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/calen.css">
+<link rel=stylesheet type="text/css" href="{{ media_url }}/css/links.css">
+
+<style type="text/css">
+    div.menu { background-image: url('{{ media_url }}/frontpage/menu.png'); background-color:{{site_bg_color}}; } 
+    
+    
+    div.mainWrapper { 
+		overflow: hidden;
+        background-color:{{site_bg_color}};
+		width: 800px;
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop,
+        src='{{media_url}}/frontpage/main.png');
+    }
+    
+    div.mainWrapper[class] {
+        background-image: url('{{media_url}}/frontpage/main.png');
+    }
+    
+    div.calendarHolder[class] { background-image: url('{{media_url}}/calendar/calen.png');}
+    div.calendarHolder { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop,
+src='{{media_url}}/calendar/calen.png');
+}
+    
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ media_url }}/js/menus.js" type="text/javascript"></script>
+{% endblock %}
+
+
+{% block body %}
+
+{% include "menu.html" %}
+
+<div class="mainWrapper">
+<div class="main">
+    
+
+	{% block breadcrumbs %}
+	{% endblock %}
+
+<!-- Calendar starts here -->
+<script type="text/javascript">
+
+	function gotoDate( month, year, urlType ) {
+		 getStr = '/ajax/calendar/?month='+month+'&year='+year+'&urlType='+urlType;	    
+	    $('#calContainer').load(getStr);
+	    $('#calIndicator').show();
+	}
+</script>
+
+<div class="calendarContainer">
+{% block calendar %}
+<div class="calendarHolder" id='calContainer'>
+
+{{calendar}}
+<BR>
+<a href="http://www.citytree.net/static/needed01.html">
+<IMG SRC="http://www.citytree.net/static/needed.jpg" WIDTH="138" HEIGHT="168" BORDER="0" ALT="">
+</a>
+</div>
+    
+{% endblock %}
+</div>
+<!-- Calendar stops here -->
+
+<div class="leftnav">
+
+{% include "leftmenu.html" %}
+
+<!-- End Left Nav -->
+</div> 
+
+<div class="centralContentWrapper">
+    <div class="centralAreaMargins">
+
+    {% block central_area %}
+    {% endblock %}
+
+    </div>
+</div> 
+
+
+<!-- End Of Main Div -->
+</div>
+
+<div class="teaser">
+
+{% block teasers %}
+{% endblock %}
+
+</div>
+<!-- End Of Main Wrapper -->
+</div>
+
+
+{% endblock %}

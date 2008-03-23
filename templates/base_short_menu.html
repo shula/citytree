@@ -1,0 +1,312 @@
+{% extends "site_skeleton.html" %} 
+
+{% load citytree_tags %}
+
+{% block stylesheets %}
+{% block customStyleSheets %}
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/citytree.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/calen.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/shortMenu.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/links.css">
+{% endblock %}
+
+<style type="text/css">
+	div.main[class] { 	background-image: url('{{media_url}}/cityblog/main_tall.png'); }
+	
+	div.main {
+		filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/cityblog/main_tall.png', sizingMethod='crop' );
+		background-repeat: repeat-y;
+	}
+	
+	div.leafspace[class] { background-image: url("{{media_url}}/cityblog/leaf.png"); }
+	div.leafspace { 
+		filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src="{{media_url}}/cityblog/leaf.png", sizingMethod='image');
+		}
+	div.menu {background-image: url('{{media_url}}/cityblog/menu_s.png'); }
+
+	div.menu_leafLong { background-image: url('{{media_url}}/cityblog/menu_top.png'); }
+	
+	div.logo { 	background-image: url('{{media_url}}/common/logo.gif');  }
+
+	* html .menu_leafLong {
+	background-image:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/cityblog/menu_top.png', sizingMethod='image');
+	}
+
+	.calendarHolder{
+		background-image: url('{{media_url}}/calendar/calen.png');
+	}
+	
+	* html .calendarHolder {
+	background-image:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/calendar/calen.png', sizingMethod='image');
+	}
+
+
+}
+
+</style>
+
+{% block scripts %}
+<script src="{{ media_url }}/js/menus.js" type="text/javascript"></script>
+
+{% endblock %}
+
+{% endblock %}
+
+
+
+{% block body %}
+<div class="top">
+    {% block  headerImage%}
+    <img src="{{blog.get_header_image_url}}" 
+    		width="{{blog.header_image_width}}px" 
+    		height="{{blog.header_image_height}}px" 
+    		alt="{{blog.header_image_label}}" title="{{blog.header_image_label}}">    
+    {% endblock %}
+    <div id="logo">
+        <a href="http://www.citytree.net">
+        <img src="{{media_url}}/common/logo.gif" width="139px" height="115px" border="0" alt="logo"></a>
+    </div>
+</div>
+
+{% include "menu.html" %}
+
+<div class="mainWrapper">
+	
+<div class="main">
+
+	<div class="crumbs">
+	{% block breadcrumbs %}
+	&nbsp;
+<a href="http://www.citytree.net">‎
+דף בית
+</a>
+ > תמי עולה לגג
+	{% endblock %}
+	</div>
+
+<!-- Calendar starts here -->
+<script type="text/javascript">
+
+	function gotoDate( month, year, urlType ) {
+		 getStr = '/ajax/calendar/?month='+month+'&year='+year+'&urlType='+urlType;	    
+	    $('#calContainer').load(getStr);
+	    $('#calIndicator').show();
+	}
+</script>
+
+<div class="calendarContainer">
+{% block calendar %}
+<div class="calendarHolder" id='calContainer'>
+
+{{calendar}}
+
+</div>
+
+{% endblock %}
+</div>
+
+<!-- Calendar stops here -->
+
+<div class="leftnav">
+
+{% block left_subject_menu %}
+
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td height="30" valign="middle">
+נושאים בענף
+<div class="lineleft"></div></td>
+</tr>
+
+{% for f in flags  %}
+<tr>
+<td valign="middle">
+    <a href="/blogs/{{blog.slug}}/?flag={{f.id}}">
+        {{f.name}}
+    </a>
+</td>
+</tr>
+{% endfor  %}
+
+</table>
+
+    
+{% endblock %}
+
+<br>
+
+{% comment %}
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td height="30" valign="middle">
+
+קישורים מקומיים
+<div class="lineleft"></div></td>
+</tr>
+<tr>
+<td valign="middle"><a href="/">
+
+בא לי להוסיף את הקישור הזה היום
+</a></td>
+</tr>
+<tr>
+<td valign="middle"><a href="/">
+וזה קישוב מגניב מאתמול
+</a></td>
+</tr>
+<tr>
+<td valign="middle"><a href="/">
+תראו, כתבו עלי כאן
+
+</a></td>
+</tr>
+</table>
+{% endcomment %}
+	</div> 
+<!-- End Left Nav -->
+
+	
+<div class="centralContentWrapper">
+
+{% block central_area %}
+		<div class="leafcontainer">
+		<div class="capImg">
+		<a href="/posts/2006/12/03/1/">
+		<img src="tami/images/teapot1.jpg" width="156px" height="108px" border="0" hspace="" vspace="" alt="" title="כותרת לתמונה חומוס"></a>
+
+				</div>
+
+		<h1>
+		<div class="date"><a href="/">03/12/06</a></div>
+		<a href="/">
+			פוסט ראשון
+		</a>	
+		</h1>
+		
+<p class="leaf">
+היום התעוררתי לצלילי מכסחת דשא. העיניים נפקחות והאוזניים כבר דרוכות -- מאיזה כיוון זה בא? מה המרחק ביני לבין הכסח? מה סיכוי להגיע בזמן? זינקתי.  
+
+</p>
+
+<p class="leaf">
+עד שיצאתי החוצה נדמו הצלילים. העיניים תרות בריכוז. מעבר לכביש אני קולטת דמות מטאטאת את המדרכה, אני עוברת את השדרה לגלות מנקה רחובות. אני עונה למבטו התמה בברכת בוקר טוב, תוך שכיסוח קצר מקפיץ אותי לעבור את השדרה בחזרה. אני מתמקדת לכיוון וצועדת במהירות. אני רואה אותו בפח פלאסטיק שנייה לפני שהוא נאסף למיכל האשפה הגדול, בניפנופי ידיים אני עוצרת את הגנן. 
+</p>
+
+<p class="leaf">
+האיש של ג. גינון המום. "מה את עושה עם זה?" "קומפוסט, חיפוי, אתה יודע. אפשר להשאיל את הפח הזה? אני חוזרת איתו ריק עוד שניה". בסיבוב השני אני חוזרת עם שני מיכלים משלי בנוסף לפח הריק שמושב לבעליו. ג.ג. מספר שאם לא יחשוף את האדמה האומללה עד העלה האחרון הוא ישאר בלי פרנסה. הוא מזמין אותי עוד שבועיים לחזור, הם יחתכו ענפים גדולים של עץ הפיקוס הענק שכבר מחטטים לשכנים בדירות. רשום לי ביומן כוננות השקמת גזם.   
+</p>
+		<div class="commentnumber"><a href="/">
+			...יש 12 תגובות
+		</a>	
+		</div>
+		
+		<div class="leafspace">
+
+		</div>
+		</div>
+		
+		<div class="leafcontainer">
+		<div class="capImg">
+		<a href="/">
+		<img src="tami/images/teapot1.jpg" width="156px" height="108px" border="0" alt=""  title="כותרת לתמונה חומוס"></a>
+		</div>
+				
+		<h1>
+		<div class="date"><a href="/">03/12/06</a></div>
+
+		<a href="/">
+			פוסט שני
+		</a>	
+		</h1>
+		
+<p class="leaf">
+היום התעוררתי לצלילי מכסחת דשא. העיניים נפקחות והאוזניים כבר דרוכות -- מאיזה כיוון זה בא? מה המרחק ביני לבין הכסח? מה סיכוי להגיע בזמן? זינקתי.  
+</p>
+
+<p class="leaf">
+עד שיצאתי החוצה נדמו הצלילים. העיניים תרות בריכוז. מעבר לכביש אני קולטת דמות מטאטאת את המדרכה, אני עוברת את השדרה לגלות מנקה רחובות. אני עונה למבטו התמה בברכת בוקר טוב, תוך שכיסוח קצר מקפיץ אותי לעבור את השדרה בחזרה. אני מתמקדת לכיוון וצועדת במהירות. אני רואה אותו בפח פלאסטיק שנייה לפני שהוא נאסף למיכל האשפה הגדול, בניפנופי ידיים אני עוצרת את הגנן. 
+</p>
+
+<p class="leaf">
+האיש של ג. גינון המום. "מה את עושה עם זה?" "קומפוסט, חיפוי, אתה יודע. אפשר להשאיל את הפח הזה? אני חוזרת איתו ריק עוד שניה". בסיבוב השני אני חוזרת עם שני מיכלים משלי בנוסף לפח הריק שמושב לבעליו. ג.ג. מספר שאם לא יחשוף את האדמה האומללה עד העלה האחרון הוא ישאר בלי פרנסה. הוא מזמין אותי עוד שבועיים לחזור, הם יחתכו ענפים גדולים של עץ הפיקוס הענק שכבר מחטטים לשכנים בדירות. רשום לי ביומן כוננות השקמת גזם.   
+
+</p>
+
+<div class="commentnumber"><a href="/">
+			...יש 38 תגובות
+		</a>	
+		</div>
+		</div>
+		
+	<div class="leafspace">
+		</div>
+
+<div class="leafcontainer">
+<div class="capImg">
+		<a href="/">
+
+		<img src="tami/images/nutcones.jpg" width="156px" height="106px" border="0" alt="teaPot" title="עוד כותרת"></a>
+		</div>
+				
+		<h1>
+		<div class="date"><a href="/">03/12/06</a></div>
+		<a href="/">
+			פוסט שלישי
+		</a>
+		</h1>
+		
+		 <p class="leaf">
+
+		
+<p class="leaf">
+אתמול בלילה, בזמן ניקוי סוף היום של המטבח נחו עיני על קומקום התה שזיו נתן לי מתנה לפני הרבה שנים. הוא הפך למתמחה אולונג אצלי. חייכתי אליו במחשבה שהקומקומים מתעוררים עכשיו מתרדמת הקייץ. בעת שהפה שלי כבר ממש הרגיש את הארומה של האולונג, העיין התפקססה על משהו מבצבץ מהפייה של הקומקום. ידעתי שלא אני הנחתי שם כלום בסוף החורף הקודם, אבל בלילה אני פחדנית אז הלכתי לישון.  
+</p>
+
+<p class="leaf">
+היום הזזתי כמה דברים בפינות היותר חשוכות במטבח, תנועה זה דבר חשוב. שוב קלטתי את מומחה האולונג שלי, שום דבר לא מבצבץ הפעם -- סימן ברור לקיומה של מחתרת עצמאית. בצעד אמיץ של בוקר אחזתי בידית, הרמתי את המכסה לאור היום -- וגיליתי את ההיאחזות של זן הנמלים החדש שהתחיל לשוטט לי במטבח בזמן האחרון. היה להם גוף והליכה של אורחות מהכפר, אני בטוחה שהן הגיעו מרועי. המסכנות עשו מאמץ יפה לשרוד אצלי! 
+</p>
+
+<p class="leaf">
+לקחתי את הקומקום לגינה, וניערתי אותן לדשא. גן החיות הביתי שלי הצטמצם, וחזרתי למחשבות האולונג שלי.   
+</p>
+</div>
+
+<div class="commentnumber"><a href="/">
+			...יש 184 תגובות
+		</a>	
+		</div>
+
+		
+		<div class="leafspace">
+		</div>
+		
+{% endblock %}
+		</div>
+	
+{% block pagination %}
+
+<div class="nav">
+{% if is_paginated %}<div class="paginator">{% paginator 4 %}</div>{% endif %}
+</div>
+
+{% endblock %}
+</div> 
+
+
+<!-- End Of Main Div -->
+</div>
+
+<div class="teaser">
+
+
+
+
+</div>
+<!-- End Of Main Wrapper -->
+</div>
+
+
+
+{% endblock %}

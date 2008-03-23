@@ -1,0 +1,32 @@
+{% if is_paginated %}
+	<br>
+<div class="space">
+	<div class="desk">
+		<div class="bottom">
+			<div class="nav">
+				{% if has_next %}	
+				<a href="?page={{pages}}">&lt;&lt;</a> &nbsp;
+				<a href="?page={{next}}"> &lt; </a>
+				{% else %}
+				&lt; &nbsp; &lt;&lt;
+				{% endif %}
+		
+			
+			
+					{{page}}
+					מתוך
+					{{pages}}
+			
+				
+			
+				{% if has_previous %}
+				<a href="?page={{previous}}"> &gt; </a> &nbsp;
+				<a href="?page=1">&gt;&gt;</a>
+				{% else %}
+				&gt; &nbsp; &gt;&gt;
+				{% endif %}
+		</div>
+	</div>
+	</div>
+</div>
+{% endif %}
