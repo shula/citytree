@@ -9,7 +9,7 @@ blog_dict = {
 
 urlpatterns = patterns('',
     (r'^$', 'cityblog.views.main_page' ),
-    (r'^(?P<blog_slug>\w+)/$', 'cityblog.views.show_blog'),
+    (r'^(?P<blog_slug>\w+)/?$', 'cityblog.views.show_blog'),
     (r'^comments/', include('django.contrib.comments.urls.comments')),
     (r'^posts/(?P<post_id>.*)/$', 'cityblog.views.display_post'),
     (r'^preview_post/(?P<post_id>.*)/$', 'cityblog.views.display_post', {'preview' : True})
