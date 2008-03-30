@@ -1,0 +1,15 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+{% if object_list %}
+    <h1>הבלוגים המגניבים שלך</h1>
+    <ul>
+    {% for blog in object_list %}
+        <li><a href='/blogs/{{blog.slug}}/'>{{blog.name}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>מצטער אחי, אין לך בלוגים</p>
+{% endif %}
+
+{% endblock %}
