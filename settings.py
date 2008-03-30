@@ -1,6 +1,6 @@
 # Django settings for citytreesite project.
 
-DEBUG = False 
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -59,6 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.cache.CacheMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
@@ -90,10 +91,17 @@ INSTALLED_APPS = (
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
+#-------------------------- Cache --------------------------
+# add to MIDDLEWARE_CLASSES (at the correct place!)
+#django.middleware.cache.CacheMiddleware
+CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
+CACHE_MIDDLEWARE_SECONDS = 1800
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
 #--------------------------- Overrides ---------------------
 # Overriding stuff for local testing - remove when copying
 # back into citytree.net
-
 import os
 try:
     if open('/etc/hostname').read().strip() == 'amber.saymoo.org':

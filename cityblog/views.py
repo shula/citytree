@@ -12,10 +12,14 @@ NUM_POSTS_PER_PAGE = 5
 NUM_SUBJECTS_PER_PAGE = 10
 
 def show_blog( request, blog_slug ):
+  #fd=open('/tmp/alon1','w')
+  #fd.write('boo')
+  #fd.close()
+  #return HttpResponse('working?')
   b = get_object_or_404(blog, slug=blog_slug)
   posts = b.post_set.filter(draft=0)
   
-  #------------ Get List of flags in blgo ---------
+  #------------ Get List of flags in blog ---------
   flags = flag.objects.filter( post__blog = b.id ).filter( blog__post__draft = 0 ).distinct()
   
   #------------ If a specific flag was requested, then show only that flag -------
@@ -128,3 +132,4 @@ def send_feedback( request ):
         return HttpResponseRedirect(redirect_url)
     else:
         return HttpResponse('Make sure all fields are entered and valid.')
+
