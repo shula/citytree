@@ -94,7 +94,6 @@ SITE_LOGO   = '' #site logo
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
 #django.middleware.cache.CacheMiddleware
-#CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
 CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
 CACHE_MIDDLEWARE_SECONDS = 1800
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
