@@ -44,7 +44,11 @@
 			אין כרגע תגובות...
 			{% else %}
 				‎...יש {{comment_count}} תגובות
-			{% endifequal %}			
+			{% endifequal %}
+			{% if post.is_gallery %}
+			, יש גלריה...
+            		{% else %}
+			{% endif %}
 			</a>
 			</div>
 			

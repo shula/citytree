@@ -94,30 +94,8 @@ SITE_LOGO   = '' #site logo
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
 #django.middleware.cache.CacheMiddleware
-#CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
+CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
 CACHE_MIDDLEWARE_SECONDS = 1800
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
-
-#--------------------------- Overrides ---------------------
-# Overriding stuff for local testing - remove when copying
-# back to original
-import os
-try:
-    if open('/etc/hostname').read().strip() == 'lini':
-        DATABASE_HOST = ''
-        DATABASE_USER = 'root'
-        DATABASE_PASSWORD = 'yy*8383'
-        BASE_DIR = '/home/tami/citytree_code/citytree'
-        MEDIA_ROOT = BASE_DIR + '/siteMedia'
-        MEDIA_URL = 'http://lini:81/siteMedia/'
-        ADMIN_MEDIA_PREFIX = 'http://lini:81/admin_media/'
-        TEMPLATE_DIRS = (
-            BASE_DIR + '/templates'
-        )
-        HEADER_MASK = BASE_DIR + '/frontpage/mask.png' #mask for main page header logo
-        DEBUG = True
-        TEMPLATE_DEBUG = DEBUG
-except:
-    pass
 
