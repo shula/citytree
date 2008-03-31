@@ -46,6 +46,12 @@ class blog(models.Model):
     def get_edit_absolute_url(self):
       return "/desk/mybranches/%s/" % (self.slug)
     
+    def get_last_post(self):
+      return self.post_set.latest('post_date')
+
+    def get_last_post_as_list(self):
+      return [self.post_set.latest('post_date')]
+
     class Admin:
       fields = (
         (None, {'fields': ('name', 'slug', 'header_image', 'header_image_label', 'teaser_photo', 'teaser_photo_label', 
@@ -121,7 +127,10 @@ class post(models.Model):
        
     class Meta:
         ordering = ['-post_date']
-       
+    
+    def is_gallery(self):
+        return self.post_style == 3 # TODO - how to make this a constant automatically, djangoly?
+
     def get_absolute_url(self):
       d = self.post_date
       return '/blogs/posts/%d/' % ( self.id )

@@ -1,0 +1,62 @@
+{% extends "base_short_menu.html" %}
+
+{% load thumbnail %}
+{% load comments.comments %}
+
+{% block thickbox %}
+{% endblock %}
+
+{% block breadcrumbs %}
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+{% endblock %}
+
+{% block central_area %}
+	{% for blog in object_list %}
+	{% for post in blog.get_last_post_as_list %}
+    <h1>
+        <a href="{{blog.get_absolute_url}}">{{blog.name}}</a>
+    </h1>
+<div class="leafcontainer">
+		<div class="blogListImage">
+		<a href="{{post.get_absolute_url}}">
+		<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
+		width='{{post.get_image_url|thumbnail:"width=156"|image_width}}px'
+		height='{{post.get_image_url|thumbnail:"width=156"|image_height}}px' 
+		border="0" alt=""  class="blog" title="{{post.image_label|escape}}"></a>
+		</div>
+
+		<h1>
+		<div class="date">
+        <a href="{{post.get_absolute_url}}">{{post.post_date|date:"d/m/y"}}</a></div>
+		<a href="{{post.get_absolute_url}}">
+			{{post.title}}
+		</a>
+		</h1>
+		
+	<p class="leaf">
+		{{post.teaser_rendered_text}}
+		</p>
+			<div class="commentnumber">
+			    <a href="{{post.get_absolute_url}}">
+			{% ifequal comment_count 0 %}
+			אין כרגע תגובות...
+			{% else %}
+				‎...יש {{comment_count}} תגובות
+			{% endifequal %}
+            {% if post.is_gallery %}
+            , יש גלריה...
+            {% else %}
+            {% endif %}
+			</a>
+			</div>
+			
+			<div class="leafspace">
+	
+			</div>
+</div>
+    {% endfor %}	
+    {% endfor %}	
+{% endblock %}
