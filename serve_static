@@ -1,0 +1,3 @@
+#!/bin/sh
+python -c "import SimpleHTTPServer as s; s.test()" 8001
+
