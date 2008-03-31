@@ -59,7 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.cache.CacheMiddleware',
+#    'django.middleware.cache.CacheMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
@@ -91,30 +91,42 @@ INSTALLED_APPS = (
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
-#--------------------------- Overrides ---------------------
-# Overriding stuff for local testing - remove when copying
-# back into citytree.net
-
+#-------------------------- Cache --------------------------
+# add to MIDDLEWARE_CLASSES (at the correct place!)
+#django.middleware.cache.CacheMiddleware
+#CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
 CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
 CACHE_MIDDLEWARE_SECONDS = 1800
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
+#--------------------------- Overrides ---------------------
+# Overriding stuff for local testing - remove when copying
+# back to original
+
 import os
 try:
     if open('/etc/hostname').read().strip() == 'amber.saymoo.org':
-	DATABASE_HOST = ''
-	DATABASE_USER = 'root'
-	DATABASE_PASSWORD = 'sarduakar'
-	BASE_DIR = '/home/alon/src/citytree/citytree'
-	MEDIA_ROOT = BASE_DIR + '/siteMedia'
-	MEDIA_URL = 'http://localhost:8001/siteMedia'
-	ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
+        DATABASE_HOST = ''
+        DATABASE_USER = 'root'
+        DATABASE_PASSWORD = 'sarduakar'
+        BASE_DIR = '/home/alon/src/citytree/citytree'
+        MEDIA_ROOT = BASE_DIR + '/siteMedia'
+        MEDIA_URL = 'http://localhost:8001/siteMedia'
+        ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
+    elif open('/etc/hostname').read().strip() == 'lini':
+        DATABASE_HOST = ''
+        DATABASE_USER = 'root'
+        DATABASE_PASSWORD = 'yy*8383'
+        BASE_DIR = '/home/tami/citytree_code/citytree'
+        MEDIA_ROOT = BASE_DIR + '/siteMedia'
+        MEDIA_URL = 'http://lini:81/siteMedia/'
+        ADMIN_MEDIA_PREFIX = 'http://lini:81/admin_media/'
         TEMPLATE_DIRS = (
             BASE_DIR + '/templates'
         )
         HEADER_MASK = BASE_DIR + '/frontpage/mask.png' #mask for main page header logo
-        DEBUG = True 
+        DEBUG = True
         TEMPLATE_DEBUG = DEBUG
 except:
     pass

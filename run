@@ -1,2 +1,3 @@
-export LD_LIBRARY_PATH='/home/tami/programs/libhdate/lib/'
-python2.4 manage.py runfcgi host=127.0.0.1 port=3100
+#!/bin/bash
+cd /home/tami/citytree_code/citytree
+python manage.py runserver 0.0.0.0:8000
