@@ -91,49 +91,9 @@ INSTALLED_APPS = (
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
-#--------------------------- Overrides ---------------------
-# Overriding stuff for local testing - remove when copying
-# back into citytree.net
+#-------------------------- Email Settings -----------------
+DEFAULT_FROM_EMAIL='noreply@citytree.net'
 
-import os
-try:
-    hostname = open('/etc/hostname'),read().strip()
-    if hostname == 'eeepc-alon':
-        DATABASE_HOST = ''
-        DATABASE_USER = 'root'             # Not used with sqlite3.
-        DATABASE_PASSWORD = 'tioxul'         # Not used with sqlite3.
-        BASE_DIR = '/home/user/src/citytree/citytree'
-        MEDIA_ROOT = BASE_DIR + '/siteMedia'
-        MEDIA_URL = 'http://localhost:8001/siteMedia'
-        ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
-        TEMPLATE_DIRS = (
-            BASE_DIR + '/templates'
-        )
-        HEADER_MASK = BASE_DIR + '/frontpage/mask.png' #mask for main page header logo
-        DEBUG = True 
-        TEMPLATE_DEBUG = DEBUG
-    elif hostname == 'amber.saymoo.org':
-        DATABASE_HOST = ''
-        DATABASE_USER = 'root'
-        DATABASE_PASSWORD = 'sarduakar'
-        BASE_DIR = '/home/alon/src/citytree/citytree'
-        MEDIA_ROOT = BASE_DIR + '/siteMedia'
-        MEDIA_URL = 'http://localhost:8001/siteMedia'
-        ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
-    elif hostname == 'lini':
-        DATABASE_HOST = ''
-        DATABASE_USER = 'root'
-        DATABASE_PASSWORD = 'yy*8383'
-        BASE_DIR = '/home/tami/citytree_code/citytree'
-        MEDIA_ROOT = BASE_DIR + '/siteMedia'
-        MEDIA_URL = 'http://lini:81/siteMedia/'
-        ADMIN_MEDIA_PREFIX = 'http://lini:81/admin_media/'
-        TEMPLATE_DIRS = (
-            BASE_DIR + '/templates'
-        )
-        HEADER_MASK = BASE_DIR + '/frontpage/mask.png' #mask for main page header logo
-        DEBUG = True
-        TEMPLATE_DEBUG = DEBUG
-except:
-    pass
+#---------------------- ONLY FOR DEVELOPMENT ---------------
+#from settings_amber import *
 

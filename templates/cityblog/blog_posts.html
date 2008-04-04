@@ -46,8 +46,12 @@
 				‎...יש {{comment_count}} תגובות
 			{% endifequal %}
 			{% if post.is_gallery %}
-			, יש גלריה...
-            		{% else %}
+, יש גלריה...
+            {% else %}
+             {% if post.is_article %}
+, <i>יש המשך...</i>
+             {% else %}
+             {% endif %}
 			{% endif %}
 			</a>
 			</div>

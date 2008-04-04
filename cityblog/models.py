@@ -1,8 +1,13 @@
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8 :
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings 
+from django.core.mail import send_mail
+from django.template import Context, loader
+from django.contrib.sites.models import Site
 from nesh.thumbnail.field import ImageWithThumbnailField
-import datetime
 from citytree.utils.textUtils import wikiSub
 
 
@@ -76,13 +81,16 @@ class post(models.Model):
     DRAFT_CHOICES = (
       ( 1, 'טיוטה'),
       ( 0, 'מאושר') )
-      
-    POST_STYLE_TYPES = (
-        ( 1, 'עלה קטן' ),
-        ( 2, 'מאמר' ),
-        ( 3, 'גלריה' ),
-    )
     
+    POST_STYLE_SMALL_LEAF = 1
+    POST_STYLE_ARTICLE = 2
+    POST_STYLE_GALLERY = 3
+    
+    POST_STYLE_TYPES = (
+        ( POST_STYLE_SMALL_LEAF, 'עלה קטן' ),
+        ( POST_STYLE_ARTICLE, 'מאמר' ),
+        ( POST_STYLE_GALLERY, 'גלריה' ),
+    )
 
     blog          = models.ForeignKey(blog)
     author        = models.ForeignKey(User, blank=False)
@@ -114,6 +122,9 @@ class post(models.Model):
     flags         = models.ManyToManyField( flag, blank=True, null=True )
     draft         = models.BooleanField(help_text='Set to post to make post live on site', default=1, choices=DRAFT_CHOICES, blank=False)
     post_style    = models.PositiveIntegerField('Post Style', help_text='Style in which post is displayed' , blank=False, default=1, choices=POST_STYLE_TYPES )
+
+    # fields required by the comment system
+    enable_comments = models.BooleanField(default=1,blank=False,help_text='Set to enable comments on post')
     
     class Admin:
        fields = (
@@ -128,11 +139,20 @@ class post(models.Model):
         ordering = ['-post_date']
     
     def is_gallery(self):
-        return self.post_style == 3 # TODO - how to make this a constant automatically, djangoly?
+        return self.post_style == self.POST_STYLE_GALLERY
+
+    def is_article(self):
+        return self.post_style == self.POST_STYLE_ARTICLE
 
     def get_absolute_url(self):
       d = self.post_date
       return '/blogs/posts/%d/' % ( self.id )
+      
+    def get_absolute_edit_url(self):
+      # TODO: is there a better way to keep this in sync? maybe just have the editBlog
+      # a constant in the desk.views model?
+      d = self.post_date
+      return '/desk/editPost/%d/' % ( self.id )
       
     def get_absolute_preview_url( self ):
       d = self.post_date
@@ -214,3 +234,31 @@ class subject(models.Model):
   
   class Meta:
     ordering = ['ordering']
+
+# Coments moderation using comment_util
+from comment_utils.moderation import CommentModerator, moderator, AlreadyModerated
+
+class PostModerator(CommentModerator):
+    #akismet = True # need an akismet account for this - and this is not private use.
+    email_notification = True
+    enable_field = 'enable_comments'
+    def email(self, comment, content_object):
+        post = content_object # same thing
+        recipient_list = [post.author.email]
+        t = loader.get_template('cityblog/post_comment_notification_email.txt')
+        site = Site.objects.get_current().name
+        c = Context({ 'comment': comment,
+                      'content_object': content_object,
+                      'site': site})
+        subject = '[%s] New comment posted on "%s"' % (site, content_object)
+        message = t.render(c)
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)
+        
+
+try:
+    i = 0
+    moderator.register(post, PostModerator)
+except AlreadyModerated:
+    i += 1
+    print "already moderated: %s" % i
+
