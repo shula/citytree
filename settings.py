@@ -97,30 +97,22 @@ SITE_LOGO   = '' #site logo
 
 import os
 try:
-    if open('/etc/hostname').read().strip() == 'eeepc-alon':
-	DATABASE_HOST = ''
-	DATABASE_USER = 'root'             # Not used with sqlite3.
-	DATABASE_PASSWORD = 'tioxul'         # Not used with sqlite3.
-	BASE_DIR = '/home/user/src/citytree/citytree'
-	MEDIA_ROOT = BASE_DIR + '/siteMedia'
-	MEDIA_URL = 'http://localhost:8001/siteMedia'
-	ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
+    hostname = open('/etc/hostname'),read().strip()
+    if hostname == 'eeepc-alon':
+        DATABASE_HOST = ''
+        DATABASE_USER = 'root'             # Not used with sqlite3.
+        DATABASE_PASSWORD = 'tioxul'         # Not used with sqlite3.
+        BASE_DIR = '/home/user/src/citytree/citytree'
+        MEDIA_ROOT = BASE_DIR + '/siteMedia'
+        MEDIA_URL = 'http://localhost:8001/siteMedia'
+        ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
         TEMPLATE_DIRS = (
             BASE_DIR + '/templates'
         )
         HEADER_MASK = BASE_DIR + '/frontpage/mask.png' #mask for main page header logo
         DEBUG = True 
         TEMPLATE_DEBUG = DEBUG
-except:
-    pass
-
-#--------------------------- Overrides ---------------------
-# Overriding stuff for local testing - remove when copying
-# back to original
-
-import os
-try:
-    if open('/etc/hostname').read().strip() == 'amber.saymoo.org':
+    elif hostname == 'amber.saymoo.org':
         DATABASE_HOST = ''
         DATABASE_USER = 'root'
         DATABASE_PASSWORD = 'sarduakar'
@@ -128,7 +120,7 @@ try:
         MEDIA_ROOT = BASE_DIR + '/siteMedia'
         MEDIA_URL = 'http://localhost:8001/siteMedia'
         ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
-    elif open('/etc/hostname').read().strip() == 'lini':
+    elif hostname == 'lini':
         DATABASE_HOST = ''
         DATABASE_USER = 'root'
         DATABASE_PASSWORD = 'yy*8383'
