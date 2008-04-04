@@ -278,7 +278,6 @@ def create_edit_blog_post( request, post_id=None, blog_slug=None ):
      a = FlagProxy( f.id, f.name, postFlags.has_key(f.id) )
      renderFlags.append(a)
      
-      
   #-------------- Render Response ------------
   return render_to_response('desk/create_edit_post.html', 
                 {'form'       : form, 

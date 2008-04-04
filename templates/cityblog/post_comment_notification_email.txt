@@ -1,0 +1,13 @@
+{# also first_name and last_name, but they are hebrew usually #}
+Hello {{content_object.author.username}},
+
+This is an automated email sent to you by citytree.
+
+Your post "{{content_object.title}}" got a new comment.
+
+What to do if you are flooded by spam: enter your account on citytree and turn enable_comments for this post: http://{{site}}{{content_object.get_absolute_edit_url}}
+
+The new comment from "{{comment.person_name}}" is:
+
+{{comment.comment}}
+

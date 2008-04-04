@@ -42,6 +42,7 @@
 		$('#id_title').addClass("must");
 		$('#id_teaser_text').addClass("must");
 		$('#id_draft').addClass("must");
+		$('#id_enable_comments').addClass("must");
 		
 		$('#id_image_file').attr('size', '50px');
 		
@@ -265,6 +266,14 @@
 				</h3>
 	</td>
 			</tr>
+            <tr>
+            <td valign="top" align="left" width="200">
+				<label for="id_enable_comments">מותר להוסיף הערות:</label>
+            </td>
+            <td>
+            {{ form.enable_comments }}
+            </td>
+            </tr>
 			<tr>
 				<td>&nbsp;	</td>
 	<td>

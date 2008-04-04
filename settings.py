@@ -91,3 +91,9 @@ INSTALLED_APPS = (
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
+#-------------------------- Email Settings -----------------
+DEFAULT_FROM_EMAIL='noreply@citytree.net'
+
+#---------------------- ONLY FOR DEVELOPMENT ---------------
+#from settings_amber import *
+
