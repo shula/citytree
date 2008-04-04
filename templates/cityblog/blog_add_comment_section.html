@@ -1,4 +1,6 @@
 {% load comments.comments %}
+{% load comment_utils.comment_utils %}
+
 				<div class="comm">
 <h1><div class="date"><a href="#add_comment">
 <img src="{{media_url}}/cityblog/comment_add.gif" width="13" height="15" border="0" alt="add comment">&nbsp;הוספת תגובה
@@ -29,3 +31,4 @@
 <a name="add_comment"></a>
 
 {% free_comment_form for cityblog.post post.id %}
+

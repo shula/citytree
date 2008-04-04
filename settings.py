@@ -1,6 +1,6 @@
 # Django settings for citytreesite project.
 
-DEBUG = False
+DEBUG = False 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -59,7 +59,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#    'django.middleware.cache.CacheMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
@@ -76,6 +75,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.comments',
+    'citytree.comment_utils',
     'citytree.cityblog',
     'citytree.desk',
     'citytree.frontpage',
@@ -91,13 +91,28 @@ INSTALLED_APPS = (
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
-#-------------------------- Cache --------------------------
-# add to MIDDLEWARE_CLASSES (at the correct place!)
-#django.middleware.cache.CacheMiddleware
-CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
-CACHE_MIDDLEWARE_SECONDS = 1800
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
+#--------------------------- Overrides ---------------------
+# Overriding stuff for local testing - remove when copying
+# back into citytree.net
+
+import os
+try:
+    if open('/etc/hostname').read().strip() == 'eeepc-alon':
+	DATABASE_HOST = ''
+	DATABASE_USER = 'root'             # Not used with sqlite3.
+	DATABASE_PASSWORD = 'tioxul'         # Not used with sqlite3.
+	BASE_DIR = '/home/user/src/citytree/citytree'
+	MEDIA_ROOT = BASE_DIR + '/siteMedia'
+	MEDIA_URL = 'http://localhost:8001/siteMedia'
+	ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
+        TEMPLATE_DIRS = (
+            BASE_DIR + '/templates'
+        )
+        HEADER_MASK = BASE_DIR + '/frontpage/mask.png' #mask for main page header logo
+        DEBUG = True 
+        TEMPLATE_DEBUG = DEBUG
+except:
+    pass
 
 #--------------------------- Overrides ---------------------
 # Overriding stuff for local testing - remove when copying
