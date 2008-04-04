@@ -91,26 +91,3 @@ INSTALLED_APPS = (
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
-#--------------------------- Overrides ---------------------
-# Overriding stuff for local testing - remove when copying
-# back into citytree.net
-
-import os
-try:
-    if open('/etc/hostname').read().strip() == 'eeepc-alon':
-	DATABASE_HOST = ''
-	DATABASE_USER = 'root'             # Not used with sqlite3.
-	DATABASE_PASSWORD = 'tioxul'         # Not used with sqlite3.
-	BASE_DIR = '/home/user/src/citytree/citytree'
-	MEDIA_ROOT = BASE_DIR + '/siteMedia'
-	MEDIA_URL = 'http://localhost:8001/siteMedia'
-	ADMIN_MEDIA_PREFIX = 'http://localhost:8001/admin_media/'
-        TEMPLATE_DIRS = (
-            BASE_DIR + '/templates'
-        )
-        HEADER_MASK = BASE_DIR + '/frontpage/mask.png' #mask for main page header logo
-        DEBUG = True 
-        TEMPLATE_DEBUG = DEBUG
-except:
-    pass
-
