@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     # (r'^citytreesite/', include('citytreesite.apps.foo.urls.foo')),
 
     # Uncomment this for admin:
+     (r'^uptime_openacs/$', 'citytree.views.uptime_openacs'),
      (r'^admin/', include('django.contrib.admin.urls')),
      (r'^desk/', include('citytree.desk.urls')),
      (r'^blogs/', include('citytree.cityblog.urls')),

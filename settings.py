@@ -59,6 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.cache.CacheMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
@@ -86,6 +87,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.flatpages',
 )
+
+#-------------------------- Cache --------------------------
+# add to MIDDLEWARE_CLASSES (at the correct place!)
+#django.middleware.cache.CacheMiddleware
+CACHE_BACKEND = 'file:///home/tamizori/django_cache/citytree.net'
+CACHE_MIDDLEWARE_SECONDS = 1800
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 #-------------------------- Site Settings ------------------
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
