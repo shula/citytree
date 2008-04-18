@@ -1,11 +1,17 @@
 from django.conf.urls.defaults import *
 from django.contrib.comments.models import FreeComment
+from citytree.cityblog.feeds import LatestPosts
+
+feeds = {
+	'latestposts' : LatestPosts
+}
 
 urlpatterns = patterns('',
     # Example:
     # (r'^citytreesite/', include('citytreesite.apps.foo.urls.foo')),
 
     # Uncomment this for admin:
+     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
      (r'^uptime_openacs/$', 'citytree.views.uptime_openacs'),
      (r'^admin/', include('django.contrib.admin.urls')),
      (r'^desk/', include('citytree.desk.urls')),
