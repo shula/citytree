@@ -6,4 +6,4 @@ class LatestPosts(Feed):
     link = "/latestposts/"
     description = "Post updates for www.citytree.net"
     def items(self):
-        return post.objects.order_by('-post_date')[:10]
+        return post.objects.filter(draft=0).order_by('-post_date')[:10]
