@@ -3,7 +3,7 @@ from django.contrib.comments.models import FreeComment
 from citytree.cityblog.feeds import LatestPosts
 
 feeds = {
-	'latestposts' : LatestPosts
+    'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.
 }
 
 urlpatterns = patterns('',
@@ -23,3 +23,4 @@ urlpatterns = patterns('',
      (r'^send_feedback/$', 'cityblog.views.send_feedback'),
      (r'^', include('citytree.frontpage.urls')),
 )
+
