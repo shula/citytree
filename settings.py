@@ -104,5 +104,5 @@ SITE_LOGO   = '' #site logo
 DEFAULT_FROM_EMAIL='noreply@citytree.net'
 
 #---------------------- ONLY FOR DEVELOPMENT ---------------
-from settings_amber import *
+#from settings_amber import *
 
