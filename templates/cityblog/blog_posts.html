@@ -3,6 +3,10 @@
 {% load thumbnail %}
 {% load comments.comments %}
 
+{% block rss %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/posts/{{blog.slug}}"/>
+{% endblock %}
+
 {% block thickbox %}
 {% endblock %}
 

@@ -31,6 +31,10 @@ $('img').Tooltip({
 {% block scripts %}
 {% endblock %}
 
+{% block rss %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/posts"/>
+{% endblock %}
+
 {% block stylesheets %}
 <link rel=stylesheet type="text/css" href="{{ media_url }}/css/citytree.css">
 <link rel=stylesheet type="text/css" href="{{ media_url }}/css/calen.css">
