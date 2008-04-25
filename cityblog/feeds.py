@@ -2,7 +2,7 @@ from django.contrib.syndication.feeds import Feed
 from cityblog.models import post, blog
 
 class LatestPosts(Feed):
-    title = "Citytree Latest Posts"
+    title = "פוסטים חדשים של עץ בעי�"
     link = "/posts/"
     description = "Post updates for www.citytree.net"
 
