@@ -13,7 +13,7 @@ from citytree.utils.textUtils import wikiSub
 
 #Object representing a blog, a blog can have many authors.
 class blog(models.Model):
-    name          = models.CharField(maxlength=200,blank=False)
+    name          = models.CharField(max_length=200,blank=False)
     slug          = models.SlugField('blog url identifier', unique=True)
     authors       = models.ManyToManyField(User,verbose_name='list of blog authors')
     header_image  = ImageWithThumbnailField(blank=True,upload_to='blog_header_images/%Y/%m/%d',
@@ -24,7 +24,7 @@ class blog(models.Model):
                                                     help_text='<b>MUST BE</b>: 808x160 image!')
     header_image_width    = models.PositiveIntegerField(blank=True,null=True)
     header_image_height   = models.PositiveIntegerField(blank=True,null=True)
-    header_image_label    = models.CharField(maxlength=255,blank=True)
+    header_image_label    = models.CharField(max_length=255,blank=True)
     
     teaser_photo          = ImageWithThumbnailField('Image to display along with teaser', 
                                                      upload_to='blog_teaser_images/%Y/%m/%d',
@@ -35,7 +35,7 @@ class blog(models.Model):
     teaser_image_height   = models.PositiveIntegerField(blank=True,null=True)
     teaser_photo_label    = models.TextField(blank=True, null=True) 
     teaser_text           = models.TextField(blank=True, null=True)
-    teaser_photo_caption  = models.CharField("Label for teaser photo", maxlength=200,blank=True, null=True)
+    teaser_photo_caption  = models.CharField("Label for teaser photo", max_length=200,blank=True, null=True)
     
     hits                  = models.PositiveIntegerField(blank=True,null=True)
     display_in_menu       = models.BooleanField( "Display in Menu", default=1 )
@@ -65,7 +65,7 @@ class blog(models.Model):
 
 #Categories a blog post can be placed under
 class flag(models.Model):
-    name         = models.CharField(maxlength=50)
+    name         = models.CharField(max_length=50)
     
     #blog in which this flag is viewable (null = all blogs)
     blog         = models.ForeignKey( blog, blank=True, null=True )
@@ -103,13 +103,13 @@ class post(models.Model):
     #Hidden field so that you can see when the post was really last changed
     time_modified = models.DateTimeField('Time Of Last Edit', auto_now=True)
     
-    title         = models.CharField('Post Title', maxlength=200,blank=False)
+    title         = models.CharField('Post Title', max_length=200,blank=False)
     
     image         = ImageWithThumbnailField(upload_to='blog_images/%Y/%m/%d',width_field='image_width', height_field='image_height', blank=True)
     image_label   = models.TextField('Text Displayed as you hover over the image',
                                                 blank=True, null=True)
     image_caption = models.CharField('post image Caption -', 
-                                     help_text='If left blank then contents of image label are copied here', maxlength=200,blank=True, null=True)
+                                     help_text='If left blank then contents of image label are copied here', max_length=200,blank=True, null=True)
     image_height  = models.PositiveIntegerField(blank=True,null=True)
     image_width   = models.PositiveIntegerField(blank=True,null=True)
     
@@ -181,7 +181,7 @@ class postImage(models.Model):
     image_width   = models.PositiveIntegerField(blank=True,null=True)
     index         = models.PositiveIntegerField("For Image Ordering", blank=True,null=True)
     label         = models.TextField(help_text="Displayed when the image is hovered over", blank=True, null=True)
-    caption       = models.CharField(help_text="Title of image, displayed in html", maxlength=200,blank=True, null=True)
+    caption       = models.CharField(help_text="Title of image, displayed in html", max_length=200,blank=True, null=True)
     
     def __str__(self):
       return self.label
@@ -204,7 +204,7 @@ class subject(models.Model):
   """
   Reshiymat Nos'iym
   """
-  name          = models.CharField(maxlength=200,blank=False)
+  name          = models.CharField(max_length=200,blank=False)
   slug          = models.SlugField('subject url identifier', unique=True)
   teaser_text   = models.TextField( blank=True, null=True )
   

@@ -10,9 +10,9 @@ class Teaser( models.Model ):
     image          = ImageWithThumbnailField('Teaser Image', blank=True,upload_to='frontpage_images/%Y/%m/%d',width_field='image_width', height_field='image_height')
     image_width    = models.PositiveIntegerField(blank=True,null=True)
     image_height   = models.PositiveIntegerField(blank=True,null=True)
-    url            = models.CharField('URL To Link To', maxlength=255,blank=True)
-    label          = models.CharField('Teaser Label', maxlength=255,blank=True)
-    title          = models.CharField('Teaser Title', maxlength=255,blank=True)
+    url            = models.CharField('URL To Link To', max_length=255,blank=True)
+    label          = models.CharField('Teaser Label', max_length=255,blank=True)
+    title          = models.CharField('Teaser Title', max_length=255,blank=True)
     teaserText     = models.TextField('Teaser Text', blank=True)
     
     def __str__( self ):
@@ -35,7 +35,7 @@ class FrontpageHeaderImage( models.Model ):
                                 help_text='<b>MUST BE</b>: 808x160!')
     image_width    = models.PositiveIntegerField(blank=True,null=True)
     image_height   = models.PositiveIntegerField(blank=True,null=True)
-    image_label    = models.CharField(maxlength=255,blank=True,null=True)
+    image_label    = models.CharField(max_length=255,blank=True,null=True)
     
     def __str__( self ):
         return self.image_label
@@ -50,7 +50,7 @@ class FrontpageHeaderImage( models.Model ):
 
 class FrontPage(models.Model):
       
-    title                 = models.CharField(maxlength=255,blank=False, help_text='Title text at top of page - Required' )
+    title                 = models.CharField(max_length=255,blank=False, help_text='Title text at top of page - Required' )
     main_text             = models.TextField( blank=True, null=True, help_text='No wiki formatting - just use plain HTML' )
     
     date                  = models.DateTimeField( blank=False, help_text='Required' )
