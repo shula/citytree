@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.comments',
+    'citytree.forum',
     'citytree.comment_utils',
     'citytree.cityblog',
     'citytree.desk',
@@ -77,6 +78,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.flatpages',
 )
+
+LOGIN_URL = '/'
 
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
