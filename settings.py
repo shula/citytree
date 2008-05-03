@@ -1,21 +1,11 @@
 # Django settings for citytreesite project.
 
-DEBUG = False 
-TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
     ('Tami', 'tami@citytree.net'),
     # ('Your Name', 'your_email@domain.com'),
 )
 
 MANAGERS = ADMINS
-
-DATABASE_ENGINE = 'mysql'           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = 'tami_citytree_django'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'tami'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'DZey9TQt'         # Not used with sqlite3.
-DATABASE_HOST = 'mysql.citytree.dreamhosters.com'             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
@@ -100,14 +90,10 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
-#-------------------------- Email Settings -----------------
-DEFAULT_FROM_EMAIL='noreply@citytree.net'
 
 #---------------------- DEVELOPMENT COMPROMISE ---------------
 # this is the only difference between a development environment
 # and production - in that settings_local.py file:
 # change database, email addresses, turn on debugging flags.
-import os
-if os.path.exists('settings_local.py'):
-    from settings_local import *
+from settings_local import *
 
