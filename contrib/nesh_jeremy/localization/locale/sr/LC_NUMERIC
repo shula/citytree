@@ -1,0 +1,9 @@
+LC_NUMERIC
+# This is the POSIX locale definition for
+# the LC_NUMERIC category.
+#
+decimal_point    ","
+thousands_sep    "."
+grouping         3
+#
+END LC_NUMERIC

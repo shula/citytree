@@ -1,7 +1,6 @@
 # Django settings for citytreesite project.
 
-DEBUG = False 
-TEMPLATE_DEBUG = DEBUG
+DEFAULT_CHARSET = 'utf-8'
 
 ADMINS = (
     ('Tami', 'tami@citytree.net'),
@@ -9,13 +8,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-DATABASE_ENGINE = 'mysql'           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = 'tami_citytree_django'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'tami'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'DZey9TQt'         # Not used with sqlite3.
-DATABASE_HOST = 'mysql.citytree.dreamhosters.com'             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
@@ -36,15 +28,6 @@ USE_I18N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = '/home/tamizori/citytree.net/siteMedia/'
 
-# URL that handles the media served from MEDIA_ROOT.
-# Example: "http://media.lawrence.com"
-MEDIA_URL = 'http://www.citytree.net/siteMedia/'
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = 'http://www.citytree.net/admin_media/'
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'oag2x*xysf_-@$-w^as@tv4+7dg2#xb5!ru4h6$d__v!luqy#o'
 
@@ -59,9 +42,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.cache.CacheMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+# TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
+#    'django.middleware.cache.CacheMiddleware',
 )
 
 ROOT_URLCONF = 'citytree.urls'
@@ -76,6 +60,8 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.comments',
+    'django.contrib.markup',
+    'citytree.forum',
     'citytree.comment_utils',
     'citytree.cityblog',
     'citytree.desk',
@@ -87,6 +73,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.flatpages',
 )
+
+#LOGIN_URL = '/'
 
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
@@ -100,8 +88,10 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 
-#-------------------------- Email Settings -----------------
-DEFAULT_FROM_EMAIL='noreply@citytree.net'
+# -------------------------- Development Stuff -------------
+# Leave this as None for default - sending to the blog author
+SEND_EMAIL_ON_COMMENT=None
+
 
 #---------------------- DEVELOPMENT COMPROMISE ---------------
 # this is the only difference between a development environment
