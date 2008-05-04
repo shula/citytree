@@ -107,7 +107,5 @@ DEFAULT_FROM_EMAIL='noreply@citytree.net'
 # this is the only difference between a development environment
 # and production - in that settings_local.py file:
 # change database, email addresses, turn on debugging flags.
-import os
-if os.path.exists('settings_local.py'):
-    from settings_local import *
+from settings_local import *
 
