@@ -45,7 +45,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 # TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
-    'django.middleware.cache.CacheMiddleware',
+#    'django.middleware.cache.CacheMiddleware',
 )
 
 ROOT_URLCONF = 'citytree.urls'
