@@ -1,0 +1,12 @@
+{% extends "news/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'News' %} | {{ object.headline|escape }}{% endblock %}
+
+{% block news_content %}
+<h1>{{ object.headline }}</h1>
+<div class="content">{{ object.body }}</div>
+<hr />
+<p class="date small">{% blocktrans with object.pub_date|date:_("DATE_FORMAT") as date %}Published on {{ date }}{% endblocktrans %}</p>
+{% endblock %}

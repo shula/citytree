@@ -1,0 +1,91 @@
+{% extends "admin/base_site.html" %}
+{% load i18n nesh.translation %}
+
+{% block title %}Prevod{% endblock %}
+
+{% block extrastyle %}
+{% comment %}
+<link rel="stylesheet" href="/media/css/rs_front.css" type="text/css" media="screen" />
+{% endcomment %}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+	<a href="/"><img src="/media/img/icons/go-home.png" alt="{% trans 'home' %}" title="{% trans 'home' %}" width="16" height="16" /></a>
+	&rsaquo; <a href="{{ path }}">Nazad</a>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="/media/js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="/tiny_mce/config.js"></script>
+<script type="text/javascript">
+function set_text(text) {
+	var area = document.getElementById('id_message');
+	area.value = text;
+	tinyMCE.setContent(text);
+}
+
+</script>
+{% endblock %}
+
+{% block content %}
+{% get_current_language as language %}
+
+<div class="module">
+	<h2>Original</h2>
+	<p><a href="#translate_form" onclick="javascript:set_text('{{ message.message|addslashes }}');" title="Iskopiraj"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="" /> Iskopiraj</a></p>
+	<div class="message">{{ message.message }}</div>
+</div>
+
+{% if translated %}
+<div class="module">
+	<h2>Prevedeno</h2>
+	<p><a href="#translate_form" onclick="javascript:set_text('{{ translated.translation|addslashes }}');" title="Iskopiraj"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="" /> Iskopiraj</a> <img src="/media/img/flags/{{ language }}.png" alt="{{ language }}" title="{% language_name %}" /></p>
+	<div class="message">{{ translated.translation }}</div>
+</div>
+{% endif %}
+
+<form action="../../save/{{ message.digest }}/" method="post" id="translate_form">
+	<fieldset class="module aligned ()">
+		<div class="form-row">
+			<label for="id_message" class="required">
+				<img src="/media/img/flags/{{ language }}.png" alt="{{ language }}" title="{% language_name %}" />
+			</label>
+			<textarea id="id_message" class="vLargeTextField required" name="message" rows="10" cols="40">{% if translated %}{{ translated.translation }}{% endif %}</textarea>
+		</div>
+	</fieldset>
+	<input type="hidden" id="id_path" name="path" value="{{ path }}" />
+	<div class="submit-row">
+		<input type="submit" value="Save" class="default" />
+		<input type="reset" value="Reset" />
+	</div>
+</form>
+
+<div class="module">
+	<h2>Slične poruke</h2>
+	{% simmilar message.message as sim %}
+	<table>
+		<thead>
+			<tr>
+				<td>Sličnost</td>
+				<td>Poruka</td>
+				<td>Razlike</td>
+				<td>Prevod</td>
+				<td>Akcije</td>
+			</tr>
+		</thead>
+		{% for s in sim %}
+			<tr>
+				<td>{{ s.0|stringformat:".2f" }}%</td>
+				<td>{{ s.1.message }}</td>
+				<td>{% diff message.message s.1.message %}</td>
+				<td>{% translate s.1.message %}</td>
+				<td>
+					<a href="#translate_form" onclick="javascript:set_text('{% filter addslashes %}{% translate s.1.message no_action %}{% endfilter %}');" title="Iskopiraj poruku"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="Iskopiraj poruku" /></a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

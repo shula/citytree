@@ -1,0 +1,54 @@
+8
+
+dir
+117
+svn://trac.studioquattro.biz/django-utils/trunk/nesh/formtools/templatetags
+svn://trac.studioquattro.biz/django-utils
+
+
+
+2006-11-27T08:44:53.809366Z
+48
+nesh
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e3d54399-ea17-0410-b588-9e8e34331349
+
+__init__.py
+file
+
+
+
+
+2008-05-03T15:32:09.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2006-09-07T09:25:03.889802Z
+36
+nesh
+has-props
+
+formtools.py
+file
+
+
+
+
+2008-05-03T15:32:09.000000Z
+3ccd7f5b288ff42dd37cdc0e6a52c12d
+2006-11-27T08:44:53.809366Z
+48
+nesh
+has-props
+

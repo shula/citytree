@@ -7,7 +7,7 @@
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/calen.css">
 {% endblock %}
 
-{% load comments.comments %}
+{% load comments %}
 {% load citytree_tags %}
 {% load thumbnail %}
 
@@ -47,12 +47,12 @@
 		</h1>
 		<div class="leafteaser">
 		<p>
-			{{post.teaser_rendered_text}}
+			{{post.teaser_rendered_text|safe}}
 		</p>
 		</div>
 		
 		<div class="leaf">
-		{{post.rendered_text|replacePostImagesArticle:post.id}}
+		{{post.rendered_text|replacePostImagesArticle:post.id|safe}}
 		</p>
 			
 		<div class="leafspace">

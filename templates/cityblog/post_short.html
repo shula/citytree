@@ -1,7 +1,7 @@
 {% extends "base_short_menu.html" %}
 {% load thumbnail %}
 
-{% load comments.comments %}
+{% load comments %}
 
 
 {% block calendar %}
@@ -61,11 +61,11 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/ci
 		</h1>
 
 		<p class="leaf">
-		{{post.teaser_rendered_text}}
+		{{post.teaser_rendered_text|safe}}
 		</p>
 		
 		<p class="leaf">
-		{{post.rendered_text}}
+		{{post.rendered_text|safe}}
 		</p>
 			
 		<div class="leafspace">

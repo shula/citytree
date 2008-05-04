@@ -1,0 +1,70 @@
+8
+
+dir
+117
+svn://trac.studioquattro.biz/django-utils/trunk/nesh/thumbnail
+svn://trac.studioquattro.biz/django-utils
+
+
+
+2006-07-20T13:45:13.185568Z
+10
+nesh
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e3d54399-ea17-0410-b588-9e8e34331349
+
+__init__.py
+file
+
+
+
+
+2008-05-03T15:32:09.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2006-07-06T17:01:22.597632Z
+7
+nesh
+has-props
+
+utils.py
+file
+
+
+
+
+2008-05-03T15:32:09.000000Z
+67270ed5225015593fa7dd3bbe9cd8f9
+2006-07-06T17:01:22.597632Z
+7
+nesh
+has-props
+
+templatetags
+dir
+
+field.py
+file
+
+
+
+
+2008-05-03T15:32:09.000000Z
+079887c86ab916c25cf7731e7111c7fc
+2006-07-06T17:01:22.597632Z
+7
+nesh
+has-props
+

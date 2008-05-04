@@ -15,7 +15,7 @@ class Teaser( models.Model ):
     title          = models.CharField('Teaser Title', max_length=255,blank=True)
     teaserText     = models.TextField('Teaser Text', blank=True)
     
-    def __str__( self ):
+    def __unicode__( self ):
         return self.title
     
     class Admin:
@@ -37,7 +37,7 @@ class FrontpageHeaderImage( models.Model ):
     image_height   = models.PositiveIntegerField(blank=True,null=True)
     image_label    = models.CharField(max_length=255,blank=True,null=True)
     
-    def __str__( self ):
+    def __unicode__( self ):
         return self.image_label
     
     class Admin:
@@ -68,7 +68,7 @@ class FrontPage(models.Model):
     def get_absolute_url(self):
       return '/frontpage/preview/%s/' % self.id
     
-    def __str__(self):
+    def __unicode__(self):
       return self.title
     
     class Admin:
