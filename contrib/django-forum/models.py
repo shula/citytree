@@ -53,6 +53,9 @@ class Forum(models.Model):
     class Admin:
         list_display = ('title', '_parents_repr')
         ordering = ['parent', 'title']
+        fields = (
+          (None, {'fields': ('title', 'slug', 'description')}),
+        )
 
     def get_absolute_url(self):
         from django.core.urlresolvers import reverse
