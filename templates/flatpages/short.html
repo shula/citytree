@@ -26,5 +26,5 @@
 {% endblock %}
 
 {% block central_area %}
-		{{flatpage.content|replaceMediaUrl:"flatpages/images"}}
+		{{flatpage.content|replaceMediaUrl:"flatpages/images"|safe}}
 {% endblock %}
