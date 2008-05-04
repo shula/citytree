@@ -1,0 +1,54 @@
+8
+
+dir
+117
+svn://trac.studioquattro.biz/django-utils/trunk/nesh/formtools/widgets
+svn://trac.studioquattro.biz/django-utils
+
+
+
+2006-11-27T08:44:53.809366Z
+48
+nesh
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e3d54399-ea17-0410-b588-9e8e34331349
+
+base.py
+file
+
+
+
+
+2008-05-03T15:32:09.000000Z
+edc5dc4370a8e4ff4865e8a8c2d4ff2d
+2006-11-27T08:44:53.809366Z
+48
+nesh
+has-props
+
+__init__.py
+file
+
+
+
+
+2008-05-03T15:32:09.000000Z
+9f6098b3d3e7bd5b697bc4bb39fbcd95
+2006-11-27T08:44:53.809366Z
+48
+nesh
+has-props
+

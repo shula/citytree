@@ -1,0 +1,16 @@
+<!-- BooleanField -->
+{% load i18n %}
+
+{% if not FORM_readonly %}
+	{% if FORM_field.errors %}{{ FORM_field.html_error_list }}{% endif %}
+	<label class="{% if FORM_field.formfield.is_required %}required{% else %}optional{% endif %}" for="{{ FORM_field.get_id }}">{{ FORM_label|title }}:</label>
+	<input type="checkbox" id="{{ FORM_field.get_id }}"
+		class="vBooleanField{% if FORM_field.formfield.is_required %} required{% endif %}"
+		name="{{ FORM_field.field_name }}"
+		{% if FORM_value %}checked="true"{% endif %}
+	/>
+	
+	{% if FORM_help_text %}<p class="help">{{ FORM_help_text }}</p>{% endif %}
+{% else %}
+	<span class="label {% if FORM_field.formfield.is_required %}required{% else %}optional{% endif %}">{{ FORM_label|title }}</span>: {% if FORM_value %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}
+{% endif %}

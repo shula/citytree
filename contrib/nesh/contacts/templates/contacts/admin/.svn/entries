@@ -1,0 +1,41 @@
+8
+
+dir
+117
+svn://trac.studioquattro.biz/django-utils/trunk/nesh/contacts/templates/contacts/admin
+svn://trac.studioquattro.biz/django-utils
+
+
+
+2006-11-27T08:44:53.809366Z
+48
+nesh
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e3d54399-ea17-0410-b588-9e8e34331349
+
+json_add_country.html
+file
+
+
+
+
+2008-05-03T15:32:11.000000Z
+fded33416075d5bfd03d03214c46300d
+2006-11-27T08:44:53.809366Z
+48
+nesh
+has-props
+

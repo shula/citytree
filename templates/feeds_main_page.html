@@ -1,0 +1,31 @@
+{% extends "base_short_menu.html" %}
+
+{% load thumbnail %}
+{% load comments %}
+
+{% block rss %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/posts/{{blog.slug}}"/>
+{% endblock %}
+
+{% block thickbox %}
+{% endblock %}
+
+{% block breadcrumbs %}
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+ > {{blog.name}}
+{% endblock %}
+
+{% block central_area %}
+	{% for blog in blog_list %}
+	
+<div class="leafcontainer">
+	<p class="leaf">
+		<a href="feeds{{blog.get_feed_url|safe}}">{{blog.name}}</a>
+	</p>
+</div>
+	{% endfor %}	
+	
+{% endblock %}

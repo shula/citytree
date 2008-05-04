@@ -1,0 +1,79 @@
+8
+
+dir
+117
+svn://trac.studioquattro.biz/django-utils/trunk/nesh/contacts
+svn://trac.studioquattro.biz/django-utils
+
+
+
+2006-11-27T08:44:53.809366Z
+48
+nesh
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e3d54399-ea17-0410-b588-9e8e34331349
+
+locale
+dir
+
+sql
+dir
+
+views.py
+file
+
+
+
+
+2008-05-03T15:32:11.000000Z
+e32d778546e473c9191532d32beb899e
+2006-11-27T08:44:53.809366Z
+48
+nesh
+has-props
+
+__init__.py
+file
+
+
+
+
+2008-05-03T15:32:11.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2006-07-06T17:01:22.597632Z
+7
+nesh
+has-props
+
+templatetags
+dir
+
+models.py
+file
+
+
+
+
+2008-05-03T15:32:11.000000Z
+52b882041adcb19a50878ce807affac6
+2006-11-27T08:44:53.809366Z
+48
+nesh
+has-props
+
+templates
+dir
+

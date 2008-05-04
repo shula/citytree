@@ -40,7 +40,7 @@
 		</h1>
 		
 	<p class="leaf">
-		{{post.teaser_rendered_text}}
+		{{post.teaser_rendered_text|safe}}
 		</p>
 			<div class="commentnumber">
 			    <a href="{{post.get_absolute_url}}">

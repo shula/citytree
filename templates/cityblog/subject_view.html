@@ -1,7 +1,7 @@
 {% extends "base_short_menu.html" %}
 
 {% load citytree_tags %}
-{% load comments.comments %}
+{% load comments %}
 {% load thumbnail %}
 
 {% block calendar %}
@@ -90,7 +90,7 @@
 	</div>
 
 	<p class="leaf">
-		{{post.teaser_rendered_text}}
+		{{post.teaser_rendered_text|safe}}
 	</p>
 	
 	<div class="commentnumber">

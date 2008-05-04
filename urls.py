@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
     # Uncomment this for admin:
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    (r'^feeds$', 'citytree.cityblog.feeds.main_page'),
     (r'^forum/', include('forum.urls')),
     (r'^uptime_openacs/$', 'citytree.views.uptime_openacs'),
     (r'^admin/', include('django.contrib.admin.urls')),

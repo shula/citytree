@@ -1,5 +1,7 @@
 # Django settings for citytreesite project.
 
+DEFAULT_CHARSET = 'utf-8'
+
 ADMINS = (
     ('Tami', 'tami@citytree.net'),
     # ('Your Name', 'your_email@domain.com'),
@@ -26,15 +28,6 @@ USE_I18N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = '/home/tamizori/citytree.net/siteMedia/'
 
-# URL that handles the media served from MEDIA_ROOT.
-# Example: "http://media.lawrence.com"
-MEDIA_URL = 'http://www.citytree.net/siteMedia/'
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = 'http://www.citytree.net/admin_media/'
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'oag2x*xysf_-@$-w^as@tv4+7dg2#xb5!ru4h6$d__v!luqy#o'
 
@@ -49,9 +42,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.cache.CacheMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+# TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
+#    'django.middleware.cache.CacheMiddleware',
 )
 
 ROOT_URLCONF = 'citytree.urls'
@@ -66,6 +60,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.comments',
+    'django.contrib.markup',
     'citytree.forum',
     'citytree.comment_utils',
     'citytree.cityblog',
@@ -79,7 +74,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
 )
 
-LOGIN_URL = '/'
+#LOGIN_URL = '/'
 
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
@@ -92,6 +87,10 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 #-------------------------- Site Settings ------------------
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
+
+# -------------------------- Development Stuff -------------
+# Leave this as None for default - sending to the blog author
+SEND_EMAIL_ON_COMMENT=None
 
 
 #---------------------- DEVELOPMENT COMPROMISE ---------------

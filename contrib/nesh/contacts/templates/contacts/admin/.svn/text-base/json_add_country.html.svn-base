@@ -1,0 +1,25 @@
+<!-- $Id$ -->
+<div id="country_add">
+    <h1>Please enter your information</h1>
+    <form id="country_add_form" name="countryAdd" method="POST" action="/contacts/json/country/add/">
+        <fieldset class="module aligned">
+            <h2>Podaci o zemlji</h2>
+            <div class="form-row required">
+                <label for="id_code">ISO kod zemlje:</label>
+                <input type="textbox" name="code" id="id_code" class="vTextField required" />
+            </div>
+            <div class="form-row required">
+                <label for="id_name">Naziv zemlje:</label>
+                <input type="textbox" name="name" id="id_name" class="vTextField required" />
+            </div>
+            <div class="form-row">
+                <label for="id_phone">Pozivni broj:</label>
+                <input type="textbox" name="phone" id="id_phone" class="vTextField" />
+            </div>
+            <div class="form-row" >
+              <label for="id_flag_file">Flag:</label> 
+              <input type="file" id="id_flag_file" class="vImageUploadField" name="flag_file" /><input type="hidden" id="id_flag" name="flag" value="" /> 
+            </div>
+        </fieldset>
+    </form>
+</div>

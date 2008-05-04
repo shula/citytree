@@ -8,7 +8,7 @@ from django.template import Context, loader
 from django.contrib.sites.models import Site
 from nesh.thumbnail.field import ImageWithThumbnailField
 from citytree.utils.textUtils import wikiSub
-
+import settings
 
 #Object representing a blog, a blog can have many authors.
 class blog(models.Model):
@@ -40,20 +40,25 @@ class blog(models.Model):
     display_in_menu       = models.BooleanField( "Display in Menu", default=1 )
 
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
     def get_absolute_url(self):
-      return '/blogs/%s/' % self.slug
+      return u'/blogs/%s/' % self.slug
       
     def get_edit_absolute_url(self):
-      return "/desk/mybranches/%s/" % (self.slug)
+      return u"/desk/mybranches/%s/" % (self.slug)
     
     def get_last_post(self):
       return self.post_set.latest('post_date')
 
     def get_last_post_as_list(self):
       return [self.post_set.latest('post_date')]
+
+    def get_feed_url(self):
+      # import here to avoid a loop, since feeds imports us
+      from citytree.cityblog.feeds import LatestPosts_get_feed_url
+      return LatestPosts_get_feed_url(self)
 
     class Admin:
       fields = (
@@ -69,7 +74,7 @@ class flag(models.Model):
     #blog in which this flag is viewable (null = all blogs)
     blog         = models.ForeignKey( blog, blank=True, null=True )
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
     class Admin:
@@ -128,7 +133,7 @@ class post(models.Model):
     class Admin:
        fields = (
         (None, {'fields': ('blog', 'author', 'title', 'post_style', 'post_date', 'image', 'image_caption', 'image_label', 'teaser_text',
-            'text', 'flags', 'draft')}),
+            'text', 'flags', 'draft', 'enable_comments')}),
        )
        list_display   = ('blog', 'title', 'author', 'time_modified', 'draft' )
        list_filter    = ('blog', 'time_modified')
@@ -145,19 +150,19 @@ class post(models.Model):
 
     def get_absolute_url(self):
       d = self.post_date
-      return '/blogs/posts/%d/' % ( self.id )
+      return u'/blogs/posts/%d/' % ( self.id )
       
     def get_absolute_edit_url(self):
       # TODO: is there a better way to keep this in sync? maybe just have the editBlog
       # a constant in the desk.views model?
       d = self.post_date
-      return '/desk/editPost/%d/' % ( self.id )
+      return u'/desk/editPost/%d/' % ( self.id )
       
     def get_absolute_preview_url( self ):
       d = self.post_date
-      return '/blogs/preview_post/%d/' % ( self.id )
+      return u'/blogs/preview_post/%d/' % ( self.id )
     
-    def __str__(self):
+    def __unicode__(self):
         return self.title
     
     def save(self):
@@ -182,7 +187,7 @@ class postImage(models.Model):
     label         = models.TextField(help_text="Displayed when the image is hovered over", blank=True, null=True)
     caption       = models.CharField(help_text="Title of image, displayed in html", max_length=200,blank=True, null=True)
     
-    def __str__(self):
+    def __unicode__(self):
       return self.label
       
     def save(self):
@@ -226,9 +231,9 @@ class subject(models.Model):
          )
     
   def get_absolute_url( self ):
-      return '/subjects/%s/' % self.slug
+      return u'/subjects/%s/' % self.slug
     
-  def __str__(self):
+  def __unicode__(self):
         return self.name
   
   class Meta:
@@ -241,15 +246,19 @@ class PostModerator(CommentModerator):
     #akismet = True # need an akismet account for this - and this is not private use.
     email_notification = True
     enable_field = 'enable_comments'
+    really_send_email_to_this_person=settings.SEND_EMAIL_ON_COMMENT
     def email(self, comment, content_object):
         post = content_object # same thing
-        recipient_list = [post.author.email]
+        if self.really_send_email_to_this_person is None:
+            recipient_list = [post.author.email]
+        else:
+            recipient_list = [self.really_send_email_to_this_person]
         t = loader.get_template('cityblog/post_comment_notification_email.txt')
         site = Site.objects.get_current().name
         c = Context({ 'comment': comment,
                       'content_object': content_object,
                       'site': site})
-        subject = '[%s] New comment posted on "%s"' % (site, content_object)
+        subject = u'[%s] New comment posted on "%s"' % (site, content_object)
         message = t.render(c)
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)
         

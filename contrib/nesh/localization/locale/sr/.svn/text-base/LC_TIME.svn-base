@@ -1,0 +1,45 @@
+LC_TIME
+# This is the POSIX locale definition for
+# the LC_TIME category.
+#
+# Abbreviated weekday names (%a)
+abday      "Ned";"Pon";"Uto";"Sre";\
+           "Čet";"Pet";"Sub"
+#
+# Full weekday names (%A)
+day        "Nedelja";"Ponedeljak";\
+           "Utorak";"Sreda";\
+           "Četvrtak";"Petak";\
+           "Subota"
+#
+# Abbreviated month names (%b)
+abmon      "Jan";"Feb";"Mar";\
+           "Apr";"Maj";"Jun";\
+           "Jul";"Avg";"Sep";\
+           "Okt";"Nov";"Dec"
+#
+# Full month names (%B)
+mon        "Januar";"Februar";\
+           "Mart";"April";\
+           "Maj";"Jun";\
+           "Jul";"Avgust";\
+           "Septembar";"Oktobar";\
+           "Novembar";"Decembar"
+#
+# Equivalent of AM/PM (%p)      "AM";"PM"
+am_pm      "AM";"PM"
+#
+# Appropriate date and time representation (%c)
+#    "%a %b %e %H:%M:%S %Y"
+d_t_fmt    "%a %b %e %H,%M,%S %Y"
+#
+# Appropriate date representation (%x)   "%m/%d/%y"
+d_fmt      "%m/%d/%y"
+#
+# Appropriate time representation (%X)   "%H:%M:%S"
+t_fmt      "%H,%M,%S"
+#
+# Appropriate 12-hour time representation (%r) "%I:%M:%S %p"
+t_fmt_ampm "%I,%M,%S %p"
+#
+END LC_TIME
