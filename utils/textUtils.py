@@ -16,7 +16,7 @@ def wikiSub( inStr ):
     # basically, inStr should always be unicode
     if type(inStr) is not unicode:
         inStr = unicode(inStr, encoding='utf_8')
-    inStr = sanitize( inStr ).encode('utf-8')
+    #inStr = sanitize( inStr ).encode('utf-8')
     
     boldItRE       = re.compile( "''''(?P<txt>[^']+)''''", re.M)
     boldRE         = re.compile( "'''(?P<txt>[^']+)'''", re.M)
@@ -45,10 +45,10 @@ def wikiSub( inStr ):
         
         if( len(thePosts) != 1):
             print post_num,thePosts
-            inStr = pre+"<!-- Invalid Link -->"+after
+            inStr = pre + u"<!-- Invalid Link -->" + after
         else:
             theUrl = thePosts[0].get_absolute_url()
-            inStr = "".join( [pre,"<a href='%s'>%s</a>" % (theUrl, link_txt),after] )
+            inStr = u"".join( [pre, u"<a href='%s'>%s</a>" % (theUrl, link_txt), after] )
         
         m = re.search( internalLinkRE, inStr )
         
