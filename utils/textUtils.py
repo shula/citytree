@@ -16,7 +16,6 @@ def wikiSub( inStr ):
     # basically, inStr should always be unicode
     if type(inStr) is not unicode:
         inStr = unicode(inStr, encoding='utf_8')
-    #inStr = sanitize( inStr ).encode('utf-8')
     
     boldItRE       = re.compile( "''''(?P<txt>[^']+)''''", re.M)
     boldRE         = re.compile( "'''(?P<txt>[^']+)'''", re.M)
