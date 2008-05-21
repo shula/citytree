@@ -10,7 +10,7 @@
 תגובות
 </h1>
 	
-{% get_public_free_comment_list for cityblog.post post.id as comment_list %}
+{% get_free_comment_list for cityblog.post post.id as comment_list %}
 {% for comment in comment_list %}
 
 	<div class="icImg">
