@@ -11,6 +11,17 @@ from nesh.thumbnail.field import ImageWithThumbnailField
 from citytree.utils.textUtils import wikiSub
 import settings
 
+# Javascript stuff - to be moved somewhere more appropriate
+
+# use Dojo - seems to have much more then just an editor, but the editor itself is much less fleshed out.
+dojo_textarea_js_list = ['js/admin/DojoTextArea.js']
+
+# TinyMCE is very nice, has tables, right to left support, raw html editing support.
+tinymce_textarea_js_list = ['tinymce/tiny_mce.js'
+,'js/admin/TinyMCETextArea.js']
+
+fckeditor_textarea_js_list = ['fckeditor/fckeditor.js']
+
 #Object representing a blog, a blog can have many authors.
 class blog(models.Model):
     name          = models.CharField(max_length=200,blank=False)
@@ -132,13 +143,24 @@ class post(models.Model):
     enable_comments = models.BooleanField(default=1,blank=False,help_text='Set to enable comments on post')
     
     class Admin:
-       fields = (
-        (None, {'fields': ('blog', 'author', 'title', 'post_style', 'post_date', 'image', 'image_caption', 'image_label', 'teaser_text',
-            'text', 'flags', 'draft', 'enable_comments')}),
-       )
-       list_display   = ('blog', 'title', 'author', 'time_modified', 'draft' )
-       list_filter    = ('blog', 'time_modified')
-       ordering       = ('-post_date',)
+        # The real editing is not done here, but in desk. Still, we can reuse
+        # stuff I guess, or just have this as a test bed.
+        #js = fckeditor_textarea_js_list
+
+        fields = (
+        # almost everything is normal
+        (None, {'fields': ('blog', 'author', 'title', 'post_style', 'post_date', 'image',
+            'image_caption', 'image_label', 'flags', 'draft', 'enable_comments')}),
+        # some stuff should be displayed using some rich text editing - we use a class that is later
+        # extracted with a javascript hook, and then the wysiwyg editor (see js above) is used.
+        (None, {
+            'fields':  ('teaser_text', 'text'),
+            'classes': ('wysiwyg'),
+            })
+        )
+        list_display   = ('blog', 'title', 'author', 'time_modified', 'draft' )
+        list_filter    = ('blog', 'time_modified')
+        ordering       = ('-post_date',)
        
     class Meta:
         ordering = ['-post_date']
@@ -263,7 +285,9 @@ class PostModerator(CommentModerator):
         message = t.render(c)
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)
         
-
+# This is annoying - but for some reason this file gets loaded
+# more then once - so I'm forced to catch the AlreadyModerated
+# exception, lest django present the dreaded error page.
 try:
     i = 0
     moderator.register(post, PostModerator)
