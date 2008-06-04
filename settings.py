@@ -76,6 +76,9 @@ INSTALLED_APPS = (
 
 #LOGIN_URL = '/'
 
+# Fix for gallery problem?
+#APPEND_SLASH=False
+
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
 #django.middleware.cache.CacheMiddleware

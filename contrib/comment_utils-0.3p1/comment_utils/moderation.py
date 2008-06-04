@@ -77,6 +77,7 @@ from django.template import Context, loader
 from django.contrib.comments.models import Comment, FreeComment
 from django.contrib.sites.models import Site
 
+from myspamdetector import spamDetector
 
 class AlreadyModerated(Exception):
     """
@@ -241,7 +242,7 @@ class CommentModerator(object):
                                  'user_agent': '' }
                 if akismet_api.comment_check(smart_str(comment.comment), data=akismet_data, build_data=True):
                     return True
-        return False
+        return spamDetector.moderate(comment, content_object)
 
     def email(self, comment, content_object):
         """
