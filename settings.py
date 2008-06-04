@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'citytree.frontpage',
     'citytree.nesh.thumbnail',
     'citytree.ajax',
+    'citytree.spamdetector',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
