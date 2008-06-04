@@ -1,3 +1,5 @@
+from citytree.spamdetector.models import banned_ip
+
 class SpamDetector(object):
     def moderate(self, comment, content_object):
         """ Just like the moderate method of moderators.CommentModerators
@@ -6,7 +8,8 @@ class SpamDetector(object):
 
         returns True if comment is to be set non-public, False otherwise
         """
-        if comment.ip_address in ['89.149.197.252']:
+        #if comment.ip_address in ['89.149.197.252']:
+        if len(banned_ip.objects.filter(ip_address=comment.ip_address)) > 0:
             return True
         return False
 

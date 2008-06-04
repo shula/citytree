@@ -77,8 +77,6 @@ from django.template import Context, loader
 from django.contrib.comments.models import Comment, FreeComment
 from django.contrib.sites.models import Site
 
-from myspamdetector import spamDetector
-
 class AlreadyModerated(Exception):
     """
     Raised when a model which is already registered for moderation is
@@ -242,7 +240,7 @@ class CommentModerator(object):
                                  'user_agent': '' }
                 if akismet_api.comment_check(smart_str(comment.comment), data=akismet_data, build_data=True):
                     return True
-        return spamDetector.moderate(comment, content_object)
+        return False
 
     def email(self, comment, content_object):
         """
@@ -255,7 +253,7 @@ class CommentModerator(object):
         recipient_list = [manager_tuple[1] for manager_tuple in settings.MANAGERS]
         t = loader.get_template('comment_utils/comment_notification_email.txt')
         c = Context({ 'comment': comment,
-                      'content_object': content_object })
+                      'content_object': content_object})
         subject = '[%s] New comment posted on "%s"' % (Site.objects.get_current().name,
                                                           content_object)
         message = t.render(c)
