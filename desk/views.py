@@ -1,5 +1,9 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
-from django import forms
+#from django import forms
+from django import newforms as forms
+from django.newforms import ModelForm
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list as generic_object_list
 from django.views.generic.create_update import create_object  as generic_create_object
@@ -125,10 +129,16 @@ def handleImageUploads( postObject, new_data ):
 
             
         #--------- Create Manipulators --------------
-        if( imgLookup.has_key(idx) ):
+        # Due to moving to development django (post 0.96.6) ImageWithThumbnail is broken. The fix
+        # is to create the instance (postImage in this case) first, then populate the images fields in it.
+        if not imgLookup.has_key(idx) and new_data.has_key(fileKey):
+            new_postImage = postImage()
+            new_postImage.index = idx
+            new_postImage.post = postObject
+            new_postImage.save()
+            imgLookup[new_postImage.index] = new_postImage.id
+        if imgLookup.has_key(idx):
             manipulator = postImage.ChangeManipulator(imgLookup[idx])
-        elif( new_data.has_key(fileKey) ):
-            manipulator = postImage.AddManipulator()
             
         if( new_data.has_key(fileKey) ):
             dataToSave.setlist('image_file',new_data.getlist(fileKey) )
@@ -140,8 +150,6 @@ def handleImageUploads( postObject, new_data ):
             dataToSave['label']   = new_data[labelKey]
             dataToSave['caption'] = new_data[tsrTxtKey]
             dataToSave['post']    = postObject.id
-
-             
             
             errors = manipulator.get_validation_errors(dataToSave)
             manipulator.do_html2python(dataToSave)
@@ -149,15 +157,23 @@ def handleImageUploads( postObject, new_data ):
                 manipulator.save(dataToSave)
                 
     #------ Hack To Maintain Image order ------------
-    if( imgWasDeleted ):
-        for idx, img in enumerate( postObject.postimage_set.all() ):
-            img.index = idx
-            img.save()
-                
-            
-                
-            
-            
+    #if( imgWasDeleted ):
+    for new_idx, (idx, img) in enumerate(sorted([(img.index, img) for img in postObject.postimage_set.all()])):
+        img.index = new_idx
+        img.save()
+
+class PostForm(ModelForm):
+    class Meta:
+        model = post
+
+def fix_boolean_fields(data, fields):
+    # in newforms, there are two options for a BooleanField:
+    #  as a multiple choice - in that case we fix BooleanField not handling '0' as False
+    #  as a checkbox - if it is False it just doesn't appear - we fix that too.
+    for field in fields:
+        if not data.has_key(field) or data[field] == '0':
+            data[field] = False
+
 def create_edit_blog_post( request, post_id=None, blog_slug=None ):
   """
   Creates a new post for the specified blog
@@ -168,16 +184,16 @@ def create_edit_blog_post( request, post_id=None, blog_slug=None ):
   postImages = None
   theBlog    = None
   message    = None
+  form       = None # not sure why I can't initialize it once somewhere.
   nullImages = range(0, NUM_IMAGES_IN_POST)
   
   #------------ Edit --------------
-  if(post_id):
+  if post_id:
     try:
-        manipulator = post.ChangeManipulator(post_id)
+        thePost = post.objects.get(id=post_id)
     except post.DoesNotExist:
         raise Http404()
     
-    thePost    = manipulator.original_object
     theBlog    = thePost.blog
     imageObj   = thePost.image
     postImages = thePost.postimage_set.all().order_by( 'index' )
@@ -187,6 +203,8 @@ def create_edit_blog_post( request, post_id=None, blog_slug=None ):
     if( thePost.author.id != userId ):
       raise Http404()
     
+    form = PostForm(instance=thePost)
+
     #return generic_update_object( request, model=post, 
                 #post_save_redirect=theBlog.get_edit_absolute_url(),
                 #template_name='desk/create_post.html',
@@ -202,49 +220,60 @@ def create_edit_blog_post( request, post_id=None, blog_slug=None ):
     except Exception, e:
       raise Http404
       
-    
-    manipulator = post.AddManipulator()
-    form = forms.FormWrapper(manipulator, {}, {})
+    form = PostForm()
   
   #--------------------- Now Render response ------------
   if request.method == 'POST':
         new_data = request.POST.copy()
-        new_data.update(request.FILES)
-        
-        from datetime import datetime
+        fix_boolean_fields(new_data, ['draft', 'enable_comments'])
         
         def isSet( theHash, theKey ):
             return (theHash.has_key( theKey ) and len( theHash[theKey] ) > 0 )
         
-        if( not isSet( new_data, 'post_date_date' ) ) : 
-                new_data['post_date_date'] = str(datetime.now().date())
-        if( not isSet( new_data, 'post_date_time' ) ): 
-                new_data['post_date_time'] = datetime.now().time().strftime("%H:%M:%S")
-         
+        if not isSet(new_data, 'post_date'):
+            new_data['post_date'] = datetime.now()
+
         #for k,v in new_data.iteritems():
         #    print "--------"
         #    print "[%s] [%s]" % (k,v)
         
         new_data['author'] = str(userId)
         new_data['blog']   = str(theBlog.id)
-        
-        errors = manipulator.get_validation_errors(new_data)
-        manipulator.do_html2python(new_data)
-        if not errors:
-            newPost = manipulator.save(new_data)
-            postId = newPost.id
+    
+        if not post_id:
+            # once again, we have a problem with ImageWithThumbnail, so the fix is:
+            # make sure the post has an id first, then add image.
+            thePost = post()
+            thePost.blog = theBlog
+            thePost.author = theUser
+            thePost.post_date = datetime.now()
+            thePost.save()
+            post_id = thePost.id
             
-            if( post_id ):
-              newPost = manipulator.original_object
-              
-              #-------------- Append Images ----------------
-              handleImageUploads( newPost, new_data )
+        form = PostForm(new_data, files=request.FILES, instance=thePost)
+        new_data.update(request.FILES)
+
+        if form.is_valid():
+            newPost = form.save()
+            post_id = newPost.id
+            
+            if post_id:
+                # XXX: save images (not really required?)
+                #if request.FILES.has_key('image'):
+                #    newPost.save_image_file(newPost.image, request.FILES['image']['content'])
+                
+                #-------------- Append Images ----------------
+                handleImageUploads( newPost, new_data )
               
             # Do a post-after-redirect so that reload works, etc.
             if( new_data.has_key('create_new_item_after_edit')):
                 return HttpResponseRedirect("/desk/blogs/%s/createPost/?new=2" % (newPost.blog.slug))
             else:
                 return HttpResponseRedirect("/desk/editPost/%d/?new=1" % (newPost.id))
+        else: # form is not valid
+            errors = form.errors
+        #manipulator.do_html2python(new_data)
+        
   else:
         if( request.GET.has_key('new') ):
             if( int(request.GET['new']) == 1):
@@ -253,10 +282,8 @@ def create_edit_blog_post( request, post_id=None, blog_slug=None ):
                 message = NEW_POST_CREATED_SUCCESSFULLY_CONTINUE_EDITING
         errors = {}
         # This makes sure the form accurate represents the fields of the place.
-        new_data = manipulator.flatten_data()
+        #new_data = manipulator.flatten_data()
 
-  form = forms.FormWrapper(manipulator, new_data, errors)
-  
   #------- Filter Flags ------------
   legalFlags = flag.objects.filter( Q(blog__isnull=True) | Q(blog=theBlog.id) )
   renderFlags = []

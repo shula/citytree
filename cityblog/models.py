@@ -139,11 +139,11 @@ class post(models.Model):
     rendered_text = models.TextField('Entry body as HTML', blank=True, null=True)
     
     flags         = models.ManyToManyField( flag, blank=True, null=True )
-    draft         = models.BooleanField(help_text='Set to post to make post live on site', default=1, choices=DRAFT_CHOICES, blank=False)
+    draft         = models.BooleanField(help_text='Set to post to make post live on site', default=1, choices=DRAFT_CHOICES, blank=True)
     post_style    = models.PositiveIntegerField('Post Style', help_text='Style in which post is displayed' , blank=False, default=1, choices=POST_STYLE_TYPES )
 
     # fields required by the comment system
-    enable_comments = models.BooleanField(default=1,blank=False,help_text='Set to enable comments on post')
+    enable_comments = models.BooleanField(default=1, blank=True, help_text='Set to enable comments on post')
     
     class Admin:
         # The real editing is not done here, but in desk. Still, we can reuse
@@ -193,9 +193,13 @@ class post(models.Model):
     
     def save(self):
         if not self.id:
-          if( len(self.image_caption) == 0 ):
-              self.image_caption = self.image_label[0:25] #take first 25 letters only
-              
+            # new post
+            if self.image_caption is None: self.image_caption= u''
+            if( len(self.image_caption) == 0 ):
+                if self.image_label is None: self.image_label = u''
+                self.image_caption = self.image_label[0:25] #take first 25 letters only
+            if self.text is None: self.text = u''
+            if self.teaser_text is None: self.teaser_text = u''
           #if( len(self.text) == 0 ):
           #    self.text = self.teaser_text
           
@@ -218,6 +222,9 @@ class postImage(models.Model):
       
     def save(self):
         if not self.id:
+            # new postImage
+            if self.caption is None: self.caption= ''
+            if self.label is None: self.label=''
             if( len(self.caption) == 0 ):
                 self.caption = self.label[0:25]
                 
