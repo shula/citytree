@@ -1,0 +1,112 @@
+{% extends "base_largemenu.html" %}
+
+{% load thumbnail %}
+
+{# No Thickbox! #}
+{% block thickbox %}
+{% endblock %}
+
+{% block top %}
+<div class="top">
+<img src="{{content.headerImage.get_image_url}}" width="{{content.headerImage.image_width}}px" height="{{content.headerImage.image_height}}px" title="{{content.headerImage.image_label|escape}}" alt="{{content.headerImage.image_label}}">
+	<div id="logo">
+	<a href="/"><img src="{{media_url}}/common/logo.gif" width="139" height="115" border="0" alt=""></a>
+	</div>
+</div>
+{% endblock %}
+
+{% block central_area %}  
+	<h1>
+	{{content.title}}
+	</h1>
+	<p>
+	{{content.main_text}}
+{% endblock %}
+
+{% block teasers %}
+
+<table cellpadding="0" cellspacing="0" border="0" width="808px">
+<tr>
+<td width="160" valign="top">
+	<div class="teaserline"></div>
+	<div class="teaserunit">
+		<a href="{{content.teaser1.url}}">
+		<img src="{{content.teaser1.get_image_url}}" width="{{content.teaser1.image_width}}px" height="{{content.teaser1.image_height}}px" border="0" hspace="6" vspace="2" alt=""  class="teaser" title="{{content.teaser1.label|escape}}"></a>
+
+		<p class="teaser">
+		<a href="{{content.teaser1.url}}">
+		{{content.teaser1.title}}
+		</a>
+		 {{content.teaser1.teaserText}}
+		</p>
+		<div class="teaserlinebott"></div>
+	</div>
+</td>
+
+<td width="160" valign="top">
+	<div class="teaserline"></div>
+	<div class="teaserunit">
+		<a href="{{content.teaser2.url}}">
+		<img src="{{content.teaser2.get_image_url}}" width="{{content.teaser2.image_width}}px" height="{{content.teaser2.image_height}}px" border="0" hspace="6" vspace="2" alt=""  class="teaser" title="{{content.teaser2.label|escape}}"></a>
+
+		<p class="teaser">
+		<a href="{{content.teaser2.url}}">
+		{{content.teaser2.title}}
+		</a>
+		 {{content.teaser2.teaserText}}
+		</p>
+		<div class="teaserlinebott"></div>
+	</div>
+</td>
+
+<td width="160" valign="top">
+	<div class="teaserline"></div>
+	<div class="teaserunit">
+		<a href="{{content.teaser3.url}}">
+		<img src="{{content.teaser3.get_image_url}}" width="{{content.teaser3.image_width}}px" height="{{content.teaser3.image_height}}px" border="0" hspace="6" vspace="2" alt=""  class="teaser" title="{{content.teaser3.label|escape}}"></a>
+
+		<p class="teaser">
+		<a href="{{content.teaser3.url}}">
+		{{content.teaser3.title}}
+		</a>
+		 {{content.teaser3.teaserText}}
+		</p>
+		<div class="teaserlinebott"></div>
+	</div>
+</td>
+
+<td width="160" valign="top">
+	<div class="teaserline"></div>
+	<div class="teaserunit">
+		<a href="{{content.teaser4.url}}">
+		<img src="{{content.teaser4.get_image_url}}" width="{{content.teaser4.image_width}}px" height="{{content.teaser4.image_height}}px" border="0" hspace="6" vspace="2" alt=""  class="teaser" title="{{content.teaser4.label|escape}}"></a>
+
+		<p class="teaser">
+		<a href="{{content.teaser4.url}}">
+		{{content.teaser4.title}}
+		</a>
+		 {{content.teaser4.teaserText}}
+		</p>
+		<div class="teaserlinebott"></div>
+	</div>
+</td>
+
+<td width="160" valign="top">
+	<div class="teaserline"></div>
+	<div class="teaserunit">
+		<a href="{{content.teaser5.url}}">
+		<img src="{{content.teaser5.get_image_url}}" width="{{content.teaser5.image_width}}px" height="{{content.teaser5.image_height}}px" border="0" hspace="6" vspace="2" alt=""  class="teaser" title="{{content.teaser5.label|escape}}"></a>
+
+		<p class="teaser">
+		<a href="{{content.teaser5.url}}">
+		{{content.teaser5.title}}
+		</a>
+		 {{content.teaser5.teaserText}}
+		</p>
+		<div class="teaserlinebott"></div>
+	</div>
+</td>
+</tr>
+</table>
+
+{% endblock %}
