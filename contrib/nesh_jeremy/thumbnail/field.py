@@ -25,10 +25,18 @@ class ImageWithThumbnailField(ImageField):
         self.logo_file   = logo_file
     #
     
-    def _save(self, instance=None):
+    def _pre_save(self, instance=None):
+        # since this is called by the pre_save signal, the pk can be unset.
+        self.needs_renaming= False
         if not self.auto_rename: return
         if instance == None: return
         image = getattr(instance, self.attname)
+        if instance._get_pk_val() is None:
+            if image == '':
+                return
+            else:
+                # TODO: should have primary key at this point.
+                return
         # XXX this needs testing, maybe it can generate too long image names (max is 100)
         image = rename_by_field(image, '%s-%s-%s' \
                                      % (instance.__class__.__name__,
@@ -42,7 +50,7 @@ class ImageWithThumbnailField(ImageField):
     def contribute_to_class(self, cls, name):
         super(ImageWithThumbnailField, self).contribute_to_class(cls, name)
         dispatcher.connect(_delete, signals.post_delete, sender=cls)
-        dispatcher.connect(self._save, signals.pre_save, sender=cls)
+        dispatcher.connect(self._pre_save, signals.pre_save, sender=cls)
     #
 
     def get_internal_type(self):

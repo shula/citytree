@@ -110,11 +110,15 @@
 				<td valign="top">
 				<label for="id_post_date">תאריך:</label> 
 				</td>
-				<td>
+                <td>
+                {{ form.post_date }}
+                <!--
 				{{ form.post_date_date }}
 				{% if form.post_date_date.errors %}*** {{ form.post_date_date.errors|join:", " }}{% endif %}
 				{{ form.post_date_time }}
-				{% if form.post_date_time.errors %}*** {{ form.post_date_time.errors|join:", " }}{% endif %}				<h3>
+                {% if form.post_date_time.errors %}*** {{ form.post_date_time.errors|join:", " }}{% endif %}
+                -->
+                <h3>
 				תנו לעלה תאריך וזמן -- הזמן לא מופיע כרגע באתר, אבל עלול להיות שימושי בעריכה. התאריך מופיע באתר. אפשר לתת איזה תאריך שרוצים (לא צריך להיצמד להיום).
 				</h3>
 				
