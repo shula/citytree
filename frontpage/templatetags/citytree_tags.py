@@ -40,10 +40,9 @@ def replacePostImagesArticle( value, arg ):
     except ValueError:
        raise template.TemplateSyntaxError, "replacePostImagesArticle filter: argument %r is invalid integer" % (arg)
 
-    
-    
     return replacePostImages( value, postId, 'cityblog/articleImgTemplate.html')
     
+
 def replacePostImagesGallery( value, arg ):
     """
     replace values of type [IMG n] with the relevant image from the post.

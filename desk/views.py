@@ -1,15 +1,14 @@
 from datetime import datetime
 
 from django.contrib.auth.models import User
-#from django import forms
 from django import newforms as forms
 from django.newforms import ModelForm
+from django.newforms.extras import widgets
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list as generic_object_list
 from django.views.generic.create_update import create_object  as generic_create_object
 from django.views.generic.create_update import update_object  as generic_update_object
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.utils import simplejson
 from django.template import RequestContext 
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
@@ -27,8 +26,9 @@ NEW_POST_CREATED_SUCCESSFULLY_CONTINUE_EDITING = 4
 NUM_POSTS_PER_PAGE    = 30
 NUM_IMAGES_IN_POST    = 12 #Number of pictures that can be attached to a post
 
-#get login/logout to work with correct urls
-login_needed = user_passes_test(lambda u: not u.is_anonymous(), login_url='/desk/login/')
+#get login/logout to work with correct urls. require at least one blog (thus removing
+# regular users without adding yet another field)
+login_needed = user_passes_test(lambda u: not u.is_anonymous() and u.blog_set.count()>0, login_url='/desk/login/')
 
 from citytree.cityblog.models import blog, post, flag, postImage
 
@@ -163,6 +163,7 @@ def handleImageUploads( postObject, new_data ):
         img.save()
 
 class PostForm(ModelForm):
+    #post_date = forms.DateField(widget = forms.widgets.SplitDateTimeWidget())
     class Meta:
         model = post
 
