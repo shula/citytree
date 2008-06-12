@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     'citytree.nesh.thumbnail',
     'citytree.ajax',
     'citytree.spamdetector',
+    'citytree.workshop',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -79,6 +80,9 @@ INSTALLED_APPS = (
 
 # Fix for gallery problem?
 #APPEND_SLASH=False
+
+AUTH_PROFILE_MODULE='workshop.userprofile'
+LOGIN_REDIRECT_URL='/'
 
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)

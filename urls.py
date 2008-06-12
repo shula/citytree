@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     (r'^desk/', include('citytree.desk.urls')),
     (r'^blogs/', include('citytree.cityblog.urls')),
     (r'^spamdetector/', include('citytree.spamdetector.urls')),
+    (r'^workshop/', include('citytree.workshop.urls')),
     (r'^subjects/(?P<subject_slug>.*)/$', 'citytree.cityblog.views.subject_view'),
     (r'^ajax/', include('citytree.ajax.urls')),
 #     (r'^comments/postfree/$', 'citytree.cityblog.views.postfree'), # this is the wrong one (move to correct namespace. do not use comments module - already exists in django and django doesn't like two modules with the same name, even if the full name is different)
