@@ -1,0 +1,14 @@
+{% extends "base_short_menu.html" %}
+{% block central_area %}
+<h3>{{ status }}</h3>
+<h2>להרשמות לסדנה בבקשה מלאו את הטופס ולחצו על אישור הרשמה. תודה!</h2>
+<form method="post" action="">
+    <table>
+        <!--<tr><td>סדנה</td><td>{{ form.workshop_slug }}</td>
+        </tr>-->
+        {{ form }}
+    </table>
+    <input type="submit" value="אישור הרשמה"/>
+</form>
+{% endblock %}
+

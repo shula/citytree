@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.comments',
     'django.contrib.markup',
+    'citytree.accounts',
     'citytree.forum',
     'citytree.comment_utils',
     'citytree.cityblog',
@@ -82,7 +83,7 @@ INSTALLED_APPS = (
 #APPEND_SLASH=False
 
 AUTH_PROFILE_MODULE='workshop.userprofile'
-LOGIN_REDIRECT_URL='/'
+#LOGIN_REDIRECT_URL='/'
 
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
