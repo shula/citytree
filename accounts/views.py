@@ -47,6 +47,9 @@ def new_capcha_request(form):
 def unicode_reverse(u):
     return ''.join(list(reversed(u)))
 
+def password_check(password):
+    return len(set(password)) >= 4 and len(password) >= 6
+
 def create_account(request):
     """hash is filled by the hidden input in the form - this is a hash into the
     CapchaRequest table to figure out if the user solved it correctly.
@@ -79,7 +82,7 @@ def create_account(request):
             capcha_request.delete() # or set a flag success or not, store ip? nah
             if User.objects.filter(username=username).count() != 0:
                 form.errors['username']=[u'שם המשתמש תפוס']
-            if len(set(password))<4 or len(password) < 6:
+            if not password_check(password):
                 form.errors['password']=[u'ססמה חייבת להיות לפחות 6 תווים, 4 שונים לפחות.']
             if len(form.errors) == 0:
                 email = form.cleaned_data['email']
@@ -117,9 +120,16 @@ def capcha_image(request, hash):
 
 class UserForm(forms.ModelForm):
     #post_date = forms.DateField(widget = forms.widgets.SplitDateTimeWidget())
+    first_name = forms.CharField(label='שם פרטי')
+    last_name = forms.CharField(label = 'שם משפחה')
+    email = forms.EmailField(label = 'דואל')
+    old_password = forms.CharField(label='ססמה ישנה', required=False)
+    new_password_1 = forms.CharField(label='ססמה חדשה', required=False)
+    new_password_2 = forms.CharField(label='שוב ססמה חדשה', required=False)
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'password')
+        #fields = ('first_name', 'last_name', 'email', 'password')
+        fields = ('first_name', 'last_name', 'email')
 
 def profile(request):
     # sucks: only about 5 fields that should actually be shown,
@@ -129,7 +139,19 @@ def profile(request):
     elif request.method == 'POST':
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
+            # check for password change
+            data = form.cleaned_data
+            new1, new2 = data['new_password_1'], data['new_password_2']
+            if not request.user.check_password(data['old_password']):
+                form.errors['old_password']=[u'ססמה מוטעית, נסו שנית']
+            elif new1 != new2:
+                form.errors['new_password_1'] = [u'הססמאות החדשות לא תואמות']
+            elif not password_check(new1):
+                form.errors['new_password_1'] = [u'הססמה החדשה לא לפחות באורך 6 ועם 4 אותיות שונות']
+            else:
+                form.save()
+                request.user.set_password(new1)
+                request.user.save()
     return render_to_response('accounts/profile.html', 
                 {'user'       : request.user, 
                  'form'       : form
