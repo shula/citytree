@@ -13,6 +13,8 @@ from StringIO import StringIO
 import struct
 import binascii
 
+__all__ = ['get_random_hebrew_alphabet_string', 'generate_capcha']
+
 alphabet='אבגדהוזחטיכלמנסעפצקרשת'.decode('utf-8')
 rev_alphabet = dict([(c, i) for i, c in enumerate(alphabet)])
 num = len(alphabet)

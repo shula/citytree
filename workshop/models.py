@@ -38,7 +38,7 @@ class WorkshopEvent(models.Model):
     # TODO: answer - create my own field!. Not now)
     instructors =   models.CharField('name of instructors', max_length=200, blank=False)
     workshop    =   models.ForeignKey(Workshop, verbose_name='סדנה', blank=False)
-    users       =   models.ManyToManyField(User, related_name='registered_workshop_set',
+    users       =   models.ManyToManyField(User, related_name='registered_workshopevent_set',
                     verbose_name='registered site users', blank=True,
                     filter_interface=models.HORIZONTAL)
 
