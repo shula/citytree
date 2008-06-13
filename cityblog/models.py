@@ -2,7 +2,6 @@
 # vim: set fileencoding=utf-8 :
 import datetime
 import random
-import sha
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -13,6 +12,8 @@ from django.contrib.sites.models import Site
 from nesh.thumbnail.field import ImageWithThumbnailField
 from citytree.utils.textUtils import wikiSub
 import settings
+
+from utils.randomUtils import make_random_hash
 
 # Javascript stuff - to be moved somewhere more appropriate
 
@@ -297,7 +298,7 @@ class PostModerator(CommentModerator):
         return spamDetector.moderate(comment, content_object)
 
     def email(self, comment, content_object):
-        self._hash = sha.new(hex((random.randint(0,65536)<<16)+random.randint(0,65536))[2:]).hexdigest()
+        self._hash = make_random_hash()
         post = content_object # same thing
         if self.really_send_email_to_this_person is None:
             recipient_list = [post.author.email]
