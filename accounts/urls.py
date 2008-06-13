@@ -1,12 +1,10 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-    (r'^register/$', 'workshop.views.register'),
-    (r'^register/(?P<workshop_slug>.+)/$', 'workshop.views.register'),
+    (r'^profile/$', 'accounts.views.profile'),
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'workshop/login.html'}),
     (r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
-    (r'^create_account/$', 'workshop.views.create_account'),
-    (r'^capcha/image/(?P<seed>.+)/$', 'workshop.views.capcha_image')
+    (r'^create_account/$', 'accounts.views.create_account'),
+    (r'^capcha/image/(?P<seed>.+)/$', 'accounts.views.capcha_image')
 )
-
 
