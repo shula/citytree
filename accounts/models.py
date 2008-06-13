@@ -8,6 +8,9 @@ class CapchaRequest(models.Model):
     hash       = models.CharField(max_length=256, blank=False)
     letters    = models.CharField(max_length=100)
 
+    def __unicode__(self):
+        return self.hash
+
     def get_image_url(self):
         return '/accounts/capcha/image/%s/' % self.hash
 

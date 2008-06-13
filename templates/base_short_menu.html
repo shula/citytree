@@ -88,9 +88,9 @@
     </div>
     <div class="userlogin">
         {% if user.is_authenticated %}
-        שלום {{ user.get_full_name }}! (<a href="/workshop/logout/">ליציאה</a>)
+        שלום {{ user.get_full_name }}! (<a href="/accounts/logout/">ליציאה</a>)
         {% else %}
-        שלום אורח! לכניסה או הרשמה לחץ <a href="/workshop/login/">כאן</a>
+        שלום אורח! לכניסה או הרשמה לחץ <a href="/accounts/login/">כאן</a>
         {% endif %}
     </div>
 </div>
