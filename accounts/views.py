@@ -17,7 +17,7 @@ from accounts.models import CapchaRequest
 from utils.randomUtils import make_random_hash
 from utils.hebrew_capcha import get_random_hebrew_alphabet_string, generate_capcha
 
-login_needed = user_passes_test(lambda u: not u.is_authenticated(), login_url='/accounts/login/')
+login_needed = user_passes_test(lambda u: u.is_authenticated(), login_url='/accounts/login/')
 
 class RegisterForm(forms.Form):
     username   = forms.CharField(label='שם משתמש', max_length=100)
@@ -115,8 +115,21 @@ def capcha_image(request, hash):
     image_data = generate_capcha(capcha_request.letters)
     return HttpResponse(image_data, mimetype="image/png")
 
+class UserForm(forms.ModelForm):
+    #post_date = forms.DateField(widget = forms.widgets.SplitDateTimeWidget())
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'password')
+
 def profile(request):
-    form = forms.form_for_instance(request.user)
+    # sucks: only about 5 fields that should actually be shown,
+    # need hebrew help text for those.
+    if request.method == 'GET':
+        form = UserForm(instance=request.user)
+    elif request.method == 'POST':
+        form = UserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
     return render_to_response('accounts/profile.html', 
                 {'user'       : request.user, 
                  'form'       : form
