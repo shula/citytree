@@ -1,0 +1,95 @@
+{% extends "base_short_noheaderimg.html" %}
+{% load thumbnail %}
+
+
+{% block customStyleSheets %}
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/shortMenuNoHeader.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/links.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/citytree.css">
+<link rel=stylesheet type="text/css" href="{{media_url}}/css/calen.css">
+{% endblock %}
+
+{% load comments %}
+{% load citytree_tags %}
+
+{% block breadcrumbs %}
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+ >
+ <a href="{{post.blog.get_absolute_url}}"> 
+ {{post.blog.name}}
+ </a>
+ >‏
+ {{post.title}}
+{% endblock %}
+
+{% block central_area %}
+
+<h1>
+<div class="date">{{post.post_date|date:"d/m/y"}}</div>
+{{post.title}}
+</h1>
+
+
+<div class="gallery">
+		<table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+			{% for img in galleryImages %}
+
+				{% ifnotequal forloop.counter0 0 %}
+					{% if forloop.counter0|divisibleby:3 %}
+						</tr><tr>
+					{% endif %}
+				{% endifnotequal %}
+				
+				<td>
+					<a href="{{img.get_image_url}}" class="thickbox" rel="gallery">
+						<img src="{{img.get_image_url|thumbnail:"width=156"}}" 
+					   width="{{img.get_image_url|thumbnail:"width=156"|image_width}}px"
+					   height="{{img.get_image_url|thumbnail:"width=156"|image_height}}px"
+					   title="{{img.label|escape}}"
+					   border="0">
+					</a>
+					<div class= "galleryCaption">
+					{{img.caption}}
+					</div>
+				</td>
+				
+			{% endfor %}
+		</tr>
+		</table>
+</div>
+
+
+	<div class="leafcontainer">
+		<p class="leaf">
+		{{post.teaser_rendered_text|safe}}
+		</p>
+		
+		<p class="leaf">
+		{{post.rendered_text|replacePostImagesArticle:post.id|safe}}
+        </p>
+
+        <p class="leaf">
+        <table>
+            <tr><td>מספר מפגשים:</td><td>{{event.parts.count}}</td></tr>
+            {% for event in workshop.events %}
+            <tr><td><a href="{{event.get_registration_absolute_url}}">להרשמה לארוע</a></td></tr>
+            {% for part in event.parts %}
+            <tr><td>מ</td><td>{{part.start_time}}</td></tr>
+            <tr><td>עד</td><td>{{part.end_time}}</td></tr>
+            {% endfor %}
+            <tr><td>מנחים:</td><td>{{post.workshop.next_event.instructors}}</td></tr>
+            <tr><td>איש קשר:</td><td>{{post.workshop.next_event.contact}}</td></td>
+            {% endfor %}
+        </table>
+        </p>
+			
+		<div class="leafspace">
+		</div>
+
+        {% include "cityblog/blog_add_comment_section.html" %}
+
+{% endblock %}

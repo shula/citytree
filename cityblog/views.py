@@ -1,4 +1,6 @@
 from datetime import datetime, date
+import itertools
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list as generic_object_list
 from django.views.generic.list_detail import object_detail as generic_object_detail
@@ -11,36 +13,58 @@ from citytree.utils.hebCalView import *
 NUM_POSTS_PER_PAGE = 5
 NUM_SUBJECTS_PER_PAGE = 10
 
-def show_blog( request, blog_slug ):
-  b = get_object_or_404(blog, slug=blog_slug)
-  posts = b.post_set.filter(draft=0)
+def show_blog_or_workshop( request, blog_slug ):
+    b = get_object_or_404(blog, slug=blog_slug)
+    posts = b.post_set.filter(draft=0)
+    
+    #------------ Get List of flags in blog ---------
+    flags = flag.objects.filter( post__blog = b.id ).filter( blog__post__draft = 0 ).distinct()
   
-  #------------ Get List of flags in blog ---------
-  flags = flag.objects.filter( post__blog = b.id ).filter( blog__post__draft = 0 ).distinct()
+    #------------ If a specific flag was requested, then show only that flag -------
+    if( request.method == 'GET' and request.GET.has_key('flag') ):
+        flagId = int(request.GET['flag'])
+        posts = posts.filter( flags__id =  flagId )
   
-  #------------ If a specific flag was requested, then show only that flag -------
-  if( request.method == 'GET' and request.GET.has_key('flag') ):
-      flagId = int(request.GET['flag'])
-      posts = posts.filter( flags__id =  flagId )
+    #------------ Create Objects for Hebrew Calender ----
+    calLinkType     = FRONTPAGE_URL_TYPE
+    calLinkTemplate = CALENDAR_URL_TYPE_REGISTRY[calLinkType]
   
-  #------------ Create Objects for Hebrew Calender ----
-  calLinkType     = FRONTPAGE_URL_TYPE
-  calLinkTemplate = CALENDAR_URL_TYPE_REGISTRY[calLinkType]
-  
-  dateToShow = date.today()
-  bgColorProcessor = makeHebBGColorProcessor( dateToShow )
-  dayLinks = makeHebCalLinks( '/?date=%s', date.today() )
-  calender = makeHebCalRequestContext(dayLinks, engDate=date.today(), urlType=calLinkType, highlightToday=True)
-  
-  
-  return generic_object_list( request, queryset=posts,
+    dateToShow = date.today()
+    bgColorProcessor = makeHebBGColorProcessor( dateToShow )
+    dayLinks = makeHebCalLinks( '/?date=%s', date.today() )
+    calender = makeHebCalRequestContext(dayLinks, engDate=date.today(), urlType=calLinkType, highlightToday=True)
+
+    if b.is_workshop():
+        for p in posts:
+            p.make_sure_workshop_exists()
+    #------------- Takes care of workshops --------
+        no_events = posts.filter(workshop__workshopevent=None)
+        now = datetime.now()
+        start_of_today = datetime(now.year, now.month, now.day)
+        _have_events = posts.filter(
+                workshop__workshopevent__workshopeventpart__start_time__gte=start_of_today
+                ).order_by('workshop__workshopevent__workshopeventpart__start_time')
+        temp_set = set()
+        have_events = []
+        for p in _have_events:
+            if p not in temp_set:
+                have_events.append(p)
+                temp_set.add(p)
+        posts = itertools.chain(have_events, no_events)
+        return render_to_response('cityblog/blog_workshops.html', {
+            'post_list': posts,
+            'blog': b, 'flags': flags
+            }, context_instance = RequestContext(request, {}, [calender, bgColorProcessor])
+            )
+    else:
+    #------------ Standard blog with normal, non workshop, posts --------
+        return generic_object_list( request, queryset=posts,
               template_object_name='post',
               template_name='cityblog/blog_posts.html',
               allow_empty=True, 
               extra_context={'blog' : b, 'flags' : flags },
               context_processors =[calender,bgColorProcessor],
               paginate_by=NUM_POSTS_PER_PAGE)
-   
    
 def subject_view( request, subject_slug ):
     theSubject = get_object_or_404(subject, slug=subject_slug)
@@ -103,7 +127,7 @@ def display_post( request, post_id, preview = False ):
     template_object_name = 'post'
   )
   
-  return render_to_response('cityblog/%s'%template_name, {'post': p, 'blog' : b})
+  #return render_to_response('cityblog/%s'%template_name, {'post': p, 'blog' : b})
   
   
 def send_feedback( request ):

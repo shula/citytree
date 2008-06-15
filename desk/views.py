@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 
-from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django import newforms as forms
-from django.newforms import ModelForm
-from django.newforms.extras import widgets
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list as generic_object_list
 from django.views.generic.create_update import create_object  as generic_create_object
@@ -11,8 +12,13 @@ from django.views.generic.create_update import update_object  as generic_update_
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext 
 from django.contrib.auth.decorators import user_passes_test
-from django.db.models import Q
+from django.contrib.sites.models import Site
+from django.contrib.auth.models import User
  
+from desk.forms import PostForm, WorkshopForm, WorkshopEventForm
+from cityblog.models import blog, post, flag, postImage
+from workshop.models import Workshop, WorkshopEvent, WorkshopEventPart
+
 MAIN_SECTION       = 1
 HELP_SECTION       = 2
 
@@ -30,14 +36,12 @@ NUM_IMAGES_IN_POST    = 12 #Number of pictures that can be attached to a post
 # regular users without adding yet another field)
 login_needed = user_passes_test(lambda u: not u.is_anonymous() and u.blog_set.count()>0, login_url='/desk/login/')
 
-from citytree.cityblog.models import blog, post, flag, postImage
-
 def tree_trunk( request ):
-  """ The main tree trunk page """
+    """ The main tree trunk page """
   
-  user_blogs = blog.objects.filter( authors=request.user.id)
+    user_blogs = blog.objects.filter( authors=request.user.id)
   
-  return render_to_response('desk/tree_trunk.html', {
+    return render_to_response('desk/tree_trunk.html', {
                 'section' : MAIN_SECTION , 
                 'user_blogs': user_blogs, 
                 'username': request.user.first_name,
@@ -45,13 +49,13 @@ def tree_trunk( request ):
 tree_trunk = login_needed(tree_trunk)
 
 def help_view( request ):
-   """
-   Desk help
-   """
+    """
+    Desk help
+    """
    
-   user_blogs = blog.objects.filter( authors=request.user.id)
+    user_blogs = blog.objects.filter( authors=request.user.id)
    
-   return render_to_response('desk/help.html', 
+    return render_to_response('desk/help.html', 
                                 {'APP_NAME' : 'cityblog',
                                 'user_blogs': user_blogs,
                                 'section' : HELP_SECTION }, 
@@ -59,27 +63,30 @@ def help_view( request ):
 help_view = login_needed(help_view)
 
 def blogdetail( request, blog_slug ):
-  """
-  List the posts in a blog
-  """
-  user_blogs = blog.objects.filter( authors=request.user.id)
-  theBlog   = get_object_or_404( blog, slug=blog_slug )
-  blogPosts = theBlog.post_set.filter(author=request.user.id) #make sure user can only see their own posts
-  theMessage   = None
+    """
+    List the posts in a blog
+
+    If it is a workshop blog, the list is slightly different, and the button allows
+    creating of new workshop, not new post.
+    """
+    user_blogs = blog.objects.filter( authors=request.user.id)
+    theBlog   = get_object_or_404( blog, slug=blog_slug )
+    blogPosts = theBlog.post_set.filter(author=request.user.id) #make sure user can only see their own posts
+    theMessage   = None
   
-  if( not blogPosts ):
-      theMessage = NO_BLOG_POSTS_MESSAGE
-  elif( request.method == 'GET' and request.GET.has_key('del') ):
-      theMessage = BLOG_POST_DELETED
+    if( not blogPosts ):
+        theMessage = NO_BLOG_POSTS_MESSAGE
+    elif( request.method == 'GET' and request.GET.has_key('del') ):
+        theMessage = BLOG_POST_DELETED
   
-  return generic_object_list( request, queryset=blogPosts, 
-  template_name='desk/display_list_of_blog_posts.html', allow_empty=True, 
-  extra_context={'blog':theBlog, 
-                 'user_blogs': user_blogs,
-                 'message' : theMessage,
-                 'section' : MAIN_SECTION ,
-                 },
-  paginate_by=NUM_POSTS_PER_PAGE)
+    return generic_object_list( request, queryset=blogPosts, 
+        template_name='desk/display_list_of_blog_posts.html', allow_empty=True, 
+        extra_context={'blog':theBlog, 
+                     'user_blogs': user_blogs,
+                     'message' : theMessage,
+                     'section' : MAIN_SECTION ,
+                     },
+    paginate_by=NUM_POSTS_PER_PAGE)
 
 blogdetail = login_needed(blogdetail)
   
@@ -162,10 +169,6 @@ def handleImageUploads( postObject, new_data ):
         img.index = new_idx
         img.save()
 
-class PostForm(ModelForm):
-    #post_date = forms.DateField(widget = forms.widgets.SplitDateTimeWidget())
-    class Meta:
-        model = post
 
 def fix_boolean_fields(data, fields):
     # in newforms, there are two options for a BooleanField:
@@ -176,153 +179,317 @@ def fix_boolean_fields(data, fields):
             data[field] = False
 
 def create_edit_blog_post( request, post_id=None, blog_slug=None ):
-  """
-  Creates a new post for the specified blog
-  """
-  userId     = request.user.id
-  user_blogs = blog.objects.filter( authors=userId)
-  thePost    = None
-  postImages = None
-  theBlog    = None
-  message    = None
-  form       = None # not sure why I can't initialize it once somewhere.
-  nullImages = range(0, NUM_IMAGES_IN_POST)
-  
-  #------------ Edit --------------
-  if post_id:
-    try:
-        thePost = post.objects.get(id=post_id)
-    except post.DoesNotExist:
-        raise Http404()
-    
-    theBlog    = thePost.blog
-    imageObj   = thePost.image
-    postImages = thePost.postimage_set.all().order_by( 'index' )
-    nullImages = range(len(postImages), NUM_IMAGES_IN_POST)
-    
-    #check that user has the right to edit this post
-    if( thePost.author.id != userId ):
-      raise Http404()
-    
-    form = PostForm(instance=thePost)
+    if post_id is None:
+        theBlog = get_object_or_404(blog, slug=blog_slug)
+    else:
+        theBlog = get_object_or_404(post, id=post_id).blog
+    if theBlog.is_workshop():
+        clazz = WorkshopCreator
+    else:
+        clazz = PostCreator
+    return clazz(request, post_id, blog_slug).response()
+create_edit_blog_post = login_needed(create_edit_blog_post)
 
-    #return generic_update_object( request, model=post, 
-                #post_save_redirect=theBlog.get_edit_absolute_url(),
-                #template_name='desk/create_post.html',
-                #object_id=post_id,
-                #extra_context={'blog_id':theBlog.id} )
-  
-   #------------ Create New --------------        
-  else:
-    #Check if this user has the rights to post to this blog
-    try:
-      theBlog = blog.objects.all().filter(slug=blog_slug)[0]
-      theUser = theBlog.authors.filter(id=userId)[0]
-    except Exception, e:
-      raise Http404
+class Responder(object):
+
+    _template = '' # override by inheritance
+
+    def __init__(s, request):
+        s._request = request
+        s._form = None
+        s._initial = {}
+        s._response = None # if set then it is returned instead of calling _render
+        s._render_dict = {}
+        s._get_instance()
+
+    def response(s):
+        if s._instance is not None: # editing existing object
+            if s._request.method != 'POST':
+                s._form = s._form_class(instance = s._instance)
+            s._edit_existing()
+        else:
+            s._create_new()
+            s._form = s._form_class(initial=s._initial)
       
-    form = PostForm()
-  
-  #--------------------- Now Render response ------------
-  if request.method == 'POST':
-        new_data = request.POST.copy()
-        fix_boolean_fields(new_data, ['draft', 'enable_comments'])
+        #--------------------- Now Render response ------------
+        if s._request.method == 'POST':
+            s.new_data = s._request.POST.copy()
+            s._handle_post()
+            s._form = s._form_class(s.new_data, files=s._request.FILES, instance=s._instance)
+            s.new_data.update(s._request.FILES)
+            if s._form.is_valid():
+                if s._instance is None:
+                    s._post_new()
+                s._instance = s._form.save()
+                s._on_valid_form()
+            else: # form is not valid
+                s.errors = s._form.errors
+ 
+        else: # GET, presumably (definitely no POST)
+            s._handle_get()
+        if s._response is not None:
+            return s._response
+        return s._render()
+    
+    def _post_new(s):
+        pass
+
+    def _on_valid_form(s):
+        pass
+
+    def _edit_existing(s):
+        pass
+
+    def _create_new(self):
+        pass
+
+    def _handle_get(self):
+        pass
+
+    def _handle_post(self):
+        pass
+
+    def _makeRenderDictionary(s):
+        pass
+
+    def _render(s):
+        s._render_dict.update({
+            'instance': s._instance,
+            'form': s._form,
+            })
+        s._makeRenderDictionary()
+        #-------------- Render Response ------------
+        return render_to_response(s._template, s._render_dict,
+                    context_instance=RequestContext(s._request))
+
+
+class PostCreator(Responder):
+
+    _template='desk/create_edit_post.html'
+    _form_class = PostForm
+
+    def __init__(s, request, post_id=None, blog_slug=None):
+        s.post_id    = post_id
+        s.blog_slug  = blog_slug
+
+        s.userId     = request.user.id
+        s.user_blogs = blog.objects.filter( authors=s.userId )
+        s.thePost    = None
+        s.postImages = None
+        s.theBlog    = None
+        s.message    = None
+        s.nullImages = range(0, NUM_IMAGES_IN_POST)
+
+        Responder.__init__(s, request)
+ 
+    def _get_instance(s):
+        s._instance = get_object_or_404(post, id=s.post_id)
+
+    def _edit_existing(s):
+        """ post_id is set. Fill in variables from existing post
+        """
+        thePost = s.thePost = s._instance
+        s.theBlog    = thePost.blog
+        s.imageObj   = thePost.image
+        s.postImages = thePost.postimage_set.all().order_by( 'index' )
+        s.nullImages = range(len(s.postImages), NUM_IMAGES_IN_POST)
+    
+        #check that user has the right to edit this post
+        if( thePost.author.id != s.userId ):
+            raise Http404()
+
+    def _create_new(s):
+        """ post_id is Null. Create an empty form, default variable values.
+        """
+        #Check if this user has the rights to post to this blog
+        try:
+            s.theBlog = blog.objects.all().filter(slug=s.blog_slug)[0]
+            s.theUser = s.theBlog.authors.filter(id=s.userId)[0]
+        except Exception, e:
+            raise Http404
+
+    def _handle_get(s):
+        if( s._request.GET.has_key('new') ):
+            if( int(s._request.GET['new']) == 1):
+                s.message = NEW_POST_CREATED_SUCCESSFULLY
+            else:
+                s.message = NEW_POST_CREATED_SUCCESSFULLY_CONTINUE_EDITING
+        s.errors = {}
+
+    def _handle_post(s):
+        fix_boolean_fields(s.new_data, ['draft', 'enable_comments'])
         
         def isSet( theHash, theKey ):
             return (theHash.has_key( theKey ) and len( theHash[theKey] ) > 0 )
         
-        if not isSet(new_data, 'post_date'):
-            new_data['post_date'] = datetime.now()
+        if not isSet(s.new_data, 'post_date'):
+            s.new_data['post_date'] = datetime.now()
 
-        #for k,v in new_data.iteritems():
-        #    print "--------"
-        #    print "[%s] [%s]" % (k,v)
-        
-        new_data['author'] = str(userId)
-        new_data['blog']   = str(theBlog.id)
-    
-        if not post_id:
-            # once again, we have a problem with ImageWithThumbnail, so the fix is:
-            # make sure the post has an id first, then add image.
-            thePost = post()
-            thePost.blog = theBlog
-            thePost.author = theUser
-            thePost.post_date = datetime.now()
-            thePost.save()
-            post_id = thePost.id
-            
-        form = PostForm(new_data, files=request.FILES, instance=thePost)
-        new_data.update(request.FILES)
+        s.new_data['author'] = str(s.userId)
+        s.new_data['blog']   = str(s.theBlog.id)
 
-        if form.is_valid():
-            newPost = form.save()
-            post_id = newPost.id
-            
-            if post_id:
-                # XXX: save images (not really required?)
-                #if request.FILES.has_key('image'):
-                #    newPost.save_image_file(newPost.image, request.FILES['image']['content'])
-                
-                #-------------- Append Images ----------------
-                handleImageUploads( newPost, new_data )
-              
-            # Do a post-after-redirect so that reload works, etc.
-            if( new_data.has_key('create_new_item_after_edit')):
-                return HttpResponseRedirect("/desk/blogs/%s/createPost/?new=2" % (newPost.blog.slug))
-            else:
-                return HttpResponseRedirect("/desk/editPost/%d/?new=1" % (newPost.id))
-        else: # form is not valid
-            errors = form.errors
-        #manipulator.do_html2python(new_data)
+    def _on_valid_form(s):
+        s.newPost = s._instance
+        s.post_id = s.newPost.id
         
-  else:
-        if( request.GET.has_key('new') ):
-            if( int(request.GET['new']) == 1):
-                message = NEW_POST_CREATED_SUCCESSFULLY
-            else:
-                message = NEW_POST_CREATED_SUCCESSFULLY_CONTINUE_EDITING
-        errors = {}
-        # This makes sure the form accurate represents the fields of the place.
-        #new_data = manipulator.flatten_data()
+        # XXX: save images (not really required?)
+        #if request.FILES.has_key('image'):
+        #    newPost.save_image_file(newPost.image, request.FILES['image']['content'])
+        
+        #-------------- Append Images ----------------
+        handleImageUploads( s.newPost, s.new_data )
+          
+        # Do a post-after-redirect so that reload works, etc.
+        if( s.new_data.has_key('create_new_item_after_edit')):
+            s._response = HttpResponseRedirect("/desk/blogs/%s/createPost/?new=2" % (s.newPost.blog.slug))
+        else:
+            s._response = HttpResponseRedirect("/desk/editPost/%d/?new=1" % (s.newPost.id))
 
-  #------- Filter Flags ------------
-  legalFlags = flag.objects.filter( Q(blog__isnull=True) | Q(blog=theBlog.id) )
-  renderFlags = []
-  postFlags = {}  #Flags that this post currently contains
-  
-  def stam( id ): postFlags[id] = True
-  
-  if( thePost != None ):
-       [ stam(f.id) for f in thePost.flags.all() ]
-  
-  
-  class FlagProxy( object ):
-      def __init__(self, id, name, sel ): 
-        self.id = id
-        self.name = name
-        self.selected = sel
-        
-  for f in legalFlags:
-     a = FlagProxy( f.id, f.name, postFlags.has_key(f.id) )
-     renderFlags.append(a)
-     
-  #-------------- Render Response ------------
-  return render_to_response('desk/create_edit_post.html', 
-                {'form'       : form, 
-                 'post'       : thePost,
-                 'postImages' : postImages,
-                 'nullImages' : nullImages, #blank places to add extra images to a blog post
-                 'blog'       : theBlog,
-                 'user_blogs' : user_blogs,
-                 'message'    : message,
-                 'blogFlags'  : renderFlags,
+    def _post_new(s):
+        """ POST - post_id is None
+        """
+        # once again, we have a problem with ImageWithThumbnail, so the fix is:
+        # make sure the post has an id first, then add image.
+        s.thePost = thePost = post()
+        thePost.blog = s.theBlog
+        thePost.author = s.theUser
+        thePost.post_date = datetime.now()
+        thePost.save()
+        s.post_id = thePost.id
+ 
+    def _makeRenderDictionary(s):
+         s._render_dict.update(
+                {'post'       : s.thePost,
+                 'postImages' : s.postImages,
+                 'nullImages' : s.nullImages, #blank places to add extra images to a blog post
+                 'blog'       : s.theBlog,
+                 'user_blogs' : s.user_blogs,
+                 'message'    : s.message,
+                 'blogFlags'  : s._makeFilterFlags(),
                  'section'    : MAIN_SECTION ,
-                 }, 
-                context_instance=RequestContext(request))
-  
-    #return generic_create_object( request, model=post, 
-                #post_save_redirect=theBlog.get_edit_absolute_url(),
-                #template_name='desk/create_post.html',
-                #extra_context={'blog_id':theBlog.id} )
-                
-create_edit_blog_post = login_needed(create_edit_blog_post)
+                 })
+
+    def _makeFilterFlags(s):
+        #------- Filter Flags ------------
+        legalFlags = flag.objects.filter( Q(blog__isnull=True) | Q(blog=s.theBlog.id) )
+        renderFlags = []
+        postFlags = {}  #Flags that this post currently contains
+      
+        def stam( id ): postFlags[id] = True
+      
+        if( s.thePost != None ):
+           [ stam(f.id) for f in s.thePost.flags.all() ]
+      
+        class FlagProxy( object ):
+            def __init__(self, id, name, sel ): 
+                self.id = id
+                self.name = name
+                self.selected = sel
+            
+        for f in legalFlags:
+            a = FlagProxy( f.id, f.name, postFlags.has_key(f.id) )
+            renderFlags.append(a)
+
+        return renderFlags
+
+# TODO: nice way to merge the post and its workshop to one form, *automagically*.
+# i.e. like edit_inline
+
+class WorkshopCreator(PostCreator):
+    
+    _template = 'desk/create_edit_workshop.html'
+    _form_class = WorkshopForm
+
+    def __init__(s, request, post_id=None, blog_slug=None):
+        PostCreator.__init__(s, request, post_id, blog_slug)
+        s.workshop = None
+
+    def _edit_existing(s):
+        super(WorkshopCreator, s)._edit_existing()
+        # now read stuff from the instance into the workshop fields
+        if s._form:
+            s._form.fill_other_fields_from_instance()
+        s.workshop = s.thePost.workshop
+        s.workshop.owners.add(s._request.user)
+
+    def _on_valid_form(s):
+        super(PostCreator, s)._on_valid_form()
+        if not s._instance.is_workshop():
+            s._instance.post_style = s._instance.POST_STYLE_WORKSHOP
+            s._instance.save()
+
+    def _makeRenderDictionary(s):
+        super(WorkshopCreator, s)._makeRenderDictionary()
+        s._render_dict.update({
+            'workshop':s.workshop,
+            'site':Site.objects.get_current().name
+            })
+
+#------------ WorkshopEvent editor ----------------------
+
+def create_edit_workshop_event( request, workshop_slug, we_id=None):
+    return WorkshopEventCreator(request, workshop_slug, we_id).response()
+create_edit_workshop_event = login_needed(create_edit_workshop_event)
+
+class WorkshopEventCreator(Responder):
+    _template = 'desk/create_edit_workshop_event.html'
+    _form_class = WorkshopEventForm
+
+    def _get_instance(self):
+        try:
+            self._instance = WorkshopEvent.objects.get(id=self.we_id)
+        except ObjectDoesNotExist:
+            self._instance = None
+
+    def _create_new(self):
+        # TODO: check that user has permissions (easy to do here, but must make sure its actually
+        # set at the right point.
+
+        # take initial values from another event of the same workshop first
+        base_event = None
+        if self.workshop.workshopevent_set.count() > 0:
+            events = self.workshop.workshopevent_set.order_by('-workshopeventpart__start_time')
+            if len(events) > 0:
+                base_event = events[0]
+        if base_event is None:
+            # last, take initial values from the default workshop event
+            default_workshop = Workshop.objects.get(name='סדנת ערכי בסיס')
+            base_event = default_workshop.workshopevent_set.get()
+        self._initial.update(base_event.get_new_event_dict())
+
+    def _makeRenderDictionary(self):
+        self._render_dict.update({
+            'workshop':self.workshop,
+            'event': self._instance
+            })
+
+    def _post_new(self):
+        we = WorkshopEvent()
+        we.workshop = self.workshop
+        self._form.instance = we
+
+    def __init__(self, request, workshop_slug, we_id):
+        self.workshop_slug = workshop_slug
+        self.workshop = get_object_or_404(Workshop, slug=workshop_slug)
+        self.we_id = we_id
+        super(WorkshopEventCreator, self).__init__(request)
+
+    def _on_valid_form(s):
+        for part_id_key in [k for k in s.new_data.keys() if k.startswith('part_id')]:
+            part_id = s.new_data[part_id_key]
+            form_part_num = part_id_key.rsplit('_',1)[1]
+            if len(WorkshopEventPart.objects.filter(id=part_id)) == 0:
+                # create new
+                part = WorkshopEventPart()
+                part.workshop_event = self._instance
+            else:
+                # edit existing
+                part = WorkshopEventPart.objects.get(id=part_id)
+            get = lambda x: s.new_data['part_%s_%s' % (x, form_part_num)]
+            start_date = get('start_date')
+            start_time = get('start_time')
+            end_time   = get('end_time')
+            part.start_time = datetime.strptime('%s %s' % (start_date, start_time), '%Y-%m-%d %H:%M:%S')
+            part.end_time = datetime.strptime('%s %s' % (start_date, end_time), '%Y-%m-%d %H:%M:%S')
+            part.save()
+

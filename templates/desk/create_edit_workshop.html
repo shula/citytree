@@ -1,0 +1,365 @@
+{% extends "base_desk.html" %}
+
+{% load thumbnail %}
+
+{% block crumbs %}
+	<a href="/desk/">‎כניסה</a> &gt; <a href="{{blog.get_edit_absolute_url}}">{{blog.name}}</a> &gt; 
+	{% if post %}
+	עריכת סדנה קיימת
+		{% else %}
+	ייסוד סדנה חדשה
+		{% endif %}
+{% endblock %}
+
+
+{% block messages %}
+	{% ifequal message 3 %}
+	<div class="gotit">
+						הסדנה נוסדה בהצלחה על האתר! אפשר להמשיך לערוך אותה.
+						
+						</div>
+	{% endifequal %}
+	
+	{% ifequal message 4 %}
+	<div class="gotit">
+						הסדנה נוסדה בהצלחה על האתר! עכשיו אפשר לערוך סדנה חדשה.
+						
+						</div>
+	{% endifequal %}
+	
+	{% if form.has_errors %}
+	<div class="gotit">
+בבקשה לשים לב לשדות שפוספסו.
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block contents %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#id_post_style').addClass("must");
+		$('#id_title').addClass("must");
+		$('#id_description').addClass("must");
+		$('#id_name').addClass("must");
+		$('#id_slug').addClass("must");
+		$('#id_draft').addClass("must");
+		$('#id_enable_comments').addClass("must");
+		
+		$('#id_image_file').attr('size', '50px');
+		$('#id_teaser_text').attr({ 'cols': '60', 'rows': '6' } );
+		$('#id_image_label').attr({ 'cols': '60','rows': '6' } );
+        $('#id_text').attr({ 'cols': '100','rows': '30' } );
+
+        $("a#postTextToggler").click(function() {
+            $("div#post_text").toggle(); return false; });
+
+	});
+</script>
+
+<div class="widecontent">
+
+<!-- New and/or Small leaf -->
+<div class="widecontent1">
+
+    <form action="." method="post" enctype="multipart/form-data">
+        <h1>
+            {% if post %}
+            עריכת סדנה קיימת
+            {% else %}
+            ייסוד סדנה חדשה
+            {% endif %}
+
+        </h1>
+        <p>
+        זה המקום ליצירת סדנה חדשה על הענף. לא להבהל מאורך הדף, לא כל השדות הכרחיים. אלה שכן - מסומנים בבהיר.
+        </p>
+
+<table class="formtab">
+<tr>
+    <td valign="top">
+        <label for="id_title">כותרת:</label> 
+    </td>
+    <td>
+        {{ form.title }}
+        {% if form.title.errors %}*** {{ form.title.errors|join:", " }}{% endif %}
+        <h3>
+            נקודה למחשבה: השארתי כותרת שונה מהשם של הסדנה. ההנחה שלי היא שיש סיבה לתת כותרת יותר "קריאה" אבל שם יותר "מדויק". שימו לב שזה לא קשור ל-slug כלל.
+        </h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top">
+        <label for="id_name">שם הסדנה:</label> 
+    </td>
+    <td>
+        {{ form.name }}
+        {% if form.name.errors %}*** {{ form.name.errors|join:", " }}{% endif %}
+        <h3> שם הסדנה.
+        </h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top">
+        <label for="id_slug">slug:</label> 
+    </td>
+    <td>
+        {{ form.slug }}
+        {% if form.slug.errors %}*** {{ form.slug.errors|join:", " }}{% endif %}
+        <h3> שם השדה הוא בכוונה באנכלי. השדה הזה לא יופיע על האתר עצמו, אבל יהיה השם בשורת הכתובת של האתר. לכן זה ידידותי לבחור מילה בודדת בלי רווחים, באנגלית, לדוגמא economy, rawfood, ecohome, וכו'.
+        </h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top">			
+        <label for="id_description">תאור בשורה אחת:</label> 
+    </td>
+    <td>
+        {{ form.description }}
+        {% if form.description.errors %}*** {{ form.description.errors|join:", " }}{% endif %}
+
+        <h3>
+            חשוב מאוד - מופיע בעמוד עם כל הסדנאות. שורה אחת קצרה וקולעת!
+        </h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top">			
+        <label for="id_teaser_text">בקיצור:</label> 
+    </td>
+    <td>
+        {{ form.teaser_text }}
+        {% if form.teaser_text.errors %}*** {{ form.teaser_text.errors|join:", " }}{% endif %}
+
+        <h3>
+            הבקיצור כרגע לא משמש בכלל בסדנה. אולי בהמשך.
+        </h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top">			
+        <label for="id_image">תמונה:</label> 
+    </td>
+    <td>
+        {{ form.image }}{{ form.image_file }}
+        {% if form.image.errors %}*** {{ form.image.errors|join:", " }}{% endif %}
+        <h3>
+            איתור תמונה שמתאימה לעלה באמצעות מקש "Browse". לא חייבים תמונה, אבל זה ממש מומלץ. התמונה חייבת להיות ברוחב 160 פיקסלים וקלה מ-20K. הגובה יכול להשתנות. 
+            <a href="http://citytree.net/plantea/index.php?title=%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA">
+                עוד ב"עריכת עלים"</a> התמונה תופיע כאן, במקום העצים שלנו:
+        </h3>
+
+        {% if post.image %}
+        <img src="{{post.get_image_url}}" width={{post.image_width}}px height={{post.image_height}}px title="{{post.image_label}}">
+        {% else %}				
+        <img src="{{media_url}}desk/trees.jpg" width="156" height="120" border="0" alt="pic example">
+        {% endif %}
+        <br>
+
+    </td>
+</tr>
+			
+<br>
+			
+<tr>
+    <td valign="top">			
+        <label for="id_image_label">הערה צפה:</label> 
+    </td>
+    <td>
+        {{ form.image_label }}
+        {% if form.image_label.errors %}*** {{ form.image_label.errors|join:", " }}{% endif %}</p>
+
+
+        <h3>
+            חהערה הצפה אכן תצוף מעל התמונה כשעכבר עובר בסביבה! היא יכולה להיות באיזה אורך שבא, והיא צריכה לשפוך אור על התמונה.
+        </h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top">			
+        <label for="id_image_caption">הערת משנה:</label> 
+    </td>
+    <td>
+        {{ form.image_caption }}
+        {% if form.image_caption.errors %}*** {{ form.image_caption.errors|join:", " }}{% endif %}</p>
+
+        <h3>
+            הערת המשנה תופיע מתחת לתמונה וצריכה להיות קצרצרה - יש הגבלה של 25 תווים. אם שדה זה נשאר ריק, המערכת משתמשת אוטומאטית ב-25 התווים הראשונים מההערה הצפה.
+        </h3>
+    </td>
+</tr>
+
+    </table>
+</div>
+<br clear="all">
+
+<!-- Longv Leaf -->
+<a href="#" id="postTextToggler">הצג\הסתר את אזור עריכת טקסט</a>
+<div class="widecontent2" id="post_text">
+	
+    <h2>
+        הרחבת העלה ל"עלה רחב" (טקסט ארוך משתי פסקאות)
+    </h2>
+    <h3>
+        העלה המורחב מכיל טקסט שארוך מההגבלה ל-2 פיסקאות שחלה על עלה קטן. הוא יכול להיות קצת יותר ארוך, או המון יותר ארוך (מאמר). העלה המורחב מופיע בדף נפרד שמוקדש לעלה הספציפי. 
+        <a href="http://citytree.net/plantea/index.php?title=%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA#.D7.92.D7.99.D7.93.D7.95.D7.9C_.D7.A2.D7.9C.D7.99.D7.9D_.D7.95.D7.A1.D7.99.D7.93.D7.95.D7.A8_.D7.A4.D7.A8.D7.97.D7.99.D7.9D">
+            עוד ב"גידול עלים וסידור פרחים"</a>. 
+    </h3>
+
+    <table class="formtab">
+
+<tr>
+    <td valign="top">			
+        <label for="id_text">תוכן:</label> 
+    </td>
+    <td>
+        {{ form.text }}
+        {% if form.text.errors %}*** {{ form.text.errors|join:", " }}{% endif %}
+        <h3>
+            התוכן המלא יופיע בדף של העלה. 
+            <a href="http://citytree.net/plantea/index.php?title=%D7%94%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA">
+                פרטים בנוגע לאפשרויות עריכת עלים</a>
+        </h3>
+    </td>
+</tr>
+<tr>
+    <td valign="top">			
+        <label for="id_flags">דגלים:</label> 
+    </td>
+    <td>
+        <select id="id_flags" class="vSelectMultipleField" name="flags" size="5" multiple="multiple">
+
+            {% for flag in blogFlags  %}
+            {% if flag.selected %}
+            <option value="{{flag.id}}" selected="selected">{{flag.name}}</option>
+            {% else	%}
+            <option value="{{flag.id}}">{{flag.name}}</option>
+            {% endif %}						
+            {% endfor %}
+
+        </select>
+
+        {% if form.flags.errors %}*** {{ form.flags.errors|join:", " }}{% endif %}
+        <h3>
+            הדגלים משייכים את העלה לנושאים שהגדרנו. להוספת נושאים פנו לעורכת.
+        </h3>
+
+    </td>
+</tr>
+
+    </table>
+</div>
+
+<div class="widecontent2">
+	
+    <table class="formtab">
+
+<tr>
+    <td valign="top" align="left" width="200">			
+        <label for="id_draft">מצב התוכן:</label>
+    </td>
+    <td colspan="2">
+        {{ form.draft }}
+        {% if form.draft.errors %}*** {{ form.draft.errors|join:", " }}{% endif %}
+
+        <h3>
+            במצב "טיוטה", התוכן שמור אך לא מופיע על האתר. אפשר לחזור אליו, לערוך ולאשר מתי שבא. במצב "מאושר" העלה המאושר מופיע על האתר..
+        </h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top" align="left" width="200">
+        <label for="id_enable_comments">מותר להוסיף הערות:</label>
+    </td>
+    <td>
+        {{ form.enable_comments }}
+    </td>
+</tr>
+
+<tr>
+    <td>&nbsp;	</td>
+    <td>
+    </td>
+
+    <td>
+        <input class="boldbutt" type="submit" value="שמירה והמשך עריכה">
+        &nbsp;&nbsp;
+        <input class="boldbutt" type="submit" name="create_new_item_after_edit" value="שמירה ויצירת עלה חדש">
+    </td>
+</tr>
+
+    </table>
+</div>
+<!-- Workshop Event and Event Parts -->
+<script type="text/javascript">
+    $(document).ready(function () {
+            $("input#addWorkshopEvent").click(function(event) {
+                window.open("http://{{site}}{{workshop.get_add_event_absolute_url}}");
+                return false;
+                });
+            });
+</script>
+
+<div class="widecontent1" id="workshop">
+    <table class="formtab">
+
+        <h2>טבלת מופעים של הסדנה</h2>
+
+<tr>
+    <td>&nbsp;	</td>
+    <td>
+    </td>
+
+    <td>
+    {% ifequal workshop.slug "" %}
+    <a href="#id_slug">בבקשה לקבוע slug לסדנה לפני הוספת ארועים!</a>
+    {% else %}
+    <input type="button" class="boldbutt" value="הוספת מופע של הסדנה" id="addWorkshopEvent" />
+    {% endifequal %}
+    </td>
+</tr>
+
+<tr>
+    <td>מנחים</td>
+    <td>איש קשר</td>
+    <td>איפה</td>
+    <td>מתחיל</td>
+    <td>מסתיים</td>
+    <td>לעריכה (חלון חיצוני)</td>
+</tr>
+{% for event in workshop.events %}
+<tr>
+    <td>{{event.instructors}}</td>
+    <td>{{event.contact}}</td>
+    <td>{{event.location}}</td>
+    <td>{{event.get_start_date}}</td>
+    <td>{{event.get_end_date}}</td>
+    <td><a href="{{event.get_edit_absolute_url}}">לעריכה</a></td>
+</tr>
+{% endfor %}
+
+    </table>
+</div>
+
+{% include "desk/gallery_form_part.html" %}
+
+</form>
+
+<br clear="all">
+<br clear="all">
+
+<div class= "bottom"> 
+<div class= "nav"> 
+{% include "desk/navigation_bar.html" %}
+</div>
+<br clear="all"><br clear="all"><br clear="all">
+</div>
+
+</div>
+{% endblock %}
