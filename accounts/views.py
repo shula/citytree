@@ -54,7 +54,8 @@ def create_account(request):
     """hash is filled by the hidden input in the form - this is a hash into the
     CapchaRequest table to figure out if the user solved it correctly.
     """
-    create_account_template = 'accounts/create_account.html'
+    template = create_account_template = 'accounts/create_account.html'
+    registration_success_template = 'accounts/registration_success.html'
     if request.method == 'GET':
         form = RegisterForm()
         hash = new_capcha_request(form)
@@ -93,16 +94,17 @@ def create_account(request):
                 user.last_name = cleaned_data['last_name']
                 user.save()
                 cleaned_data['password'] = password
+                print "reg: 1"
                 send_email_to('accounts/create_acount_email.txt', email, 'פרטי חשבון עץ בעיר',
                             cleaned_data)
-                return HttpResponseRedirect('/accounts/registration_success')
+                template = registration_success_template
         else:
-            import pdb
-            pdb.set_trace()
+            pass
         
+    print "reg: 2"
     site = Site.objects.get_current().name
     #site='citytree.saymoo.org:9192' # TODO!!! change back to above line before commit.
-    return render_to_response(create_account_template,
+    return render_to_response(template,
             {
                 'form':form,
                 'hash':hash,
@@ -110,9 +112,6 @@ def create_account(request):
             },
             context_instance=RequestContext(request))
     
-def registration_success(request):
-    return render_to_response('accounts/registration_success.html')
-
 def capcha_image(request, hash):
     capcha_request = get_object_or_404(CapchaRequest, hash=hash)
     image_data = generate_capcha(capcha_request.letters)

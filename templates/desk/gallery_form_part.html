@@ -1,0 +1,98 @@
+{% load thumbnail %}
+
+<!-- Gallery -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            $("a.galleryToggler").click(function() {
+                $("div#gallery").toggle(); return false; });
+        });
+</script>
+
+<a href="#" class="galleryToggler">הצג\הסתר את אזור עריכת הגלריה</a>
+
+<div class="widecontent2" id="gallery">
+
+<h2>
+    סידור זר פרחים (הוספת גלריית תמונות)
+</h2>
+<h3>
+    הזר יכול להכיל עד 12 תמונות. התמונות יכולות להיות בכל גודל שהוא, אבל לא יותר כבדות מ 90K. התמונה בזר היא תמיד בגודל 156X120 פיקסלים. תצוגה מוקטנת שלהן מופיעה כאן. לכל תמונה הערת משנה והערה צפה שעובדות בדיוק כמו ההערות של עלה קטן.
+</h3>
+
+    <table class="formtabgal" border="1px">
+
+<tr>
+    <td class="formtabgal">	
+        מס'
+    </td>
+    <td class="formtabgal" width="200px">
+        איתור תמונה 
+    </td>
+    <td class="formtabgal" width="68px">
+        התמונה
+    </td>
+    <td class="formtabgal" width="200px">
+        הערה צפה (באורך בלתי מוגבל)
+    </td>
+    <td class="formtabgal" width="140px">
+        הערת משנה (רק 25 תווים)
+    </td>
+
+    <td class="formtabgal" width="140px">
+        מחיקה
+    </td>
+</tr>
+
+{% for postImage in postImages  %}
+<tr>
+	<td style="text-align: center;">
+		{{forloop.counter0}}
+	</td>
+    <td class="formtabgal">
+        <input type="hidden" id="id_image" name="gallery_image_indx{{forloop.counter0}}" value="{{postImage.index}}">
+
+        <input type="hidden" id="id_image" name="gallery_image{{forloop.counter0}}" value="{{postImage.image}}" />
+        <input type="file"class="vImageUploadField" name="gallery_image_file{{forloop.counter0}}" size="20" />
+    </td>
+    <td class="formtabgal">
+        <a href="{{postImage.get_image_url}}" class="thickbox">
+            <img src="{{postImage.get_image_url|thumbnail:"width=65"}}" width="{{postImage.get_image_url|thumbnail:"width=65"|image_width}}px" height="{{postImage.get_image_url|thumbnail:"width=65"|image_height}}px" border="0" alt="{{postImage.label|escape}}" title="{{postImage.label|escape}}" ></a>
+    </td>
+    <td class="formtabgal">
+        <textarea id="id_teaser_text" class="vLargeTextField required" name="gallery_image_label{{forloop.counter0}}" rows="6" cols="34">
+            {{postImage.label}}
+        </textarea>
+    </td>
+    <td class="formtabgal">
+        <input type="text" id="id_image_label" class="vTextField" name="gallery_teaser_text{{forloop.counter0}}" size="20" maxlength="25" value="{{postImage.caption}}"/>
+    </td>
+    <td style="text-align: center;">
+        <input type="checkbox" name="gallery_image_delete{{forloop.counter0}}" value="{{postImage.id}}">
+    </td>
+</tr>    
+{% endfor %}
+
+{% for img in nullImages  %}
+<tr>
+    <td></td>
+    <td class="formtabgal">
+        <input type="hidden" id="gallery_image{{img}}" name="gallery_image{{img}}" value="" />
+        <input type="hidden" id="id_image" name="gallery_image_indx{{img}}" value="{{img}}">
+        <input type="file" id="gallery_image_file{{img}}" class="vImageUploadField" name="gallery_image_file{{img}}" size="20" />
+    </td>
+    <td class="formtabgal">
+        <img src="{{media_url}}/desk/trees_s.jpg" width="65" height="50" border="0" alt="trees">
+    </td>
+    <td class="formtabgal">
+        <textarea id="id_teaser_text" class="vLargeTextField required" name="gallery_image_label{{img}}" rows="6" cols="34"></textarea>
+    </td>
+    <td class="formtabgal">
+        <input type="text" id="id_image_label" class="vTextField" name="gallery_teaser_text{{img}}" size="20" value="" maxlength="25" />
+    </td>
+</tr>
+
+{% endfor %}
+
+    </table>
+</div>
