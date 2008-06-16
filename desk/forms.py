@@ -51,7 +51,7 @@ class WorkshopForm(forms.ModelForm):
         for field in fields:
             if s.fields.has_key(field):
                 value = getattr(w, field)
-                print "wform: reading %s=%s" % (field, value)
+                #print "wform: reading %s=%s" % (field, value)
                 s.initial[field] = value
 
     def save(s):

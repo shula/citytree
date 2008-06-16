@@ -83,16 +83,10 @@
 <a href="http://www.citytree.net">‎
 דף בית
 </a>
- > תמי עולה לגג
+ &gt; תמי עולה לגג
 	{% endblock %}
-    </div>
-    <div class="userlogin">
-        {% if user.is_authenticated %}
-        שלום {{ user.get_full_name }}! (<a href="/accounts/logout/">ליציאה</a>)
-        {% else %}
-        שלום אורח! לכניסה או הרשמה לחץ <a href="/accounts/login/">כאן</a>
-        {% endif %}
-    </div>
+</div>
+{% include "userlogin.html" %}
 </div>
 
 <!-- Calendar starts here -->

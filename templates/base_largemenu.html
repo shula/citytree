@@ -61,13 +61,22 @@ src='{{media_url}}/calendar/calen.png');
 </script>
 
 <div class="calendarContainer">
+<div class="userlogin">
+    {% if user.is_authenticated %}
+    שלום {{ user.get_full_name }}! (<a href="/accounts/logout/">ליציאה</a>, <a href="/accounts/profile/">לפרופיל</a>)
+    {% else %}
+    <a href="/accounts/login_and_register/">
+        <img src="/siteMedia/common/come_in.png" alt="שלום אורח! לכניסה או הרשמה"/>
+    </a>
+{% endif %}
+</div>
 {% block calendar %}
 <div class="calendarHolder" id='calContainer'>
 
 {{calendar}}
 <BR>
 <a href="http://www.citytree.net/static/needed01.html">
-<IMG SRC="http://www.citytree.net/static/needed.jpg" WIDTH="138" HEIGHT="168" BORDER="0" ALT="">
+<IMG SRC="http://www.citytree.net/static/needed.jpg" WIDTH="138" HEIGHT="168" BORDER="0" ALT=""/>
 </a>
 </div>
     

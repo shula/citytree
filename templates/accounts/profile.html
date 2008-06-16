@@ -23,11 +23,29 @@
 פרופיל משתמש
 </h1>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+            $("div#password_change").hide();
+            $("a#password_change").click(function() {
+                $("div#password_change").toggle(); return false; });
+    })
+</script>
+
 <form method="post" action=".">
-<table>
-    {{ form }}
-</table>
-<input type="submit" value="בבקשה" class="boldbutt"/>
+    <table>
+        <tr><td>{{form.first_name.label}}</td><td>{{form.first_name}}</td></tr>
+        <tr><td>{{form.last_name.label}}</td><td>{{form.last_name}}</td></tr>
+        <tr><td>{{form.email.label}}</td><td>{{form.email}}</td></tr>
+        <td><td></td><td><a href="#" id="password_change">לשינוי סיסמה</a></td>
+    </table>
+    <div id="password_change">
+        <table>
+            <tr><td>{{form.old_password.label}}</td><td>{{form.old_password}}</td></tr>
+            <tr><td>{{form.new_password_1.label}}</td><td>{{form.new_password_1}}</td></tr>
+            <tr><td>{{form.new_password_2.label}}</td><td>{{form.new_password_2}}</td></tr>
+        </table>
+    </div>
+<input type="submit" value="לשינוי פרטים" class="boldbutt"/>
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
