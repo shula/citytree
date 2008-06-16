@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.contrib.comments.models import FreeComment
 from citytree.cityblog.feeds import LatestPosts
+import settings
 
 feeds = {
     'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.
@@ -28,4 +29,7 @@ urlpatterns = patterns('',
     (r'^send_feedback/$', 'cityblog.views.send_feedback'),
     (r'^', include('citytree.frontpage.urls')),
 )
+
+if settings.SERVE_SITEMEDIA_FROM_DJANGO:
+    urlpatterns += patterns('',(r'^siteMedia/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/citytree/siteMedia'}))
 

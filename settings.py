@@ -99,8 +99,8 @@ SITE_LOGO   = '' #site logo
 
 # -------------------------- Development Stuff -------------
 # Leave this as None for default - sending to the blog author
-SEND_EMAIL_ON_COMMENT=None
-
+SEND_EMAIL_ON_COMMENT = None
+SERVE_SITEMEDIA_FROM_DJANGO = False
 
 #---------------------- DEVELOPMENT COMPROMISE ---------------
 # this is the only difference between a development environment
