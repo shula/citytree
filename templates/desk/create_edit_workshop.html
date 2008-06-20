@@ -128,20 +128,6 @@
 
 <tr>
     <td valign="top">			
-        <label for="id_teaser_text">בקיצור:</label> 
-    </td>
-    <td>
-        {{ form.teaser_text }}
-        {% if form.teaser_text.errors %}*** {{ form.teaser_text.errors|join:", " }}{% endif %}
-
-        <h3>
-            הבקיצור כרגע לא משמש בכלל בסדנה. אולי בהמשך.
-        </h3>
-    </td>
-</tr>
-
-<tr>
-    <td valign="top">			
         <label for="id_image">תמונה:</label> 
     </td>
     <td>
@@ -212,6 +198,16 @@
     </h3>
 
     <table class="formtab">
+
+<tr>
+    <td valign="top">			
+        <label for="id_teaser_text">בקיצור:</label> 
+    </td>
+    <td>
+        <h3>הטקסט הקצר מהעלה המקורי:</h3>
+        {{ workshop.defining_post.teaser_text }}
+    </td>
+</tr>
 
 <tr>
     <td valign="top">			
