@@ -22,8 +22,8 @@
 	
 	{% for post in post_list %}
 	
-	{% get_free_comment_count for cityblog.post post.id as comment_count %}
-    <div class="workshopLeafContainer" style="min-height: 220px">
+    {% get_free_comment_count for cityblog.post post.id as comment_count %}
+<div class="workshopLeafContainer" style="min-height: 220px">
     <div class="blogListImage">
         <a href="{{post.workshop.get_absolute_url}}">
 		<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
@@ -42,12 +42,16 @@
         <table>
             <tr><td>תאור:</td><td>{{post.workshop.description}}</td></tr>
             {% if post.workshop.next_event %}
-            <tr><td>תאריך התחלה</td><td>{{post.workshop.next_event.start_date}}</td></tr>
+            <tr><td>תאריך התחלה</td>
+                <td>{{post.workshop.next_event.start_date|date:"d/m/y"}}</td></tr>
             {% ifnotequal post.workshop.next_event.start_date post.workshop.next_event.end_date %}
-            <tr><td>תאריך סיום:</td><td>{{post.workshop.next_event.end_date}}</td></tr>
+            <tr><td>תאריך סיום:</td>
+                <td>{{post.workshop.next_event.end_date|date:"d/m/y"}}</td></tr>
             {% endifnotequal %}
-            <tr><td>מנחים:</td><td>{{post.workshop.next_event.instructors}}</td></tr>
-            <tr><td>איש קשר:</td><td>{{post.workshop.next_event.contact}}</td></td>
+            <tr><td>מנחים:</td>
+                <td>{{post.workshop.next_event.instructors}}</td></tr>
+            <tr><td>איש קשר:</td>
+                <td>{{post.workshop.next_event.contact}}</td></td>
             {% endif %}
         </table>
     </p>
