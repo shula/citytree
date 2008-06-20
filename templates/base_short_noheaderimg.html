@@ -8,6 +8,9 @@
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/links.css">
 {% endblock %}
 
+{% block login %}
+{% endblock %}
+
 <style type="text/css">
 	
 	div.main { 
@@ -76,8 +79,10 @@
 </a>
  > תמי עולה לגג
 	{% endblock %}
-</div>
-{% include "userlogin.html" %}
+    </div>
+    <div class="userlogin">
+        {% include "login_snippet.html" %}
+    </div>
 </div>
 
 <!-- Calendar starts here -->

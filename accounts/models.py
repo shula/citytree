@@ -19,5 +19,7 @@ class CapchaRequest(models.Model):
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
+    phone = models.CharField(max_length=200)
+    in_citytree_list = models.BooleanField(blank=True, default=True, null=True)
     # TODO whenever needed
 

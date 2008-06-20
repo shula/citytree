@@ -458,7 +458,25 @@ color: #61775B;
 	text-align: right;
 	width: 430px;
 }
-	
+
+div.login {
+    direction: rtl;
+	position: relative; right: -8px; top: 0px;
+    float: left;
+    /*
+    position: absolute; top: 10px; left: 170px;
+    */
+    z-index: 100;
+	color: #160066;
+	font-weight: bold;
+	font-size: 10pt;
+	font-family: arial, helvetica, sans-serif;
+}
+
+div.login a {
+    color: #3e19ca;
+}
+
 /* For Pagination  */
 .paginator { padding: .25em .25em .6em .25em; }
 .paginate-pages { padding: 2px 3px; border: 1px solid #ddd; cursor: pointer; text-decoration: underline; }

@@ -53,7 +53,14 @@ $('img').Tooltip({
 </head>
 
 <body style="background-color: #B6E3AB;">
+
 <div id="wrapper">
+
+<div class=login>
+{% block login %}
+{% include "login_snippet.html" %}
+{% endblock %}
+</div>
 
 {% block top %}
 {% endblock %}

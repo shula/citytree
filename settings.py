@@ -82,7 +82,7 @@ INSTALLED_APPS = (
 # Fix for gallery problem?
 #APPEND_SLASH=False
 
-AUTH_PROFILE_MODULE='workshop.userprofile'
+AUTH_PROFILE_MODULE='accounts.UserProfile'
 #LOGIN_REDIRECT_URL='/'
 
 #-------------------------- Cache --------------------------
