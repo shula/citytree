@@ -1,0 +1,88 @@
+{% extends "base_desk.html" %}
+
+{% load thumbnail %}
+
+{% block crumbs %}
+	<a href="/desk/">‎כניסה</a> &gt; <a href="{{blog.get_edit_absolute_url}}">{{blog.name}}</a> &gt; 
+	{% if event %}
+	עריכת מופע סדנה
+		{% else %}
+	הוספת מופע לסדנה
+		{% endif %}
+{% endblock %}
+
+{% block messages %}
+{% endblock %}
+
+{% block contents %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#id_post_style').addClass("must");
+		$('#id_title').addClass("must");
+		$('#id_description').addClass("must");
+		$('#id_name').addClass("must");
+		$('#id_slug').addClass("must");
+		$('#id_draft').addClass("must");
+		$('#id_enable_comments').addClass("must");
+
+        $("a#postTextToggler").click(function() {
+            $("div#post_text").toggle(); return false; });
+
+	});
+</script>
+
+<div class="widecontent">
+
+<!-- New and/or Small leaf -->
+<div class="widecontent1">
+
+    <form action="." method="post" enctype="multipart/form-data">
+        <h1>
+        {{ workshop }} - 
+            {% if event %}
+            עריכת מופע קיים
+            {% else %}
+            יצירת מופע חדש
+            {% endif %}
+        </h1>
+        <p>
+        כאן תגדירו את זמן ומיקום הסדנה או קורס הבאים
+        </p>
+
+        <table class="formtab">
+            {{ form }}
+        <input class="boldbutt" type="submit" value="שמירה והמשך עריכה">
+    </table>
+
+    <table class="formtab">
+        <tr>
+            <td>תאריך</td><td>שעת התחלה</td><td>שעת סיום</td>
+        </tr>
+        {% for part in form.instance.parts %}
+        <input type="hidden" name="part_id_{{forloop.counter0}}" value="{{part.id}}"/>
+        <tr>
+            <td>
+                <input type="text" name="part_start_date_{{forloop.counter0}}" value="{{part.start_time.date}}"/>
+            </td>
+            <td>
+                <input type="text" name="part_start_time_{{forloop.counter0}}" value="{{part.start_time.time}}"/>
+            </td>
+            <td>
+                <input type="text" name="part_end_time_{{forloop.counter0}}" value="{{part.end_time.time}}"/>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+</div>
+<br clear="all">
+
+<div class= "bottom"> 
+    <div class= "nav"> 
+        {% include "desk/navigation_bar.html" %}
+    </div>
+    <br clear="all"><br clear="all"><br clear="all">
+</div>
+
+</div>
+{% endblock %}

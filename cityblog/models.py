@@ -1,7 +1,8 @@
 # vim: set fileencoding=utf-8 :
+# -*- coding: utf-8 -*-
+
 import datetime
 import random
-import sha
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -12,6 +13,8 @@ from django.contrib.sites.models import Site
 from nesh.thumbnail.field import ImageWithThumbnailField
 from citytree.utils.textUtils import wikiSub
 import settings
+
+from utils.randomUtils import make_random_hash
 
 # Javascript stuff - to be moved somewhere more appropriate
 
@@ -74,6 +77,9 @@ class blog(models.Model):
       from citytree.cityblog.feeds import LatestPosts_get_feed_url
       return LatestPosts_get_feed_url(self)
 
+    def is_workshop(self):
+        return self.blogworkshop_set.count() > 0
+
     class Admin:
       fields = (
         (None, {'fields': ('name', 'slug', 'header_image', 'header_image_label', 'teaser_photo', 'teaser_photo_label', 
@@ -103,11 +109,13 @@ class post(models.Model):
     POST_STYLE_SMALL_LEAF = 1
     POST_STYLE_ARTICLE = 2
     POST_STYLE_GALLERY = 3
+    POST_STYLE_WORKSHOP = 4
     
     POST_STYLE_TYPES = (
         ( POST_STYLE_SMALL_LEAF, 'עלה קטן' ),
         ( POST_STYLE_ARTICLE, 'מאמר' ),
         ( POST_STYLE_GALLERY, 'גלריה' ),
+        ( POST_STYLE_WORKSHOP, 'סדנה' ),
     )
 
     blog          = models.ForeignKey(blog)
@@ -131,7 +139,7 @@ class post(models.Model):
     image_height  = models.PositiveIntegerField(blank=True,null=True)
     image_width   = models.PositiveIntegerField(blank=True,null=True)
     
-    teaser_text          = models.TextField(blank=False, null=True)
+    teaser_text          = models.TextField(blank=False, null=True, help_text='הבקיצור יופיע בעמוד הראשי של הבלוג, ויכול גם להוות את העלה כולו (במקרב של "עלה קטן")')
     teaser_rendered_text = models.TextField(blank=True, null=True)
     
     text          = models.TextField(help_text="If left blank then Text is copied here", blank=True, null=True)
@@ -161,12 +169,30 @@ class post(models.Model):
             })
         )
         list_display   = ('blog', 'title', 'author', 'time_modified', 'draft' )
-        list_filter    = ('blog', 'time_modified')
+        list_filter    = ('blog', 'time_modified', 'post_style')
         ordering       = ('-post_date',)
        
     class Meta:
         ordering = ['-post_date']
     
+    def get_workshop(self):
+        # a little hack to force old posts to become "with workshop" posts upon visitation
+        return self.workshop_set.get()
+    workshop = property(get_workshop)
+
+    def make_sure_workshop_exists(self):
+        # basically a gradual update measure - posts that are on a blog that is a workshop
+        # should always have a Workshop instance pointing at them, but it didn't use to be that way.
+        if self.blog.is_workshop() and self.workshop_set.count() == 0:
+            from workshop.models import Workshop
+            self.workshop_set.add(Workshop.create_workshop_by_post(self))
+            self.save()
+
+    # TODO - is there a simpler way to do this is_X stuff? some magic of meta classes? my
+    # oppurtunity?? nah.
+    def is_workshop(self):
+        return self.post_style == self.POST_STYLE_WORKSHOP
+
     def is_gallery(self):
         return self.post_style == self.POST_STYLE_GALLERY
 
@@ -296,7 +322,7 @@ class PostModerator(CommentModerator):
         return spamDetector.moderate(comment, content_object)
 
     def email(self, comment, content_object):
-        self._hash = sha.new(hex((random.randint(0,65536)<<16)+random.randint(0,65536))[2:]).hexdigest()
+        self._hash = make_random_hash()
         post = content_object # same thing
         if self.really_send_email_to_this_person is None:
             recipient_list = [post.author.email]

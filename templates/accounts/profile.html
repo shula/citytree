@@ -1,0 +1,56 @@
+{% extends "base_short_menu.html" %}
+
+
+{% block  headerImage%}
+    <img src="/siteMedia/common/top_registration.jpg" 
+    		width="808px" 
+    		height="160px" 
+    		alt="מציעים לכם חברום" title="מציעים לכם חברות">    
+{% endblock %}
+
+{% block navigation %}
+{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block messages %}
+
+{% if form.has_errors %}
+<div class="gotit">
+    שגיאה בעריכת הטופס
+</div>
+{% endif %}
+
+
+{% endblock %}
+{% block central_area %}
+<div class="content">
+
+<h1>
+    הפרופיל של {{user.username}}
+</h1>
+<h3>
+    שינוי פרטים אישיים
+</h3>
+
+<form method="post" action=".">
+    <table>
+        <tr><td>{{form.username.label}}</td><td>{{form.username}}</td></tr>
+        <tr><td>{{form.first_name.label}}</td><td>{{form.first_name}}</td></tr>
+        <tr><td>{{form.last_name.label}}</td><td>{{form.last_name}}</td></tr>
+        <tr><td>{{form.email.label}}</td><td>{{form.email}}</td></tr>
+        </table>
+    <h3>שינוי סיסמה</h3>
+    <div id="password_change">
+        <table>
+            <tr><td>{{form.old_password.label}}</td><td>{{form.old_password}}</td></tr>
+            <tr><td>{{form.new_password_1.label}}</td><td>{{form.new_password_1}}</td></tr>
+            <tr><td>{{form.new_password_2.label}}</td><td>{{form.new_password_2}}</td></tr>
+        </table>
+    </div>
+<input type="submit" value="לשינוי פרטים" class="boldbutt"/>
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}

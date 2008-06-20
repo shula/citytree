@@ -1,0 +1,41 @@
+{% extends "base_short_menu.html" %}
+
+{% block navigation %}
+{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block messages %}
+
+{% if form.has_errors %}
+<div class="gotit">
+    יכול להיות שאיבדת את המפתחות? העורכת יכולה לעזור.						
+</div>
+{% endif %}
+
+
+{% endblock %}
+{% block central_area %}
+<div class="content">
+
+<h1>
+כניסה לעץ-בעיר 
+</h1>
+
+<form method="post" action=".">
+<table class="formtab">
+<tr><td width="90"><label for="id_username">שם משתמש:</label></td><td><input type="text" id="id_username" class="vTextField required" name="username" size="15" value="" maxlength="30" />
+</td></tr>
+<tr><td><label for="id_password">סיסמה:</label></td><td><input type="password" id="id_password" class="vPasswordField required" name="password" size="15" value="" maxlength="30" /></td></tr>
+</table>
+
+<div class= "button">
+<input type="submit" value="בבקשה" class="boldbutt"/>
+
+<input type="hidden" name="next" value="{{ next }}" />
+</div>
+
+</form>
+</div>
+{% endblock %}

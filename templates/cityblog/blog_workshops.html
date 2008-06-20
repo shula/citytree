@@ -1,0 +1,57 @@
+{% extends "base_short_menu.html" %}
+
+{% load thumbnail %}
+{% load comments %}
+
+{% block rss %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/posts/{{blog.slug}}"/>
+{% endblock %}
+
+{% block thickbox %}
+{% endblock %}
+
+{% block breadcrumbs %}
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+ > {{blog.name}}
+{% endblock %}
+
+{% block central_area %}
+	
+	{% for post in post_list %}
+	
+	{% get_free_comment_count for cityblog.post post.id as comment_count %}
+<div class="workshopLeafContainer">
+    <div class="blogListImage">
+        <a href="{{post.workshop.get_absolute_url}}">
+		<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
+		width='{{post.get_image_url|thumbnail:"width=156"|image_width}}px'
+		height='{{post.get_image_url|thumbnail:"width=156"|image_height}}px' 
+		border="0" alt=""  class="blog" title="{{post.image_label|escape}}"></a>
+		</div>
+
+		<h1>
+		<a href="{{post.workshop.get_absolute_url}}">
+			{{post.title}}
+		</a>
+		</h1>
+		
+        <p class="leaf">
+        <table>
+            <tr><td>תאור:</td><td>{{post.workshop.description}}</td></tr>
+            {% if post.workshop.next_event %}
+            <tr><td>תאריך התחלה</td><td>{{post.workshop.next_event.start_date}}</td></tr>
+            {% ifnotequal post.workshop.next_event.start_date post.workshop.next_event.end_date %}
+            <tr><td>תאריך סיום:</td><td>{{post.workshop.next_event.end_date}}</td></tr>
+            {% endifnotequal %}
+            <tr><td>מנחים:</td><td>{{post.workshop.next_event.instructors}}</td></tr>
+            <tr><td>איש קשר:</td><td>{{post.workshop.next_event.contact}}</td></td>
+            {% endif %}
+        </table>
+    </p>
+</div>
+	{% endfor %}	
+	
+{% endblock %}

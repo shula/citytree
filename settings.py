@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.comments',
     'django.contrib.markup',
+    'citytree.accounts',
     'citytree.forum',
     'citytree.comment_utils',
     'citytree.cityblog',
@@ -69,6 +70,7 @@ INSTALLED_APPS = (
     'citytree.nesh.thumbnail',
     'citytree.ajax',
     'citytree.spamdetector',
+    'citytree.workshop',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -79,6 +81,9 @@ INSTALLED_APPS = (
 
 # Fix for gallery problem?
 #APPEND_SLASH=False
+
+AUTH_PROFILE_MODULE='accounts.UserProfile'
+#LOGIN_REDIRECT_URL='/'
 
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
@@ -94,8 +99,8 @@ SITE_LOGO   = '' #site logo
 
 # -------------------------- Development Stuff -------------
 # Leave this as None for default - sending to the blog author
-SEND_EMAIL_ON_COMMENT=None
-
+SEND_EMAIL_ON_COMMENT = None
+SERVE_SITEMEDIA_FROM_DJANGO = False
 
 #---------------------- DEVELOPMENT COMPROMISE ---------------
 # this is the only difference between a development environment

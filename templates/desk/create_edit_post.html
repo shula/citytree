@@ -3,10 +3,9 @@
 {% load thumbnail %}
 
 {% block crumbs %}
-	<a href="/desk/">‎כניסה</a> > <a href="{{blog.get_edit_absolute_url}}">{{blog.name}}</a> > 
-	
+	<a href="/desk/">‎כניסה</a> &gt; <a href="{{blog.get_edit_absolute_url}}">{{blog.name}}</a> &gt; 
 	{% if post %}
-		עריכת עלה קיים
+	עריכת עלה קיים
 		{% else %}
 	יצירת עלה חדש
 		{% endif %}

@@ -29,7 +29,7 @@
 </script>
 
 <H1>
-עלים ב"{{blog.name}}"
+{% if blog.is_workshop %}סדנאות{% else %}עלים{% endif %} ב"{{blog.name}}"
 
 </H1>
 <p>
@@ -37,8 +37,13 @@
 </p>
 
 <div class="space">
-<div class="buttonright"><a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
+    {% if blog.is_workshop %}
+    <div class="buttonright"><a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
+&nbsp;&nbsp; ייסוד סדנה או קורס חדש &nbsp;&nbsp;
+    {% else %}
+    <div class="buttonright"><a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
 &nbsp;&nbsp; הצמחת עלה חדש &nbsp;&nbsp;
+    {% endif %}
 </font></a></div></div>
 
 {% if object_list %}
@@ -75,10 +80,13 @@
 {% endif %}
 
 
-<div class="buttonright">
-<a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
-&nbsp;&nbsp; הצמחת עלה חדש &nbsp;&nbsp;
-
+{% if blog.is_workshop %}
+<div class="buttonright"><a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
+            &nbsp;&nbsp; ייסוד סדנה או קורס חדש &nbsp;&nbsp;
+{% else %}
+<div class="buttonright"><a href="/desk/blogs/{{blog.slug}}/createPost/"><font id="butt">
+            &nbsp;&nbsp; הצמחת עלה חדש &nbsp;&nbsp;
+{% endif %}
 </font></a>
 </div>
 
