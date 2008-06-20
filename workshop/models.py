@@ -82,7 +82,7 @@ class Workshop(models.Model):
         return defws
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return self.name
 
     def get_absolute_url(self):
         return u'/workshop/%s/' % self.slug
