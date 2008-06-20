@@ -125,10 +125,16 @@ class WorkshopEvent(models.Model):
     # to have both free text and also site users in the instructors field - how do
     # I do that easily (i.e. without creating two seperate fields I'll have to keep checking?
     # TODO: answer - create my own field!. Not now)
+
+    cost        =   models.FloatField('cost', blank=False)
+    duration    =   models.CharField('duration of workshop', max_length=200, blank=False)
+    
+    audience    =   models.CharField('expected size of audience, number of participants', max_length=200, blank=False)
     instructors =   models.CharField('name of instructors', max_length=200, blank=False)
     contact     =   models.EmailField('email of point of contact for questions', blank=False)
     location    =   models.CharField('location of workshop', max_length=200, blank=False)
     workshop    =   models.ForeignKey(Workshop, verbose_name='סדנה', blank=False)
+
     users       =   models.ManyToManyField(User, related_name='registered_workshopevent_set',
                     verbose_name='registered site users', blank=True,
                     filter_interface=models.HORIZONTAL)
