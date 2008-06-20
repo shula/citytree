@@ -27,6 +27,9 @@ class Workshop(models.Model):
                     verbose_name='workshop owners', blank=True,
                     filter_interface=models.HORIZONTAL)
 
+    def __unicode__(self):
+        return u'<workshop %s>' % (self.slug)
+
     def get_events(self):
         return self.workshopevent_set.order_by('workshopeventpart__start_time')
     events = property(get_events)
@@ -63,17 +66,18 @@ class Workshop(models.Model):
             defws.name = default_name
             defws.slug = 'defaults'
             defws.description = 'סדנת ערגי בסיס - מועתק לכל סדנה חדשה'
+            defws.save()
             we = WorkshopEvent()
             we.instructors = 'someone_should_update_the_default_instructors'
             we.contact = 'default_contact@doesntexist.hopefully.com'
             we.location = 'someone_didnt_fill_in_the_default_values'
+            we.workshop = defws
+            we.save()       # now wep has id, can save we
             wep = WorkshopEventPart()
             wep.start_time = datetime(2006,9,23)
             wep.end_time = datetime(2006,9,23)
+            wep.workshop_event = we
             wep.save()
-            wep.workshop_event = we # now wep has id, it's ok to save
-            we.save()
-            defws.workshopevent_set.add(we) # now we has id, can save
             defws.save()
         return defws
 
