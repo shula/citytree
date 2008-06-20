@@ -79,5 +79,5 @@ class WorkshopEventForm(forms.ModelForm):
     location = forms.CharField(label="איפה")
     class Meta:
         model = WorkshopEvent
-        fields = ('instructors', 'contact', 'location')
+        fields = ('instructors', 'contact', 'location', 'cost', 'duration')
 
