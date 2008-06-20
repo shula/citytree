@@ -126,7 +126,7 @@ class WorkshopEvent(models.Model):
     # I do that easily (i.e. without creating two seperate fields I'll have to keep checking?
     # TODO: answer - create my own field!. Not now)
 
-    cost        =   models.FloatField('cost', blank=False)
+    cost        =   models.CharField('cost', max_length=200, blank=False)
     duration    =   models.CharField('duration of workshop', max_length=200, blank=False)
     
     audience    =   models.CharField('expected size of audience, number of participants', max_length=200, blank=False)
