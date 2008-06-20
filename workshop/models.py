@@ -67,13 +67,13 @@ class Workshop(models.Model):
             we.instructors = 'someone_should_update_the_default_instructors'
             we.contact = 'default_contact@doesntexist.hopefully.com'
             we.location = 'someone_didnt_fill_in_the_default_values'
-            defws.workshopevent_set.add(we)
             wep = WorkshopEventPart()
             wep.start_time = datetime(2006,9,23)
             wep.end_time = datetime(2006,9,23)
-            wep.workshop_event = we
             wep.save()
+            wep.workshop_event = we # now wep has id, it's ok to save
             we.save()
+            defws.workshopevent_set.add(we) # now we has id, can save
             defws.save()
         return defws
 
