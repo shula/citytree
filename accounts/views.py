@@ -30,6 +30,7 @@ class RegisterForm(forms.Form):
     last_name  = forms.CharField(label='שם משפחה', max_length=200)
     email      = forms.EmailField(label='כתובת דואל', max_length=200)
     password   = forms.CharField(label='סיסמה', max_length=15, widget=forms.PasswordInput)
+    optin_citytree_list = forms.BooleanField(required=False, label='הצטרפות לרשימת התפוצה של עץ בעיר')
     capcha_response = forms.CharField(label='רשום את האותיות המופיעות מתחת', max_length=200)
     hash       = forms.CharField(max_length=200, widget=forms.HiddenInput)
 
@@ -202,16 +203,17 @@ def capcha_image(request, hash):
 
 class UserForm(forms.ModelForm):
     #post_date = forms.DateField(widget = forms.widgets.SplitDateTimeWidget())
+    username = forms.CharField(label='שם משתמש (כינוי)')
     first_name = forms.CharField(label='שם פרטי')
     last_name = forms.CharField(label = 'שם משפחה')
     email = forms.EmailField(label = 'דואל')
-    old_password = forms.CharField(label='ססמה ישנה', required=False)
-    new_password_1 = forms.CharField(label='ססמה חדשה', required=False)
-    new_password_2 = forms.CharField(label='שוב ססמה חדשה', required=False)
+    old_password = forms.CharField(label='סיסמה ישנה', required=False, widget=forms.PasswordInput)
+    new_password_1 = forms.CharField(label='סיסמה חדשה', required=False, widget=forms.PasswordInput)
+    new_password_2 = forms.CharField(label='שוב סיסמה חדשה', required=False, widget=forms.PasswordInput)
     class Meta:
         model = User
         #fields = ('first_name', 'last_name', 'email', 'password')
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 def profile(request):
     # sucks: only about 5 fields that should actually be shown,
@@ -226,7 +228,7 @@ def profile(request):
             new1, new2 = data['new_password_1'], data['new_password_2']
             if not request.user.check_password(data['old_password']):
                 form.errors['old_password']=[u'ססמה מוטעית, נסו שנית']
-            elif new1 != new2:
+            elif (new1 != '' or new2 != '') and new1 != new2:
                 form.errors['new_password_1'] = [u'הססמאות החדשות לא תואמות']
             elif not password_check(new1):
                 form.errors['new_password_1'] = [u'הססמה החדשה לא לפחות באורך 6 ועם 4 אותיות שונות']

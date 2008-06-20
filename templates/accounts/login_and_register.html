@@ -1,0 +1,61 @@
+{% extends "base_short_menu.html" %}
+
+{% block  headerImage%}
+    <img src="/siteMedia/common/top_registration.jpg" 
+    		width="808px" 
+    		height="160px" 
+    		alt="מציעים לכם חברום" title="מציעים לכם חברות">    
+{% endblock %}
+
+{% block central_area %}
+
+<div class="gotit">
+</div>
+
+<div class="content_right">
+    <h1>
+        כניסה לעץבעיר 
+    </h1>
+    <h3>
+{% ifequal status "lform_not_valid" %}
+    הדלת לא נפתחת. משהו חסר...
+{% endifequal %}
+{% ifequal status "rform_not_valid" %}
+    חלק מהשדות לא מולאו בטופס ההרשמה, אנא תקנו אותם.
+{% endifequal %}
+{% ifequal status "regproblem" %}
+    הייתה בעיה בהרשמה, בדקו בטופס למטה את כל הפרטים.
+{% endifequal %}
+{% ifequal status "failed" %}
+    הסיסמה שהוכנסה אינה תואמת לשם המשתמש. יותר מזל פעם הבאה..
+{% endifequal %}
+{% ifequal status "success" %}
+    ברוכים הבאים, העץ לשרותכם!
+    {% endifequal %}
+</h3>
+
+    <form method="post" action="/accounts/login_and_register/?login=1">
+        <table class="formtab">
+            {{ lform }}
+        </table>
+
+        <div class= "button">
+            <input type="submit" value="בבקשה" class="boldbutt"/>
+        </div>
+
+    </form>
+</div>
+
+<div class="content_left">
+    <h2>יצירת חשבון תאפשר הרשמה פשוטה לסדנאות.</h2>
+    <form method="post" action="/accounts/login_and_register/">
+        <table>
+            {{ rform }}
+            <input id="capcha" type="hidden" name="hash2" value="{{hash}}"/>
+            <tr><th></th><th><img id="capcha" src="http://{{site}}/accounts/capcha/image/{{hash}}/"></th></tr>
+        </table>
+        <input type="submit" value="אישור הרשמה"/>
+    </form>
+</div>
+
+{% endblock %}

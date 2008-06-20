@@ -58,6 +58,9 @@ class Workshop(models.Model):
     def get_add_event_absolute_url(self):
         return u'/desk/workshop/%s/addEvent' % self.slug
 
+    def get_header_image_absolute_url(self):
+        return self.defining_post.blog.get_header_image_url()
+
     class Admin:
         list_filter    = ('owners',)
 
@@ -76,7 +79,7 @@ class BlogWorkshop(models.Model):
     """
 
     blog              = models.ForeignKey(blog, edit_inline=models.STACKED,
-            core=True, unique=True, min_num_in_admin=1, max_num_in_admin=1)
+            core=True, unique=True, num_in_admin=1,min_num_in_admin=1, max_num_in_admin=1,num_extra_on_change=0)
     is_workshops_blog = models.BooleanField("Is this a workshop blog")
 
     def save(self):
@@ -169,8 +172,8 @@ class ExternalParticipant(models.Model):
     """
     first_name      =   models.CharField(verbose_name='שם פרטי', max_length=200, blank=False)
     last_name       =   models.CharField(verbose_name='שם משפחה', max_length=200, blank=False)
-    email           =   models.EmailField(verbose_name='כתובת דואל', max_length=200, blank=False)
-    phone           =   models.PositiveIntegerField(verbose_name='מספר טלפון', blank=True, null=True)
+    email           =   models.EmailField(verbose_name='כתובת דואל', max_length=200, blank=True)
+    phone           =   models.CharField(verbose_name='מספר טלפון', max_length=200, blank=True)
     workshop_event  =   models.ForeignKey(WorkshopEvent, verbose_name='מופע הסדנה', blank=False)
 
     def __unicode__(self):

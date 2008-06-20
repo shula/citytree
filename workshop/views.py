@@ -32,7 +32,7 @@ def registerForm(workshop, workshop_event_id, request):
         workshop_event = forms.ChoiceField(label='סדנה', choices= id_names_pairs, initial = initial)
 
     class ExternalParticipantRegisterForm(forms.ModelForm):
-        #workshop = forms.ChoiceField(label='סדנה', choices=slugs_names_pairs, initial=initial)
+        #workshop = forms.ChoiceField(label='סדנה', choices=slugs_names_pairs, initial=initial)A
         class Meta:
             model = ExternalParticipant
     ExternalParticipantRegisterForm.base_fields['workshop_event'].empty_label = None
@@ -80,7 +80,9 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
     return render_to_response(template,
             {
                 'form':form,
-                'participant':participant
+                'participant':participant,
+                'workshop':workshop,
+                'blog':workshop.defining_post.blog, # used for header image in base_short_menu.html
             },
             context_instance=RequestContext(request))
 
