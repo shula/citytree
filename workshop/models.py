@@ -53,6 +53,19 @@ class Workshop(models.Model):
         workshop = Workshop.objects.create(slug='unnamed_%s' % (maxid+1))
         return workshop
 
+    @staticmethod
+    def get_default_workshop():
+        default_name = 'סדנת ערכי בסיס'
+        try:
+            defws = Workshop.objects.get(name=default_name)
+        except Workshop.DoesNotExist:
+            defws = Workshop()
+            defws.name = default_name
+            defws.slug = 'defaults'
+            defws.description = 'סדנת ערגי בסיס - מועתק לכל סדנה חדשה'
+            defws.save()
+        return defws
+
     def __unicode__(self):
         return self.name
 
