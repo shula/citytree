@@ -451,10 +451,11 @@ class WorkshopEventCreator(Responder):
     _form_class = WorkshopEventForm
 
     def _get_instance(self):
-        try:
-            self._instance = WorkshopEvent.objects.get(id=self.we_id)
-        except ObjectDoesNotExist:
-            self._instance = None
+        # don't really need workshop_slug if we_id is filled, do I?
+        if self.we_id is not None:
+            self._instance = get_object_or_404(WorkshopEvent, id=self.we_id)
+            self.workshop_slug = self._instance.workshop.slug
+            self.workshop = self._instance.workshop
 
     def _create_new(self):
         # TODO: check that user has permissions (easy to do here, but must make sure its actually
@@ -485,13 +486,9 @@ class WorkshopEventCreator(Responder):
 
     def __init__(self, request, workshop_slug, we_id):
         self.workshop_slug = workshop_slug
-        # don't really need workshop_slug if we_id is filled, do I?
-        if we_id is not None:
-            self.workshop = get_object_or_404(WorkshopEvent, id=we_id)
-            self.workshop_slug = self.workshop.slug
-        else:
-            self.workshop = get_object_or_404(Workshop, slug=workshop_slug)
         self.we_id = we_id
+        if workshop_slug is not None:
+            self.workshop = get_object_or_404(Workshop, slug=workshop_slug)
         super(WorkshopEventCreator, self).__init__(request)
 
     def _on_valid_form(s):

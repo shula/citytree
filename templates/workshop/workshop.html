@@ -70,16 +70,18 @@
 
         <p class="leaf">
         <table>
+            <!--
             <tr><td>מספר מפגשים:</td><td>{{event.parts.count}}</td></tr>
+            -->
             {% for event in workshop.events %}
-            <tr><td><a href="{{event.get_registration_absolute_url}}">להרשמה לארוע</a></td></tr>
             {% for part in event.parts %}
-            <tr><td>מ</td><td>{{part.start_time}}</td></tr>
-            <tr><td>עד</td><td>{{part.end_time}}</td></tr>
+            <tr><th>מ</th><td>{{part.start_time}}</td></tr>
+            <tr><th>עד</th><td>{{part.end_time}}</td></tr>
             {% endfor %}
             <tr><td>מנחים:</td><td>{{post.workshop.next_event.instructors}}</td></tr>
             <tr><td>איש קשר:</td><td>{{post.workshop.next_event.contact}}</td></td>
             {% endfor %}
+            <tr><th><a href="{{event.get_registration_absolute_url}}">להרשמה לארוע</a></th></tr>
         </table>
         </p>
 			
