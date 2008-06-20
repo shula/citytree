@@ -21,7 +21,7 @@ def wikiSub( inStr ):
     boldItRE       = re.compile( "''''(?P<txt>[^']+)''''", re.M)
     boldRE         = re.compile( "'''(?P<txt>[^']+)'''", re.M)
     italicRE       = re.compile( "''(?P<txt>[^']+)''", re.M)
-    linkRE         = re.compile( "\[(?P<url>http://\S+)\s+(?P<txt>[^\]]+)\]")
+    linkRE         = re.compile( "\[(?P<url>https?://\S+)\s+(?P<txt>[^\]]+)\]")
     internalLinkRE = re.compile( "\[\[(?P<post_num>\d+)\s*\|\s*(?P<link_text>[^\|]+)\]\]" )
     newLineRE      = re.compile( r'\r\n|\n\n', re.M)
     
