@@ -46,7 +46,10 @@ class Workshop(models.Model):
 
     @staticmethod
     def create_workshop_by_post(post):
-        maxid = Workshop.objects.order_by('-id')[0].id
+        if Workshop.objects.count() == 0:
+            maxid = 0
+        else:
+            maxid = Workshop.objects.order_by('-id')[0].id
         workshop = Workshop.objects.create(slug='unnamed_%s' % (maxid+1))
         return workshop
 
