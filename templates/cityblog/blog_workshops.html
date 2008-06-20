@@ -39,18 +39,25 @@
 		</h1>
 		
         <p class="leaf">
-        <table>
-            <tr><td>תאור:</td><td>{{post.workshop.description}}</td></tr>
+        <table valign="top">
+            <tr><th>תאור:</th>
+                <td>{{post.workshop.description}}</td></tr>
             {% if post.workshop.next_event %}
-            <tr><td>תאריך התחלה</td>
+            <tr><th>תאריך התחלה</th>
                 <td>{{post.workshop.next_event.start_date|date:"d/m/y"}}</td></tr>
             {% ifnotequal post.workshop.next_event.start_date post.workshop.next_event.end_date %}
-            <tr><td>תאריך סיום:</td>
+            <tr><th>תאריך סיום:</th>
                 <td>{{post.workshop.next_event.end_date|date:"d/m/y"}}</td></tr>
             {% endifnotequal %}
-            <tr><td>מנחים:</td>
+            <tr><th>משך:</th>
+                <td>{{post.workshop.next_event.duration}}</td></tr>
+            <tr><th>מיקום:</th>
+                <td>{{post.workshop.next_event.location}}</td></tr>
+            <tr><th>עלות:</th>
+                <td>{{post.workshop.next_event.cost}}</td></tr>
+            <tr><th>מנחים:</th>
                 <td>{{post.workshop.next_event.instructors}}</td></tr>
-            <tr><td>איש קשר:</td>
+            <tr><th>איש קשר:</th>
                 <td>{{post.workshop.next_event.contact}}</td></td>
             {% endif %}
         </table>
