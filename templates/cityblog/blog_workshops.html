@@ -41,24 +41,30 @@
         <p class="leaf">
         <table>
             <tbody valign="top">
-                <tr><th>תאור:</th>
+                <tr><th>תאור</th>
                     <td>{{post.workshop.description}}</td></tr>
                 {% if post.workshop.next_event %}
-                <tr><th>תאריך התחלה</th>
+                <tr><th>
+                {% ifnotequal post.workshop.next_event.start_date post.workshop.next_event.end_date %}
+                התחלה
+                {% else %}
+                תאריך
+                {% endifnotequal %}
+                </th>
                     <td>{{post.workshop.next_event.start_date|date:"d/m/y"}}</td></tr>
                 {% ifnotequal post.workshop.next_event.start_date post.workshop.next_event.end_date %}
-                <tr><th>תאריך סיום:</th>
+                <tr><th>סיום</th>
                     <td>{{post.workshop.next_event.end_date|date:"d/m/y"}}</td></tr>
                 {% endifnotequal %}
-                <tr><th>משך:</th>
+                <tr><th>משך</th>
                     <td>{{post.workshop.next_event.duration}}</td></tr>
-                <tr><th>מיקום:</th>
+                <tr><th>מיקום</th>
                     <td>{{post.workshop.next_event.location}}</td></tr>
-                <tr><th>עלות:</th>
+                <tr><th>עלות</th>
                     <td>{{post.workshop.next_event.cost}}</td></tr>
-                <tr><th>מנחים:</th>
+                <tr><th>מנחים</th>
                     <td>{{post.workshop.next_event.instructors}}</td></tr>
-                <tr><th>איש קשר:</th>
+                <tr><th>לפרטים</th>
                     <td>{{post.workshop.next_event.contact}}</td></td>
                 {% endif %}
             </tbody>
