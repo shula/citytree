@@ -200,7 +200,8 @@ class Responder(object):
         s._initial = {}
         s._response = None # if set then it is returned instead of calling _render
         s._render_dict = {}
-        s._get_instance()
+        s._instance = None
+        s._get_instance() # if this is an edit, will override _instance
 
     def response(s):
         if s._instance is not None: # editing existing object
@@ -252,6 +253,9 @@ class Responder(object):
     def _makeRenderDictionary(s):
         pass
 
+    def _get_instance(s):
+        pass # Must not fail on missing object - just set _instance to None
+
     def _render(s):
         s._render_dict.update({
             'instance': s._instance,
@@ -283,7 +287,9 @@ class PostCreator(Responder):
         Responder.__init__(s, request)
  
     def _get_instance(s):
-        s._instance = get_object_or_404(post, id=s.post_id)
+        objs = post.objects.filter(id=s.post_id)
+        if objs.count() > 0:
+            s._instance = objs[0]
 
     def _edit_existing(s):
         """ post_id is set. Fill in variables from existing post
@@ -436,7 +442,7 @@ class WorkshopCreator(PostCreator):
 
 #------------ WorkshopEvent editor ----------------------
 
-def create_edit_workshop_event( request, workshop_slug, we_id=None):
+def create_edit_workshop_event( request, workshop_slug=None, we_id=None):
     return WorkshopEventCreator(request, workshop_slug, we_id).response()
 create_edit_workshop_event = login_needed(create_edit_workshop_event)
 
@@ -479,7 +485,12 @@ class WorkshopEventCreator(Responder):
 
     def __init__(self, request, workshop_slug, we_id):
         self.workshop_slug = workshop_slug
-        self.workshop = get_object_or_404(Workshop, slug=workshop_slug)
+        # don't really need workshop_slug if we_id is filled, do I?
+        if we_id is not None:
+            self.workshop = get_object_or_404(WorkshopEvent, id=we_id)
+            self.workshop_slug = self.workshop.slug
+        else:
+            self.workshop = get_object_or_404(Workshop, slug=workshop_slug)
         self.we_id = we_id
         super(WorkshopEventCreator, self).__init__(request)
 
