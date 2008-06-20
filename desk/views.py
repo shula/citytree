@@ -411,6 +411,15 @@ class WorkshopCreator(PostCreator):
             s._form.fill_other_fields_from_instance()
         s.workshop = s.thePost.workshop
         s.workshop.owners.add(s._request.user)
+        # if the teaser text exists in the post, then it is an existing
+        # post being moved over.
+        # copy it to the description.
+        defpost = s.workshop.defining_post
+        if len(defpost.teaser_text) > 0 and len(defpost.text) == 0:
+            defpost.description = defpost.teaser_text
+            defpost.save()
+            # update form to reflect this (should be done automagically somehow?)
+            #todo
 
     def _on_valid_form(s):
         super(PostCreator, s)._on_valid_form()
