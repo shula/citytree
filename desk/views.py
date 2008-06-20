@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from time import strptime
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
@@ -492,6 +493,10 @@ class WorkshopEventCreator(Responder):
         super(WorkshopEventCreator, self).__init__(request)
 
     def _on_valid_form(s):
+        def strptime_datetime(s, format):
+            st = time.strptime(s, format)
+            return datetime(year=st.tm_year, month=st.tm_mon, day=st.tm_mday, hour=st.tm_hour, minute=st.tm_min, second=st.tm_sec)
+
         for part_id_key in [k for k in s.new_data.keys() if k.startswith('part_id')]:
             part_id = s.new_data[part_id_key]
             form_part_num = part_id_key.rsplit('_',1)[1]
@@ -506,7 +511,8 @@ class WorkshopEventCreator(Responder):
             start_date = get('start_date')
             start_time = get('start_time')
             end_time   = get('end_time')
-            part.start_time = datetime.strptime('%s %s' % (start_date, start_time), '%Y-%m-%d %H:%M:%S')
-            part.end_time = datetime.strptime('%s %s' % (start_date, end_time), '%Y-%m-%d %H:%M:%S')
+            # python 2.4 - datetime has no strptime function
+            part.start_time = strptime_datetime('%s %s' % (start_date, start_time), '%Y-%m-%d %H:%M:%S')
+            part.end_time = strptime_datetime('%s %s' % (start_date, end_time), '%Y-%m-%d %H:%M:%S')
             part.save()
 
