@@ -453,7 +453,7 @@ class WorkshopEventCreator(Responder):
                 base_event = events[0]
         if base_event is None:
             # last, take initial values from the default workshop event
-            default_workshop = Workshop.objects.get(name='סדנת ערכי בסיס')
+            default_workshop = Workshop.get_default_workshop()
             base_event = default_workshop.workshopevent_set.get()
         self._initial.update(base_event.get_new_event_dict())
 
