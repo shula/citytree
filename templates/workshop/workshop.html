@@ -1,5 +1,6 @@
 {% extends "base_short_noheaderimg.html" %}
 {% load thumbnail %}
+{% load hebrewtime %}
 
 
 {% block customStyleSheets %}
@@ -75,7 +76,7 @@
             -->
             {% for event in workshop.events %}
             {% for part in event.parts %}
-            <tr><th>זמן</th><td>{{part.start_time.date|date:"d/m/y"}}, {{part.start_time.time|time:"G:i"}}, {{part.duration}}</td></tr>
+            <tr><th>זמן</th><td>{{part.start_time.date|date:"d/m/y"}}, {{part.start_time.time|time:"G:i"}}, {{part.start_time|hebrew_timeuntil:part.end_time}}</td></tr>
             {% endfor %}
             <tr><td>מנחים:</td><td>{{post.workshop.next_event.instructors}}</td></tr>
             <tr><td>איש קשר:</td><td>{{post.workshop.next_event.contact}}</td></td>
