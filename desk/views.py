@@ -494,7 +494,7 @@ class WorkshopEventCreator(Responder):
 
     def _on_valid_form(s):
         def strptime_datetime(s, format):
-            st = time.strptime(s, format)
+            st = strptime(s, format)
             return datetime(year=st.tm_year, month=st.tm_mon, day=st.tm_mday, hour=st.tm_hour, minute=st.tm_min, second=st.tm_sec)
 
         for part_id_key in [k for k in s.new_data.keys() if k.startswith('part_id')]:
