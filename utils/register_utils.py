@@ -9,26 +9,33 @@ import settings
 DUPLICATE_ERROR = 'duplicate error'
 EMAIL_ERROR = 'email_error'
 SUCCESS_ERROR = 'success'
+DEMO_ERROR = 'demo success'
 
 def register_new_user(donor, really_send_email=False):
     email = str(donor['email'])
-    if User.objects.filter(email=email).count() != 0:
-        return DUPLICATE_ERROR
+    user_exists = User.objects.filter(email=email).count() != 0
+    if user_exists and really_send_email:
+            return DUPLICATE_ERROR
 
     try:
-        password = User.objects.make_random_password(6)
-        user = User.objects.create_user(username=email, email=email, password=password)
-        first_name = donor['first']
-        last_name = donor['last']
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
+        if not user_exists:
+            password = User.objects.make_random_password(6)
+            if really_send_email:
+                user = User.objects.create_user(username=email, email=email, password=password)
+                first_name = donor['first']
+                last_name = donor['last']
+                user.first_name = first_name
+                user.last_name = last_name
+                user.save()
+        else:
+            user = User.objects.get(email=email)
+            password = 'user already exists - hope you know it!'
 
         t = loader.get_template('accounts/litrom_newuser_email.txt')
         site = Site.objects.get_current().name
         c = Context({ 'site': site,
-                      'first': donor['first'],
-                      'last': donor['last'],
+                      'first': user.first_name,
+                      'last': user.last_name,
                       'email': email,
                       'password': password})
         subject = u'תודה שאמרת כן להצעת החברות שלנו!'
@@ -40,5 +47,9 @@ def register_new_user(donor, really_send_email=False):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
     except BadHeaderError:
         return EMAIL_ERROR
-    return SUCCESS_ERROR
+    if not really_send_email:
+        send_mail('got one', email, settings.DEFAULT_FROM_EMAIL, ['alonlevy1@gmail.com'], fail_silently=True)
+    if really_send_email:
+        return SUCCESS_ERROR
+    return DEMO_ERROR
 
