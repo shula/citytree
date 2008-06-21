@@ -31,7 +31,7 @@ def register_new_user(donor, really_send_email=False):
                       'last': donor['last'],
                       'email': email,
                       'password': password})
-        subject = u'תודה שתרמתם לעץבעיר!'
+        subject = u'תודה שאמרת כן להצעת החברות שלנו!'
         message = t.render(c)
         
         if not really_send_email:
