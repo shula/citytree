@@ -139,7 +139,7 @@ class SharedLoginRegister(object):
             else:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/')
+                    s.response = HttpResponseRedirect('/')
                 else:
                     s.status = 'failed' # TODO: seperate message for non active users?
         else:
