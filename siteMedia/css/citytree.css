@@ -479,6 +479,26 @@ div.login a {
 
 /* workshops */
 div.workshopLeafContainer {
+    color: #4e1c7d;
+}
+
+div.workshopLeafContainer h1 {
+    color: #7a0bcc;
+}
+
+div.workshopLeafContainer h1 a:link {
+    color: #7a0bcc;
+}
+
+div.workshopLeafContainer table {
+    font-size: 10pt;
+}
+
+div.workshopLeafContainer table th {
+    font-weight: bold;
+}
+
+div.workshopLeafContainer table td {
 }
 
 /* For Pagination  */
