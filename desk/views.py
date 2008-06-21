@@ -516,3 +516,11 @@ class WorkshopEventCreator(Responder):
             part.end_time = strptime_datetime('%s %s' % (start_date, end_time), '%Y-%m-%d %H:%M:%S')
             part.save()
 
+def delete_workshop_event(request, we_id):
+    we = get_object_or_404(WorkshopEvent, id=we_id)
+    redir = we.workshop.get_absolute_edit_url()
+    we.delete()
+    return HttpResponseRedirect( redir )
+
+delete_workshop_event = login_needed(delete_workshop_event)
+
