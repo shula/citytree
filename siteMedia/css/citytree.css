@@ -461,11 +461,7 @@ color: #61775B;
 
 div.login {
     direction: rtl;
-	position: relative; right: -8px; top: 0px;
-    float: left;
-    /*
-    position: absolute; top: 10px; left: 170px;
-    */
+	position: absolute; right: 600px; top: 0px;
     z-index: 100;
 	color: #160066;
 	font-weight: bold;

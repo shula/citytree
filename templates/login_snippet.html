@@ -1,7 +1,7 @@
-<!--
 {% if user.is_authenticated %}
-שלום {{ user.get_full_name }}! (<a href="/accounts/logout/">ליציאה</a>, <a href="/accounts/profile/">לפרופיל</a>)
+שלום {{ user.username }}!<br>
+(<a href="/accounts/logout/">ליציאה</a>, <a href="/accounts/profile/">לפרופיל</a>)
 {% else %}
-שלום לך! <a href="/accounts/login_and_register/">לכניסה או הרשמה</a>
+שלום לך!
+<a href="/accounts/login_and_register/">לכניסה</a>
 {% endif %}
--->
