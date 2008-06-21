@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     # workshop
     (r'^workshop/(?P<workshop_slug>\w+)/addEvent/$', 'desk.views.create_edit_workshop_event'),
     (r'^workshop/(?P<workshop_slug>\w+)/editEvent/(?P<we_id>\d+)/$', 'desk.views.create_edit_workshop_event'),
+    (r'^workshop/deleteEvent/(?P<we_id>\d+)/$', 'desk.views.delete_workshop_event'),
 )

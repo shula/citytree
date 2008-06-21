@@ -46,6 +46,7 @@
 		$('#id_enable_comments').addClass("must");
 		
 		$('#id_image_file').attr('size', '50px');
+        $('#id_description').attr({ 'cols': '100','rows': '3' } );
 		$('#id_teaser_text').attr({ 'cols': '60', 'rows': '6' } );
 		$('#id_image_label').attr({ 'cols': '60','rows': '6' } );
         $('#id_text').attr({ 'cols': '100','rows': '30' } );
@@ -329,8 +330,25 @@
     <td>מסתיים</td>
     <td>לעריכה (חלון חיצוני)</td>
 </tr>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            $("a.askuser")
+            })
+</script>
+<script type="text/javascript">
+
+	function doDelete( delete_location, start_date ) {
+		 doDelete = confirm("בטוח למחוק את " + start_date + "?");
+		 if( doDelete )
+		 	window.location=delete_location;
+	}
+</script>
+
+
 {% for event in workshop.events %}
 <tr>
+    <td><a href="#" onClick="doDelete('{{event.get_delete_absolute_url}}', '{{event.get_start_date}}')" style="background: url('{{media_url}}/desk/delete.gif}}')" class="askuser">הסר</a></td>
     <td>{{event.instructors}}</td>
     <td>{{event.contact}}</td>
     <td>{{event.location}}</td>

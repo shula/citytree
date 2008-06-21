@@ -90,6 +90,9 @@ class Workshop(models.Model):
     def get_add_event_absolute_url(self):
         return u'/desk/workshop/%s/addEvent' % self.slug
 
+    def get_absolute_edit_url(self):
+        return self.defining_post.get_absolute_edit_url()
+
     def get_header_image_absolute_url(self):
         return self.defining_post.blog.get_header_image_url()
 
@@ -169,6 +172,9 @@ class WorkshopEvent(models.Model):
 
     def get_edit_absolute_url(self):
         return u"/desk/workshop/%s/editEvent/%s/" % (self.workshop.slug, self.id)
+
+    def get_delete_absolute_url(self):
+        return u"/desk/workshop/deleteEvent/%s/" % (self.id)
 
     def get_registration_absolute_url(self):
         return u"/workshop/register/%s/%s/" % (self.workshop.slug, self.id)
