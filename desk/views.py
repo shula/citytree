@@ -222,6 +222,7 @@ class Responder(object):
             if s._form.is_valid():
                 if s._instance is None:
                     s._post_new()
+                    s._form.instance = s._instance
                 s._instance = s._form.save()
                 s._on_valid_form()
             else: # form is not valid
@@ -363,6 +364,7 @@ class PostCreator(Responder):
         thePost.post_date = datetime.now()
         thePost.save()
         s.post_id = thePost.id
+        s._instance = s.thePost
  
     def _makeRenderDictionary(s):
          s._render_dict.update(
