@@ -1,5 +1,5 @@
-# vim: set fileencoding=utf-8 :
 # -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8 :
 
 import datetime
 import random
@@ -103,8 +103,8 @@ class flag(models.Model):
     
 class post(models.Model):
     DRAFT_CHOICES = (
-      ( 1, 'טיוטה'),
-      ( 0, 'מאושר') )
+      ( 1, '×××××'),
+      ( 0, '××××©×¨') )
     
     POST_STYLE_SMALL_LEAF = 1
     POST_STYLE_ARTICLE = 2
@@ -112,10 +112,10 @@ class post(models.Model):
     POST_STYLE_WORKSHOP = 4
     
     POST_STYLE_TYPES = (
-        ( POST_STYLE_SMALL_LEAF, 'עלה קטן' ),
-        ( POST_STYLE_ARTICLE, 'מאמר' ),
-        ( POST_STYLE_GALLERY, 'גלריה' ),
-        ( POST_STYLE_WORKSHOP, 'סדנה' ),
+        ( POST_STYLE_SMALL_LEAF, '×¢×× ×§××' ),
+        ( POST_STYLE_ARTICLE, '××××¨' ),
+        ( POST_STYLE_GALLERY, '×××¨××' ),
+        ( POST_STYLE_WORKSHOP, '×¡×× ×' ),
     )
 
     blog          = models.ForeignKey(blog)
@@ -139,7 +139,7 @@ class post(models.Model):
     image_height  = models.PositiveIntegerField(blank=True,null=True)
     image_width   = models.PositiveIntegerField(blank=True,null=True)
     
-    teaser_text          = models.TextField(blank=False, null=True, help_text='הבקיצור יופיע בעמוד הראשי של הבלוג, ויכול גם להוות את העלה כולו (במקרב של "עלה קטן")')
+    teaser_text          = models.TextField(blank=False, null=True, help_text='×××§××¦××¨ ×××¤××¢ ××¢××× ××¨××©× ×©× ×××××, ××××× ×× ×××××ª ××ª ××¢×× ×××× (×××§×¨× ×©× "×¢×× ×§××")')
     teaser_rendered_text = models.TextField(blank=True, null=True)
     
     text          = models.TextField(help_text="If left blank then Text is copied here", blank=True, null=True)

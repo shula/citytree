@@ -483,9 +483,10 @@ class WorkshopEventCreator(Responder):
             })
 
     def _post_new(self):
+        # must set self._instance on exit
         we = WorkshopEvent()
         we.workshop = self.workshop
-        self._form.instance = we
+        self._instance = we
 
     def __init__(self, request, workshop_slug, we_id):
         self.workshop_slug = workshop_slug

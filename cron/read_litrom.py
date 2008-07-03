@@ -33,6 +33,10 @@ if __name__ == '__main__':
     print "start out:", User.objects.count()
     log('# registring - %s - %s users' % (datetime.now(), User.objects.count()))
     for donor in litrom.get_donors(txt):
+        if not donor.has_key('email'):
+            error = 'donor didnt provide email - %s' % donor
+            log(error)
+            continue
         error = register_new_user(donor, really_send_email=True)
         if error in [DUPLICATE_ERROR]: continue
         log('%s, %s' % (str(donor['email']), error))

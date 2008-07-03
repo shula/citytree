@@ -1,11 +1,13 @@
+# -*- coding:utf-8 -*-
 # vim: set fileencoding=utf-8 :
+
 from django.db import models
 from nesh.thumbnail.field import ImageWithThumbnailField
 from django.conf import settings 
 
 DRAFT_CHOICES = (
-  ( 1, 'טיוטה'),
-  ( 0, 'מאושר') )
+  ( 1, '×××××'),
+  ( 0, '××××©×¨') )
   
 class Teaser( models.Model ):
     image          = ImageWithThumbnailField('Teaser Image', blank=True,upload_to='frontpage_images/%Y/%m/%d',width_field='image_width', height_field='image_height')

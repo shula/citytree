@@ -23,7 +23,7 @@
 	{% for post in post_list %}
 	
     {% get_free_comment_count for cityblog.post post.id as comment_count %}
-<div class="workshopLeafContainer" style="min-height: 220px">
+<div class="workshopLeafContainer">
     <div class="blogListImage">
         <a href="{{post.workshop.get_absolute_url}}">
 		<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
