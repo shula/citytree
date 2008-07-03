@@ -23,6 +23,7 @@ def get_csv_html():
 
     return b.get_html()
 
+CITYTREE_CAMPAIGN = '266'
 re_fields=re.compile('(?P<field>[^,]*),\s*')
 
 def get_donors(txt):
@@ -40,11 +41,18 @@ def get_donors(txt):
     # there may be superfluous carriage returns - count the ',' 
     #טופל  קמפיין  סכום  תאריך  שם פרטי  שם משפחה  כתובת  עיר  מיקוד  דואר אלקטרוני
     donors = [dict(zip(fields, line) + [('line', line)]) for line in lines[1:]]
+    donors = [d for d in donors if d['campaign'] == CITYTREE_CAMPAIGN]
+    
     return donors
 	
 if __name__ == '__main__':
-    output = get_csv_html()
-    open('output.csv','w+').write(output)
+    import os
+    output_filename = 'output.csv'
+    if not os.path.exists(output_filename):
+        output = get_csv_html()
+        open(output_filename, 'w+').write(output)
+    else:
+        output = open(output_filename).read()
     print output
-    print get_donors(output)
+    print '\n'.join(map(str,get_donors(output)))
 

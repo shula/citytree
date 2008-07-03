@@ -47,8 +47,8 @@ def register_new_user(donor, really_send_email=False):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
     except BadHeaderError:
         return EMAIL_ERROR
-    if really_send_email:
-        send_mail('new user in citytree', email, settings.DEFAULT_FROM_EMAIL, ['tamizori@gmail.com'], fail_silently=True)
+    if not really_send_email:
+        send_mail('got one', email, settings.DEFAULT_FROM_EMAIL, ['alonlevy1@gmail.com'], fail_silently=True)
     if really_send_email:
         return SUCCESS_ERROR
     return DEMO_ERROR
