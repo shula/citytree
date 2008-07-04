@@ -461,8 +461,8 @@ color: #61775B;
 
 div.login {
     direction: rtl;
-	position: absolute; left: 0px; top: 0px;
-    display: block;
+	position: absolute; right: 600px; top: 0px;
+    z-index: 100;
 	color: #160066;
 	font-weight: bold;
 	font-size: 10pt;
@@ -474,29 +474,15 @@ div.login a {
 }
 
 /* workshops */
-div.workshopLeafContainer a:link {
-    color: #7a0bcc;
-}
-
-div.workshopLeafContainer a:visited {
-    color: #7a0bcc;
-}
-
-div.workshopLeafContainer a:hover {
-	color: #AC3BFF;
-}
-
-div.workshopLeafContainer a:active {
-	color: #AC3BFF;
-}
-
 div.workshopLeafContainer {
     color: #4e1c7d;
-    padding: 0px 0px 14px 0px;
-    min-height: 200px;
 }
 
 div.workshopLeafContainer h1 {
+    color: #7a0bcc;
+}
+
+div.workshopLeafContainer h1 a:link {
     color: #7a0bcc;
 }
 
