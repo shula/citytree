@@ -117,6 +117,9 @@ class BlogWorkshop(models.Model):
             core=True, unique=True, num_in_admin=1,min_num_in_admin=1, max_num_in_admin=1,num_extra_on_change=0)
     is_workshops_blog = models.BooleanField("Is this a workshop blog")
 
+    def __unicode__(self):
+        return self.blog.name
+
     def save(self):
         super(BlogWorkshop, self).save()
 
