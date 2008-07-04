@@ -8,6 +8,9 @@
 
 {% block top %}
 <div class="top">
+    <div class="login">
+        {% include "login_snippet.html" %}
+    </div>
 <img src="{{content.headerImage.get_image_url}}" width="{{content.headerImage.image_width}}px" height="{{content.headerImage.image_height}}px" title="{{content.headerImage.image_label|escape}}" alt="{{content.headerImage.image_label}}">
 	<div id="logo">
 	<a href="/"><img src="{{media_url}}/common/logo.gif" width="139" height="115" border="0" alt=""></a>
