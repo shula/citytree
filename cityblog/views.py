@@ -1,4 +1,5 @@
 from datetime import datetime, date
+import re
 import itertools
 
 from django.shortcuts import render_to_response, get_object_or_404
@@ -221,4 +222,9 @@ def search(request):
         'terms': terms,
         'results': results,
     }, context_instance=RequestContext(request))
+
+re_blogs_to_branches = re.compile('(.*)blogs(.*)')
+def redirect_to_branches(request):
+    new_path = re.sub(re_blogs_to_branches, '\\1branches\\2', request.META['PATH_INFO'])
+    return HttpResponseRedirect(new_path)
 
