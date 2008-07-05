@@ -1,7 +1,0 @@
-<div class="userlogin">
-    {% if user.is_authenticated %}
-    שלום {{ user.get_full_name }}! (<a href="/accounts/logout/">ליציאה</a>, <a href="/accounts/profile/">לפרופיל</a>)
-    {% else %}
-    שלום אורח! <a href="/accounts/login_and_register/">לכניסה או הרשמה</a>
-    {% endif %}
-</div>

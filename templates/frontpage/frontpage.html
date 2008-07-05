@@ -8,13 +8,21 @@
 
 {% block top %}
 <div class="top">
-    <div class="login">
-        {% include "login_snippet.html" %}
-    </div>
 <img src="{{content.headerImage.get_image_url}}" width="{{content.headerImage.image_width}}px" height="{{content.headerImage.image_height}}px" title="{{content.headerImage.image_label|escape}}" alt="{{content.headerImage.image_label}}">
 	<div id="logo">
 	<a href="/"><img src="{{media_url}}/common/logo.gif" width="139" height="115" border="0" alt=""></a>
 </div>
+</div>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="belowmenu">
+    <div class="crumbs">
+        ברוכים הבאים לאתר של עץבעיר, פרויקט אורבאני אקולוגי החושף ומקדם אפשרויות לחיים וכלכלה בני קיימא בעיר.
+    </div>
+    <div class="userlogin">
+        {% include "login_snippet.html" %}
+    </div>
 </div>
 {% endblock %}
 
