@@ -76,8 +76,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.flatpages',
     ## evolution of schema
-    #'citytree.django_evolution',
 )
+
+try:
+    import django_evolution
+    INSTALLED_APPS = tuple(list(INSTALLED_APPS)+['django_evolution'])
+except:
+    pass
 
 #LOGIN_URL = '/'
 
