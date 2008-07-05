@@ -1,0 +1,31 @@
+{% extends "base_short_menu.html" %}
+
+{% block thickbox %}
+{% endblock %}
+
+{% block breadcrumbs %}
+	&nbsp;
+<a href="/">‎
+דף בית
+</a>
+&gt; תוצאות חיפוש
+{% endblock %}
+
+{% block central_area %}
+<div class="search">
+    <div class="search_title">
+        תוצאות חיפוש ל-"{{ terms }}"
+    </div>
+    <div class="search_results">
+    {% for class, result_set in results %}
+    {% for result in result_set %}
+    <div class="search_single">
+        <p>
+        <b>{{ forloop.counter0|add:1 }}</b>. <a href="{{result.get_absolute_url}}">{{ result }}</a>
+        </p>
+    </div>
+	{% endfor %}
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
