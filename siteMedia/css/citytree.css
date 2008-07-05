@@ -497,6 +497,26 @@ div.workshopLeafContainer table th {
 div.workshopLeafContainer table td {
 }
 
+/* search */
+div.search {
+	line-height: 13pt;
+	font-family: arial, helvetica, sans-serif;
+    margin: 4px 8px 8px;
+}
+
+div.search_title {
+    color: #75AD2C;
+	font-weight: bold;
+	font-size: 10pt;
+    margin: 4px 8px 8px;
+}
+
+div.search_results {
+	font-size: 9pt;
+}
+
+
+
 /* For Pagination  */
 .paginator { padding: .25em .25em .6em .25em; }
 .paginate-pages { padding: 2px 3px; border: 1px solid #ddd; cursor: pointer; text-decoration: underline; }

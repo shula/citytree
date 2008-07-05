@@ -77,7 +77,13 @@ src='{{media_url}}/calendar/calen.png');
 
 <!-- Calendar stops here -->
 
-<div class="leftnav">
+<div class="leftnav" style="font-size: 7pt">
+
+    <form id="search" action="/branches/search" method="get">
+        <label for="form-search">חיפוש בעץ</label>
+        <input id="form-search" name="q" type="text" size="10" value=""/>
+        {# <input type="submit" value=""/> #}
+    </form>
 
 {% include "leftmenu.html" %}
 

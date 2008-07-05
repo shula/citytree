@@ -13,8 +13,9 @@ blog_dict = {
 urlpatterns = patterns('',
     #(r'^$', list_detail.object_list, blog_dict ),
     (r'^$', redirect_to, {'url':'/'}),
+    (r'^search$', 'cityblog.views.search'),
     (r'^(?P<blog_slug>\w+)/?$', 'cityblog.views.show_blog_or_workshop'),
     (r'^comments/', include('django.contrib.comments.urls.comments')),
     (r'^posts/(?P<post_id>.*)/$', 'cityblog.views.display_post'),
-    (r'^preview_post/(?P<post_id>.*)/$', 'cityblog.views.display_post', {'preview' : True})
+    (r'^preview_post/(?P<post_id>.*)/$', 'cityblog.views.display_post', {'preview' : True}),
 )

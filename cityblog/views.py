@@ -9,6 +9,7 @@ from frontpage.models import FrontPage
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from citytree.utils.hebCalView import *
+from cityblog.search import search as cityblog_search
 
 NUM_POSTS_PER_PAGE = 5
 NUM_SUBJECTS_PER_PAGE = 10
@@ -213,4 +214,11 @@ def cityblog_post_free_comment(request):
     else:
         raise Http404, _("The comment form didn't provide either 'preview' or 'post'")
 
+def search(request):
+    terms = request.GET['q']
+    results = cityblog_search(terms)
+    return render_to_response('cityblog/search_results.html', {
+        'terms': terms,
+        'results': results,
+    }, context_instance=RequestContext(request))
 
