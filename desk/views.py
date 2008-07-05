@@ -349,7 +349,7 @@ class PostCreator(Responder):
           
         # Do a post-after-redirect so that reload works, etc.
         if( s.new_data.has_key('create_new_item_after_edit')):
-            s._response = HttpResponseRedirect("/desk/blogs/%s/createPost/?new=2" % (s.newPost.blog.slug))
+            s._response = HttpResponseRedirect("/desk/branches/%s/createPost/?new=2" % (s.newPost.blog.slug))
         else:
             s._response = HttpResponseRedirect("/desk/editPost/%d/?new=1" % (s.newPost.id))
 

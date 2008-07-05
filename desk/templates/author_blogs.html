@@ -5,7 +5,7 @@
     <h1>הבלוגים המגניבים שלך</h1>
     <ul>
     {% for blog in object_list %}
-        <li><a href='/blogs/{{blog.slug}}/'>{{blog.name}}</a></li>
+        <li><a href='/branches/{{blog.slug}}/'>{{blog.name}}</a></li>
     {% endfor %}
     </ul>
 {% else %}

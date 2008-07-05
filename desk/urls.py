@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     (r'^help/$', 'desk.views.help_view'),
     (r'^mybranches/(?P<blog_slug>\w+)/$', 'desk.views.blogdetail'),
     # NOTE: posts are changed through the same urls, wether they are a workshop or regular.
-    (r'^blogs/(?P<blog_slug>\w+)/createPost/$', 'desk.views.create_edit_blog_post'),
+    (r'^branches/(?P<blog_slug>\w+)/createPost/$', 'desk.views.create_edit_blog_post'),
     (r'^editPost/(?P<post_id>\d+)/$', 'desk.views.create_edit_blog_post'),
     (r'^deletePost/(?P<post_id>\d+)/$', 'desk.views.delete_blog_post'),
     # workshop

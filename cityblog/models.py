@@ -62,7 +62,7 @@ class blog(models.Model):
         return self.name
     
     def get_absolute_url(self):
-      return u'/blogs/%s/' % self.slug
+      return u'/branches/%s/' % self.slug
       
     def get_edit_absolute_url(self):
       return u"/desk/mybranches/%s/" % (self.slug)
@@ -202,7 +202,7 @@ class post(models.Model):
 
     def get_absolute_url(self):
       d = self.post_date
-      return u'/blogs/posts/%d/' % ( self.id )
+      return u'/branches/posts/%d/' % ( self.id )
       
     def get_absolute_edit_url(self):
       # TODO: is there a better way to keep this in sync? maybe just have the editBlog
@@ -212,7 +212,7 @@ class post(models.Model):
       
     def get_absolute_preview_url( self ):
       d = self.post_date
-      return u'/blogs/preview_post/%d/' % ( self.id )
+      return u'/branches/preview_post/%d/' % ( self.id )
     
     def __unicode__(self):
         return self.title
