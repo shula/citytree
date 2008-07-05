@@ -18,8 +18,8 @@ class CapchaRequest(models.Model):
         pass
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, unique=True)
-    phone = models.CharField(max_length=200)
+    user = models.ForeignKey(User, unique=True,
+        edit_inline=models.TABULAR, num_in_admin=1,min_num_in_admin=1, max_num_in_admin=1,num_extra_on_change=0)
+    phone = models.CharField(max_length=200, core=True)
+    admin_notes = models.TextField(blank=True, null=True, help_text="Admin only (not for user) notes about the user")
     in_citytree_list = models.BooleanField(blank=True, default=True, null=True)
-    # TODO whenever needed
-
