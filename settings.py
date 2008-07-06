@@ -3,7 +3,7 @@
 DEFAULT_CHARSET = 'utf-8'
 
 ADMINS = (
-    ('Tami', 'tami@citytree.net'),
+    ('Tami', 'tami@citytree.dreamhosters.com'),
     # ('Your Name', 'your_email@domain.com'),
 )
 
