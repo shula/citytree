@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     (r'^workshop/(?P<workshop_slug>\w+)/addEvent/$', 'desk.views.create_edit_workshop_event'),
     (r'^workshop/(?P<workshop_slug>\w+)/editEvent/(?P<we_id>\d+)/$', 'desk.views.create_edit_workshop_event'),
     (r'^workshop/deleteEvent/(?P<we_id>\d+)/$', 'desk.views.delete_workshop_event'),
+    (r'^workshop/(?P<workshop_slug>\w+)/(?P<we_id>\d+)/csv/$', 'desk.views.get_workshop_event_registered_csv'),
 )

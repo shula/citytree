@@ -68,7 +68,11 @@
 		{{post.post_date|date:"d/m/y"}}
 		</font> 
 		{{post.title}}
-		</a></td>
+</a></td>
+{# extra column for workshop blogs #}
+{% if blog.is_workshop %}
+<td><div class="edit">{{ post.workshop.get_registered_total }}</div></td>
+{% endif %}
 <td><div class="edit"><a href="/desk/editPost/{{post.id}}" style="background: url('{{media_url}}/desk/edit.gif');">&nbsp;</a></div></td>
 <td><div class="edit"><a href="{{post.get_absolute_preview_url}}" style="background: url('{{media_url}}/desk/eye.gif');">&nbsp;</a></div></td>
 <td><div class="delete"><a href="#" onClick="doDelete({{post.id}},'{{post.title}}')" style="background: url('{{media_url}}/desk/delete.gif');">&nbsp;</a></div></td

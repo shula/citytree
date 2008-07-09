@@ -47,6 +47,9 @@ class Workshop(models.Model):
         except:
             return None
 
+    def get_registered_total(self):
+        return sum([event.get_registered_total() for event in self.workshopevent_set.all()])
+
     @staticmethod
     def create_workshop_by_post(post):
         if Workshop.objects.count() == 0:
@@ -181,6 +184,12 @@ class WorkshopEvent(models.Model):
 
     def get_registration_absolute_url(self):
         return u"/workshop/register/%s/%s/" % (self.workshop.slug, self.id)
+
+    def get_registered_total(self):
+        return self.users.count() + self.externalparticipant_set.count()
+
+    def get_registered_csv_absolute_url(self):
+            return u"/desk/workshop/%s/%s/csv/" % (self.workshop.slug, self.id)
 
     def save(self):
         # no WorkshopEvent can exist without at least one WorkshopEventPart.

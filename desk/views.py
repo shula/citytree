@@ -527,3 +527,16 @@ def delete_workshop_event(request, we_id):
 
 delete_workshop_event = login_needed(delete_workshop_event)
 
+def get_workshop_event_registered_csv(request, workshop_slug, we_id):
+    import csv
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=registered_users_for_%s_event_number_%s.csv' % (workshop_slug, we_id)
+    event = get_object_or_404(WorkshopEvent, id=we_id)
+    writer = csv.writer(response)
+    writer.writerow(['שם פרטי', 'שם משפחה', 'דואל'])
+    for user in event.users.all():
+        writer.writerow([user.first_name, user.last_name, user.email])
+    for user in event.externalparticipant_set.all():
+        writer.writerow([user.first_name, user.last_name, user.email])
+    return response
+

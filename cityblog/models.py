@@ -177,7 +177,6 @@ class post(models.Model):
         ordering = ['-post_date']
     
     def get_workshop(self):
-        # a little hack to force old posts to become "with workshop" posts upon visitation
         return self.workshop_set.get()
     workshop = property(get_workshop)
 
