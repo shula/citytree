@@ -38,12 +38,11 @@
 		</a>
 		</h1>
 		
-        <p class="leaf">
-        <table>
+        {% if post.workshop.next_event %}
+        <table class="leaf">
             <tbody valign="top">
                 <tr><th>תאור</th>
-                    <td>{{post.workshop.description}}</td></tr>
-                {% if post.workshop.next_event %}
+                    <td>{{post.workshop.description|safe}}</td></tr>
                 <tr><th>
                 {% ifnotequal post.workshop.next_event.start_date post.workshop.next_event.end_date %}
                 התחלה
@@ -66,9 +65,13 @@
                     <td>{{post.workshop.next_event.instructors}}</td></tr>
                 <tr><th>לפרטים</th>
                     <td>{{post.workshop.next_event.contact}}</td></td>
-                {% endif %}
             </tbody>
         </table>
+        {% else %} {# a event less workshop #}
+        <p class="leaf">
+            {{post.workshop.description|safe}}
+        </p>
+        {% endif %}
     </p>
 </div>
 	{% endfor %}	

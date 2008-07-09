@@ -43,6 +43,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
+#    'staticgenerator.middleware.StaticGeneratorMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 # TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
 #    'django.middleware.cache.CacheMiddleware',
@@ -100,9 +101,20 @@ CACHE_MIDDLEWARE_SECONDS = 1800
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
+#-------------------------- StaticGenerator-----------------
+# Instead of Cache - this is supposed to be even faster.
+# installation: add 'staticgenerator.middleware.StaticGenerator'
+#  to middleware, and set STATIC_GENERATOR_URLS and WEB_ROOT
+STATIC_GENERATOR_URLS = (
+    r'^/$',
+)
+
+#WEB_ROOT set in settings_local.py
+
 #-------------------------- Site Settings ------------------
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
+SHOW_WORKSHOPS_WITH_NO_EVENTS = False # True will add them at after the workshops with events - not very visible, but there.
 
 # -------------------------- Development Stuff -------------
 # Leave this as None for default - sending to the blog author

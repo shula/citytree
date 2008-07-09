@@ -52,8 +52,11 @@ def show_blog_or_workshop( request, blog_slug ):
             if p not in temp_set:
                 have_events.append(p)
                 temp_set.add(p)
-        #posts = itertools.chain(have_events, no_events)
-        posts = have_events
+        if settings.SHOW_WORKSHOPS_WITH_NO_EVENTS:
+            posts = itertools.chain(have_events, no_events)
+        else:
+            posts = have_events
+
         # don't show no_events for now
         return render_to_response('cityblog/blog_workshops.html', {
             'post_list': posts,
