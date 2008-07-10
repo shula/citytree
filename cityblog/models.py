@@ -57,6 +57,9 @@ class blog(models.Model):
     hits                  = models.PositiveIntegerField(blank=True,null=True)
     display_in_menu       = models.BooleanField( "Display in Menu", default=1 )
 
+    # I could have used the same solution as for the workshop question - 
+    # is_workshop is the other solution.
+    member_blog           = models.BooleanField( "Is this blog open for members?", default=False)
     
     def __unicode__(self):
         return self.name
@@ -82,10 +85,12 @@ class blog(models.Model):
         return self.blogworkshop_set.count() > 0
 
     class Admin:
-      fields = (
+        fields = (
         (None, {'fields': ('name', 'slug', 'header_image', 'header_image_label', 'teaser_photo', 'teaser_photo_label', 
-        'teaser_text', 'authors', 'display_in_menu')}),
+        'teaser_text', 'authors', 'display_in_menu', 'member_blog')}),
        )
+        list_display   = ('name', 'is_workshop', 'member_blog' )
+        list_filter    = ('member_blog',)
         
 
 #Categories a blog post can be placed under

@@ -74,12 +74,18 @@ $('img').Tooltip({
 		</h2>
 	</div>
 
-	<div class="rightmenulines">
-	{% for blog in user_blogs %}
-	<a href="{{blog.get_edit_absolute_url}}">
-		{{blog.name}}
-	</a><br>
+    <div class="rightmenulines">
+        <table>
+            <tbody>
+        {% for blog in user_blogs %}
+                <tr>
+    <td><a href="{{blog.get_edit_absolute_url}}">
+       {{blog.name}}
+   </a></td>
+        <td> {% if blog.is_workshop %} x {% else %} {% endif %} </td>
+   </tr>
 	{% endfor %}
+   </tbody></table>
 	</div>
 </div>
 {% endblock %}

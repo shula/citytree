@@ -1,5 +1,10 @@
 from django.conf.urls.defaults import *
 
+
+members_csv_url = 'members/csv/'
+# XXX: desk shouldn't be in that, it's determined elsewhere
+members_csv_absolute_url = '/desk/%s' % members_csv_url
+
 urlpatterns = patterns('',
     (r'^$', 'desk.views.tree_trunk'),
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'desk/login.html'}),
@@ -10,6 +15,8 @@ urlpatterns = patterns('',
     (r'^branches/(?P<blog_slug>\w+)/createPost/$', 'desk.views.create_edit_blog_post'),
     (r'^editPost/(?P<post_id>\d+)/$', 'desk.views.create_edit_blog_post'),
     (r'^deletePost/(?P<post_id>\d+)/$', 'desk.views.delete_blog_post'),
+    # members
+    ('^^%s$' % members_csv_url, 'desk.views.members_csv'),
     # workshop
     (r'^workshop/(?P<workshop_slug>\w+)/addEvent/$', 'desk.views.create_edit_workshop_event'),
     (r'^workshop/(?P<workshop_slug>\w+)/editEvent/(?P<we_id>\d+)/$', 'desk.views.create_edit_workshop_event'),

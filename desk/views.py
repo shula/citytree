@@ -19,6 +19,8 @@ from django.contrib.auth.models import User
 from desk.forms import PostForm, WorkshopForm, WorkshopEventForm
 from cityblog.models import blog, post, flag, postImage
 from workshop.models import Workshop, WorkshopEvent, WorkshopEventPart
+from desk.urls import members_csv_absolute_url
+from accounts.models import UserProfile
 
 MAIN_SECTION       = 1
 HELP_SECTION       = 2
@@ -36,6 +38,7 @@ NUM_IMAGES_IN_POST    = 12 #Number of pictures that can be attached to a post
 #get login/logout to work with correct urls. require at least one blog (thus removing
 # regular users without adding yet another field)
 login_needed = user_passes_test(lambda u: not u.is_anonymous() and u.blog_set.count()>0, login_url='/desk/login/')
+staff_required = user_passes_test(lambda u: u.is_authenticated() and u.is_staff, login_url='/desk/login/')
 
 def tree_trunk( request ):
     """ The main tree trunk page """
@@ -46,6 +49,7 @@ def tree_trunk( request ):
                 'section' : MAIN_SECTION , 
                 'user_blogs': user_blogs, 
                 'username': request.user.first_name,
+                'members_csv_absolute_url': members_csv_absolute_url,
                 'APP_NAME' : 'cityblog' }, context_instance=RequestContext(request) )
 tree_trunk = login_needed(tree_trunk)
 
@@ -527,6 +531,9 @@ def delete_workshop_event(request, we_id):
 
 delete_workshop_event = login_needed(delete_workshop_event)
 
+def as_utf_8(l):
+    return [s.encode('utf-8') for s in l]
+
 def get_workshop_event_registered_csv(request, workshop_slug, we_id):
     import csv
     response = HttpResponse(mimetype='text/csv')
@@ -535,8 +542,22 @@ def get_workshop_event_registered_csv(request, workshop_slug, we_id):
     writer = csv.writer(response)
     writer.writerow(['שם פרטי', 'שם משפחה', 'דואל'])
     for user in event.users.all():
-        writer.writerow([user.first_name, user.last_name, user.email])
+        writer.writerow(as_utf_8([user.first_name, user.last_name, user.email]))
     for user in event.externalparticipant_set.all():
-        writer.writerow([user.first_name, user.last_name, user.email])
+        writer.writerow(as_utf_8([user.first_name, user.last_name, user.email]))
     return response
 
+get_workshop_event_registered_csv = login_needed(get_workshop_event_registered_csv)
+
+def members_csv(request):
+    import csv
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=members.csv'
+    writer = csv.writer(response)
+    writer.writerow(['תאריך הצטרפות', 'שם פרטי', 'שם משפחה', 'דואל', 'כתובת', 'סכום', 'תשלומים' 'שיטת תשלום', 'נשלחה קבלה', 'הגיע בעקבות'])
+    #TODO need to record the litrom csv and use it here to fill in those fields
+    for member in UserProfile.members.all():
+        writer.writerow(as_utf_8([str(member.date_joined.date()), member.first_name, member.last_name, member.email,'','','','','','probably litrom']))
+    return response
+
+members_csv = staff_required(members_csv)
