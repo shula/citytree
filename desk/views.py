@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from time import strptime
+import itertools
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
@@ -556,7 +557,8 @@ def members_csv(request):
     writer = csv.writer(response)
     writer.writerow(['תאריך הצטרפות', 'שם פרטי', 'שם משפחה', 'דואל', 'כתובת', 'סכום', 'תשלומים' 'שיטת תשלום', 'נשלחה קבלה', 'הגיע בעקבות'])
     #TODO need to record the litrom csv and use it here to fill in those fields
-    for member in UserProfile.members.all():
+    for member in itertools.chain(UserProfile.members.all(),
+            [x for x in User.objects.all() if x.blog_set.count() == 0]):
         writer.writerow(as_utf_8([str(member.date_joined.date()), member.first_name, member.last_name, member.email,'','','','','','probably litrom']))
     return response
 
