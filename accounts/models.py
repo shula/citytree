@@ -35,6 +35,7 @@ class UserProfile(models.Model):
     admin_notes = models.TextField(blank=True, null=True, help_text="Admin only (not for user) notes about the user")
     in_citytree_list = models.BooleanField(blank=True, default=True, null=True)
 
+    objects = models.Manager()
     members = MemberManager()
 
     def is_gardener(self):
