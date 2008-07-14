@@ -148,12 +148,16 @@ def send_feedback( request ):
     message      = request.POST.get('message', '')
     sender_name  = request.POST.get('sender_name', '')
     from_email   = request.POST.get('from_email', '')
+    phone_number = request.POST.get('sender_phone', '')
+    if phone_number is not '':
+        phone_number = '(phone#: %s)' % phone_number
     
+    # NOTE: phone_number exists only in newer version of db - don't require it [alon]
     if redirect_url and subject and message and from_email and sender_name:
         try:
-            msg = "User Who Sent the email %s \n\n %s" % (sender_name, message  )
+            msg = "User Who Sent the email %s%s \n\n %s" % (sender_name, phone_number, message  )
             
-            send_mail(subject, msg, from_email, ['tree@citytree.net'])
+            send_mail(subject, msg, from_email, settings.CITYTREE_FEEDBACK_CONTACTS)
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
         return HttpResponseRedirect(redirect_url)

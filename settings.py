@@ -115,6 +115,7 @@ STATIC_GENERATOR_URLS = (
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 SHOW_WORKSHOPS_WITH_NO_EVENTS = False # True will add them at after the workshops with events - not very visible, but there.
+CITYTREE_FEEDBACK_CONTACTS = ['tree@citytree.net']
 
 # -------------------------- Development Stuff -------------
 # Leave this as None for default - sending to the blog author

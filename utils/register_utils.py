@@ -14,6 +14,7 @@ DEMO_ERROR = 'demo success'
 def register_new_user(donor, really_send_email=False):
     email = str(donor['email'])
     user_exists = User.objects.filter(email=email).count() != 0
+    members_blogs = blog.objects.filter(member_blog=True)
     if user_exists and really_send_email:
             return DUPLICATE_ERROR
 
@@ -26,6 +27,9 @@ def register_new_user(donor, really_send_email=False):
                 last_name = donor['last']
                 user.first_name = first_name
                 user.last_name = last_name
+                user.save()
+                for b in member_blogs:
+                    user.blog_set.add(b)
                 user.save()
         else:
             user = User.objects.get(email=email)
