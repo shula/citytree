@@ -15,6 +15,8 @@ from django.contrib.sites.models import Site
 
 import settings
 from accounts.models import CapchaRequest
+from frontpage.views import show_front_page
+from frontpage.models import FrontPage
 from utils.randomUtils import make_random_hash
 from utils.hebrew_capcha import get_random_hebrew_alphabet_string, generate_capcha
 
@@ -70,6 +72,7 @@ class SharedLoginRegister(object):
         s.rform = None # registration
         s.lform = None # login
         s.hash = None
+        s.first_time_user = False
  
     def register_new_account(s, request):
         registration_success_template = 'accounts/registration_success.html'
@@ -138,8 +141,15 @@ class SharedLoginRegister(object):
                 s.status = 'failed'
             else:
                 if user.is_active:
+                    s.first_time_user = user.last_login == user.date_joined
                     login(request, user)
-                    s.response = HttpResponseRedirect('/')
+                    # check if this is a first time login
+                    if request.user.is_authenticated() and s.first_time_user:
+                        front_page = get_object_or_404(FrontPage, title=settings.NEW_MEMBERS_FRONTPAGE_TITLE)
+                        s.response = show_front_page(request, front_page=front_page)
+                    else:
+                        # redirect normal users to frontpage
+                        s.response = HttpResponseRedirect('/')
                 else:
                     s.status = 'failed' # TODO: seperate message for non active users?
         else:

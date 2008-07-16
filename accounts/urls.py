@@ -6,6 +6,6 @@ urlpatterns = patterns('',
 #    (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}),
     (r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
 #    (r'^create_account/$', 'accounts.views.create_account'),
-    (r'^capcha/image/(?P<hash>.+)/$', 'accounts.views.capcha_image')
+    (r'^capcha/image/(?P<hash>.+)/$', 'accounts.views.capcha_image'),
 )
 

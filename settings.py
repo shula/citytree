@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Django settings for citytreesite project.
 
 DEFAULT_CHARSET = 'utf-8'
@@ -111,11 +113,12 @@ STATIC_GENERATOR_URLS = (
 
 #WEB_ROOT set in settings_local.py
 
-#-------------------------- Site Settings ------------------
+#-------------------------- Citytree specific (i.e. the app, and the site) Site Settings ------------------
 HEADER_MASK = '/home/tamizori/django/django_projects/citytree/frontpage/mask.png' #mask for main page header logo
 SITE_LOGO   = '' #site logo
 SHOW_WORKSHOPS_WITH_NO_EVENTS = False # True will add them at after the workshops with events - not very visible, but there.
 CITYTREE_FEEDBACK_CONTACTS = ['tree@citytree.net']
+NEW_MEMBERS_FRONTPAGE_TITLE = 'ברוכים המצטרפים לעץבעיר'
 
 # -------------------------- Development Stuff -------------
 # Leave this as None for default - sending to the blog author

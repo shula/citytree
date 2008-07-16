@@ -9,12 +9,15 @@ from django.contrib.auth.decorators import user_passes_test
 
 admin_only = user_passes_test(lambda u: (not u.is_anonymous() and u.is_staff), login_url='/')
 
-def show_front_page( request ):
+def show_front_page( request, front_page = None ):
   
-  try:
-    pageObj = FrontPage.objects.filter(draft=False).latest()
-  except FrontPage.DoesNotExist:
-    raise Http404
+  if front_page is None:
+    try:
+      pageObj = FrontPage.objects.filter(draft=False).latest()
+    except FrontPage.DoesNotExist:
+      raise Http404
+  else:
+    pageObj = front_page
   
   from citytree.utils.hebDate import makeHebCalLinks
   
