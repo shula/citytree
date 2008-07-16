@@ -6,7 +6,7 @@ function showMenu( idx )
 
 function hideMenu( idx )
 {
-	$('div.l'+idx+'menu').css({'visibility':'hidden'})
+	$('div.l'+idx+'menu').css({'visibility':'hidden'});
 }
 
 function setupMenu( idx )
@@ -19,6 +19,6 @@ $(function() {
 
     for( i = 1; i <=5; i++)
 		setupMenu(i);
-		
 	   
 });
+
