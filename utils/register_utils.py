@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 import settings
 
+from cityblog.models import blog
+
 DUPLICATE_ERROR = 'duplicate error'
 EMAIL_ERROR = 'email_error'
 SUCCESS_ERROR = 'success'
