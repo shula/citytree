@@ -86,6 +86,7 @@ class FrontPage(models.Model):
        )
       list_display   = ('title', 'date', 'draft' )
       ordering       = ('-date',)
+      search_fields  = ('title',)
     
     class Meta:
         get_latest_by = 'date'

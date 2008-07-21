@@ -19,6 +19,8 @@ from frontpage.views import show_front_page
 from frontpage.models import FrontPage
 from utils.randomUtils import make_random_hash
 from utils.hebrew_capcha import get_random_hebrew_alphabet_string, generate_capcha
+from utils.email import send_email_to
+
 
 login_needed = user_passes_test(lambda u: u.is_authenticated(), login_url='/accounts/login/')
 
@@ -35,13 +37,6 @@ class RegisterForm(forms.Form):
     optin_citytree_list = forms.BooleanField(required=False, label='הצטרפות לרשימת התפוצה של עץ בעיר')
     capcha_response = forms.CharField(label='רשום את האותיות המופיעות מתחת', max_length=200)
     hash       = forms.CharField(max_length=200, widget=forms.HiddenInput)
-
-def send_email_to(template, to, subject, context_dict):
-    recipient_list = [to]
-    t = loader.get_template(template)
-    c = Context(context_dict)
-    message = t.render(c)
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)
 
 def new_capcha_request(form, reuse_hash=None):
     if reuse_hash:

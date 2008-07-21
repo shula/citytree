@@ -77,12 +77,21 @@ src='{{media_url}}/calendar/calen.png');
 
 <!-- Calendar stops here -->
 
-<div class="leftnav" style="font-size: 7pt">
+<div class="leftnav" style="font-size: 8pt">
 
     <form id="search" action="/branches/search" method="get">
-        <label for="form-search">חיפוש בעץ</label>
-        <input id="form-search" name="q" type="text" size="10" value=""/>
-        {# <input type="submit" value=""/> #}
+        <label for="form-search">חיפוש בעץ</label><br>
+        <div style="text-align:left">
+        <input id="form-search" name="q" type="text" size="15" value=""/>
+        <input type="submit" value="לחיפוש" style="margin-top: 3px; padding-left: 0px; padding-right: 0px"/>
+        </div>
+    </form>
+    <form id="joinlist" action="/mailinglist/join" method="get" style="text-align:center">
+        <label for="form-joinlist">דואל להצטרפות לרשימת תפוצה</label><br>
+        <div style="text-align:left">
+        <input id="form-joinlist" name="q" type="text" size="15" value=""/>
+        <input type="submit" value="להצטרפות" style="margin-top: 3px; padding-left: 0px; padding-right: 0px"/>
+        </div>
     </form>
 
 {% include "leftmenu.html" %}

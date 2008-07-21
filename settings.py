@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     'citytree.ajax',
     'citytree.spamdetector',
     'citytree.workshop',
+    'citytree.mailinglist',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
