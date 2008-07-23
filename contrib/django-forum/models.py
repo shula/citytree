@@ -52,7 +52,10 @@ class Forum(models.Model):
 
     class Admin:
         list_display = ('title', '_parents_repr')
-        ordering = ['parent', 'title']
+        ordering = ['title']
+        search_fields = ['title']
+        # must have a parent for this to work
+        #ordering = ['title', 'parent']
 
     def get_absolute_url(self):
         from django.core.urlresolvers import reverse
