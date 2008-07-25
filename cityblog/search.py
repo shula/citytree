@@ -1,11 +1,13 @@
+import operator
+
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.template import loader, Context
-from cityblog.models import post
-import operator
 
-class_search_fields = ((post, ['title', 'teaser_text', 'text'], {'draft':0}),)
+from cityblog.models import Post
+
+class_search_fields = ((Post, ['title', 'teaser_text', 'text'], {'draft':0}),)
 
 def search(terms): 
     query = terms.replace("+"," ")       

@@ -1,12 +1,12 @@
 from django.conf.urls.defaults import *
-from cityblog.models import blog
 from django.contrib.comments.models import FreeComment
 from django.views.generic import list_detail
 from django.views.generic.simple import redirect_to
 
+from cityblog.models import Blog
 
 blog_dict = {
-    'queryset': blog.objects.all(),
+    'queryset': Blog.objects.all(),
     'template_name': 'cityblog/blogs_main_page.html'
 }
 

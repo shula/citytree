@@ -18,7 +18,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
  
 from desk.forms import PostForm, WorkshopForm, WorkshopEventForm
-from cityblog.models import blog, post, flag, postImage
+from cityblog.models import Blog, Post, Flag, PostImage
 from workshop.models import Workshop, WorkshopEvent, WorkshopEventPart
 from desk.urls import members_csv_absolute_url
 from accounts.models import UserProfile
@@ -44,7 +44,7 @@ staff_required = user_passes_test(lambda u: u.is_authenticated() and u.is_staff,
 def tree_trunk( request ):
     """ The main tree trunk page """
   
-    user_blogs = blog.objects.filter( authors=request.user.id)
+    user_blogs = Blog.objects.filter( authors=request.user.id)
   
     return render_to_response('desk/tree_trunk.html', {
                 'section' : MAIN_SECTION , 
@@ -59,7 +59,7 @@ def help_view( request ):
     Desk help
     """
    
-    user_blogs = blog.objects.filter( authors=request.user.id)
+    user_blogs = Blog.objects.filter( authors=request.user.id)
    
     return render_to_response('desk/help.html', 
                                 {'APP_NAME' : 'cityblog',
@@ -75,8 +75,8 @@ def blogdetail( request, blog_slug ):
     If it is a workshop blog, the list is slightly different, and the button allows
     creating of new workshop, not new post.
     """
-    user_blogs = blog.objects.filter( authors=request.user.id)
-    theBlog   = get_object_or_404( blog, slug=blog_slug )
+    user_blogs = Blog.objects.filter( authors=request.user.id)
+    theBlog   = get_object_or_404( Blog, slug=blog_slug )
     blogPosts = theBlog.post_set.filter(author=request.user.id) #make sure user can only see their own posts
     theMessage   = None
   
@@ -101,7 +101,7 @@ def delete_blog_post( request, post_id ):
     """
     Delete requisit post
     """
-    thePost = get_object_or_404( post, id=post_id, author=request.user.id )
+    thePost = get_object_or_404( Post, id=post_id, author=request.user.id )
     
     thePost.delete()
     
@@ -135,7 +135,7 @@ def handleImageUploads( postObject, new_data ):
         
         #--------- Check if we're deleting an image --------------
         if( imgLookup.has_key(idx) and new_data.has_key(delKey)):
-            postImg = get_object_or_404( postImage, id=new_data[delKey] )
+            postImg = get_object_or_404( PostImage, id=new_data[delKey] )
             postImg.delete()
             imgWasDeleted = True
             continue
@@ -145,13 +145,13 @@ def handleImageUploads( postObject, new_data ):
         # Due to moving to development django (post 0.96.6) ImageWithThumbnail is broken. The fix
         # is to create the instance (postImage in this case) first, then populate the images fields in it.
         if not imgLookup.has_key(idx) and new_data.has_key(fileKey):
-            new_postImage = postImage()
+            new_postImage = PostImage()
             new_postImage.index = idx
             new_postImage.post = postObject
             new_postImage.save()
             imgLookup[new_postImage.index] = new_postImage.id
         if imgLookup.has_key(idx):
-            manipulator = postImage.ChangeManipulator(imgLookup[idx])
+            manipulator = PostImage.ChangeManipulator(imgLookup[idx])
             
         if( new_data.has_key(fileKey) ):
             dataToSave.setlist('image_file',new_data.getlist(fileKey) )
@@ -186,9 +186,9 @@ def fix_boolean_fields(data, fields):
 
 def create_edit_blog_post( request, post_id=None, blog_slug=None ):
     if post_id is None:
-        theBlog = get_object_or_404(blog, slug=blog_slug)
+        theBlog = get_object_or_404(Blog, slug=blog_slug)
     else:
-        theBlog = get_object_or_404(post, id=post_id).blog
+        theBlog = get_object_or_404(Post, id=post_id).blog
     if theBlog.is_workshop():
         clazz = WorkshopCreator
     else:
@@ -284,7 +284,7 @@ class PostCreator(Responder):
         s.blog_slug  = blog_slug
 
         s.userId     = request.user.id
-        s.user_blogs = blog.objects.filter( authors=s.userId )
+        s.user_blogs = Blog.objects.filter( authors=s.userId )
         s.thePost    = None
         s.postImages = None
         s.theBlog    = None
@@ -294,7 +294,7 @@ class PostCreator(Responder):
         Responder.__init__(s, request)
  
     def _get_instance(s):
-        objs = post.objects.filter(id=s.post_id)
+        objs = Post.objects.filter(id=s.post_id)
         if objs.count() > 0:
             s._instance = objs[0]
 
@@ -316,7 +316,7 @@ class PostCreator(Responder):
         """
         #Check if this user has the rights to post to this blog
         try:
-            s.theBlog = blog.objects.all().filter(slug=s.blog_slug)[0]
+            s.theBlog = Blog.objects.all().filter(slug=s.blog_slug)[0]
             s.theUser = s.theBlog.authors.filter(id=s.userId)[0]
         except Exception, e:
             raise Http404
@@ -363,7 +363,7 @@ class PostCreator(Responder):
         """
         # once again, we have a problem with ImageWithThumbnail, so the fix is:
         # make sure the post has an id first, then add image.
-        s.thePost = thePost = post()
+        s.thePost = thePost = Post()
         thePost.blog = s.theBlog
         thePost.author = s.theUser
         thePost.post_date = datetime.now()
@@ -385,7 +385,7 @@ class PostCreator(Responder):
 
     def _makeFilterFlags(s):
         #------- Filter Flags ------------
-        legalFlags = flag.objects.filter( Q(blog__isnull=True) | Q(blog=s.theBlog.id) )
+        legalFlags = Flag.objects.filter( Q(blog__isnull=True) | Q(blog=s.theBlog.id) )
         renderFlags = []
         postFlags = {}  #Flags that this post currently contains
       

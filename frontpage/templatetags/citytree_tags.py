@@ -1,5 +1,5 @@
 from django import template
-from citytree.cityblog.models import post
+from citytree.cityblog.models import Post
 from citytree.utils.imgUtils  import replacePostImages
 from django.conf import settings 
 import re

@@ -1,7 +1,10 @@
 from django.conf.urls.defaults import *
 from django.contrib.comments.models import FreeComment
+from django.contrib import admin
 from citytree.cityblog.feeds import LatestPosts
 import settings
+
+admin.autodiscover() # import all app.admin modules
 
 feeds = {
     'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.
@@ -11,12 +14,11 @@ urlpatterns = patterns('',
     # Example:
     # (r'^citytreesite/', include('citytreesite.apps.foo.urls.foo')),
 
-    # Uncomment this for admin:
+    (r'^admin/(.*)',  admin.site.root),
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^feeds$',      'citytree.cityblog.feeds.main_page'),
     (r'^forum/',      include('forum.urls')),
     (r'^uptime_openacs/$', 'citytree.views.uptime_openacs'),
-    (r'^admin/',      include('django.contrib.admin.urls')),
     (r'^desk/',       include('citytree.desk.urls')),
     (r'^blogs/',      'citytree.cityblog.views.redirect_to_branches'),
     (r'^branches/',      include('citytree.cityblog.urls')),

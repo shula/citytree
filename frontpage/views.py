@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from frontpage.models import FrontPage
-from citytree.cityblog.models  import blog, subject
+from citytree.cityblog.models  import Blog, Subject
 from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext 
 from datetime import datetime, date, timedelta
@@ -51,7 +51,7 @@ def show_front_page( request, front_page = None ):
                                         urlType=calLinkType, highlightToday=True)
   
   return render_to_response('frontpage/frontpage.html', 
-    {'content':pageObj, 'blogs': blog.objects.all(), 'subjects' : subject.objects.all() },
+    {'content':pageObj, 'blogs': Blog.objects.all(), 'subjects' : Subject.objects.all() },
     context_instance=RequestContext(request, {}, [calender,bgColorProcessor]))
     
 
@@ -72,7 +72,7 @@ def preview_front_page(request, page_id):
                                            urlType=calLinkType, highlightToday=True  )
     
     return render_to_response('frontpage/frontpage.html', 
-    {'content':pageObj, 'blogs': blog.objects.all(), 'subjects' : subject.objects.all()},
+    {'content':pageObj, 'blogs': Blog.objects.all(), 'subjects' : Subject.objects.all()},
     context_instance=RequestContext(request, {}, [calender,bgColorProcessor]))
     
 preview_front_page = admin_only(preview_front_page) 

@@ -2,7 +2,7 @@
 
 import django.newforms as forms
 
-from cityblog.models import post, blog
+from cityblog.models import Post, Blog
 from workshop.models import Workshop, WorkshopEvent
 
 #----------------- Forms --------------------------
@@ -10,12 +10,12 @@ from workshop.models import Workshop, WorkshopEvent
 class PostForm(forms.ModelForm):
     #post_date = forms.DateField(widget = forms.widgets.SplitDateTimeWidget())
     class Meta:
-        model = post
+        model = Post
 
 #class WorkshopForm(forms.Form):
 class WorkshopForm(forms.ModelForm):
     class Meta:
-        model = post
+        model = Post
         fields = ('title', 'description', 'image', 'image_label', 'image_caption', 'text', 'draft', 'enable_comments')
 
     # post stuff

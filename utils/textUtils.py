@@ -9,7 +9,7 @@ def wikiSub( inStr ):
     '''bold'''
     [http://foo an external link]
     """
-    from cityblog.models import post
+    from cityblog.models import Post
     
     #First sanitize input string
     
@@ -41,7 +41,7 @@ def wikiSub( inStr ):
         after =  inStr[m.end():]
         
         #try to find posts with a matching ID
-        thePosts = post.objects.filter(id=post_num)
+        thePosts = Post.objects.filter(id=post_num)
         
         if( len(thePosts) != 1):
             print post_num,thePosts

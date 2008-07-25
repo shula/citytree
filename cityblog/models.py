@@ -28,8 +28,8 @@ tinymce_textarea_js_list = ['tinymce/tiny_mce.js'
 
 fckeditor_textarea_js_list = ['fckeditor/fckeditor.js']
 
-#Object representing a blog, a blog can have many authors.
-class blog(models.Model):
+#Object representing a blog, a Blog can have many authors.
+class Blog(models.Model):
     name          = models.CharField(max_length=200,blank=False)
     slug          = models.SlugField('blog url identifier', unique=True)
     authors       = models.ManyToManyField(User,verbose_name='list of blog authors')
@@ -83,22 +83,15 @@ class blog(models.Model):
 
     def is_workshop(self):
         return self.blogworkshop_set.count() > 0
-
-    class Admin:
-        fields = (
-        (None, {'fields': ('name', 'slug', 'header_image', 'header_image_label', 'teaser_photo', 'teaser_photo_label', 
-        'teaser_text', 'authors', 'display_in_menu', 'member_blog')}),
-       )
-        list_display   = ('name', 'is_workshop', 'member_blog' )
-        list_filter    = ('member_blog',)
-        
+    is_workshop.boolean = True # prettier display in Admin
+       
 
 #Categories a blog post can be placed under
-class flag(models.Model):
+class Flag(models.Model):
     name         = models.CharField(max_length=50)
     
     #blog in which this flag is viewable (null = all blogs)
-    blog         = models.ForeignKey( blog, blank=True, null=True )
+    blog         = models.ForeignKey( Blog, blank=True, null=True )
     
     def __unicode__(self):
         return self.name
@@ -107,7 +100,7 @@ class flag(models.Model):
         list_display  = ( 'name', 'blog' )
         pass
     
-class post(models.Model):
+class Post(models.Model):
     DRAFT_CHOICES = (
       ( 1, 'טיוטה'),
       ( 0, 'מאושר') )
@@ -124,7 +117,7 @@ class post(models.Model):
         ( POST_STYLE_WORKSHOP, 'סדנה' ),
     )
 
-    blog          = models.ForeignKey(blog)
+    blog          = models.ForeignKey(Blog)
     author        = models.ForeignKey(User, blank=False)
     
     #slug          = models.SlugField('blog url identifier', unique=True)
@@ -151,7 +144,7 @@ class post(models.Model):
     text          = models.TextField(help_text="If left blank then Text is copied here", blank=True, null=True)
     rendered_text = models.TextField('Entry body as HTML', blank=True, null=True)
     
-    flags         = models.ManyToManyField( flag, blank=True, null=True )
+    flags         = models.ManyToManyField( Flag, blank=True, null=True )
     draft         = models.BooleanField(help_text='Set to post to make post live on site', default=1, choices=DRAFT_CHOICES, blank=True)
     post_style    = models.PositiveIntegerField('Post Style', help_text='Style in which post is displayed' , blank=False, default=1, choices=POST_STYLE_TYPES )
 
@@ -236,10 +229,10 @@ class post(models.Model):
         self.time_modified        = datetime.date.today()
         self.rendered_text        = wikiSub(self.text)
         self.teaser_rendered_text = wikiSub(self.teaser_text)
-        super(post, self).save() # Call the "real" save() method.
+        super(Post, self).save() # Call the "real" save() method.
 
-class postImage(models.Model):
-    post          = models.ForeignKey(post)
+class PostImage(models.Model):
+    post          = models.ForeignKey(Post)
     image         = ImageWithThumbnailField(upload_to='blog_images/%Y/%m/%d',width_field='image_width', height_field='image_height')
     image_height  = models.PositiveIntegerField(blank=True,null=True)
     image_width   = models.PositiveIntegerField(blank=True,null=True)
@@ -252,13 +245,13 @@ class postImage(models.Model):
       
     def save(self):
         if not self.id:
-            # new postImage
+            # new PostImage
             if self.caption is None: self.caption= ''
             if self.label is None: self.label=''
             if( len(self.caption) == 0 ):
                 self.caption = self.label[0:25]
                 
-        super( postImage, self ).save()
+        super( PostImage, self ).save()
         
     class Admin:
       fields = (
@@ -267,7 +260,7 @@ class postImage(models.Model):
        
       list_display = ('index', 'label', 'image')
     
-class subject(models.Model):
+class Subject(models.Model):
   """
   Reshiymat Nos'iym
   """
@@ -285,8 +278,8 @@ class subject(models.Model):
   
   ordering      = models.PositiveIntegerField('Ordering:', blank=True,null=True, help_text='For custom ordering of Subjects')
   
-  flags         = models.ManyToManyField(flag,verbose_name='flags to include', blank=True, null=True)
-  blogs         = models.ManyToManyField(blog, help_text="currently not in use", verbose_name='blogs to include', blank=True, null=True)
+  flags         = models.ManyToManyField(Flag,verbose_name='flags to include', blank=True, null=True)
+  blogs         = models.ManyToManyField(Blog, help_text="currently not in use", verbose_name='blogs to include', blank=True, null=True)
   
   class Admin:
       fields = (
@@ -335,8 +328,8 @@ class PostModerator(CommentModerator):
             recipient_list = [self.really_send_email_to_this_person]
         t = loader.get_template('cityblog/post_comment_notification_email.txt')
         site = Site.objects.get_current().name
-        from spamdetector.models import allowed_ban_requests
-        allowed_ban_requests(ip_address = comment.ip_address, hash=self._hash).save()
+        from spamdetector.models import AllowedBanRequests
+        AllowedBanRequests(ip_address = comment.ip_address, hash=self._hash).save()
         c = Context({ 'comment': comment,
                       'content_object': content_object,
                       'site': site,
@@ -350,7 +343,7 @@ class PostModerator(CommentModerator):
 # exception, lest django present the dreaded error page.
 try:
     i = 0
-    moderator.register(post, PostModerator)
+    moderator.register(Post, PostModerator)
 except AlreadyModerated:
     i += 1
     print "already moderated: %s" % i

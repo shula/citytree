@@ -1,5 +1,5 @@
 from PIL import Image
-from cityblog.models import post
+from cityblog.models import Post
 from django.template import Context, loader
 import re
 
@@ -30,7 +30,7 @@ def replacePostImages( text, postId, theTemplate ):
         """
 
         #----------- Convert [img n] tags ------------------
-        thePost = post.objects.filter( id=postId )[0]
+        thePost = Post.objects.filter( id=postId )[0]
         
         t = loader.get_template(theTemplate)
 

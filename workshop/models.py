@@ -15,17 +15,16 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
-from cityblog.models import post, blog
+from cityblog.models import Post, Blog
 
 class Workshop(models.Model):
     name        =   models.CharField('workshop name', max_length=200, blank=False)
     slug        =   models.SlugField(verbose_name='workshop url identifier', unique=True)
     description =   models.TextField(blank=True, null=True, help_text='single line description')
-    defining_post = models.ForeignKey( post, blank=True, null=True, help_text='Defining post where this workshop is written about. ' )
+    defining_post = models.ForeignKey( Post, blank=True, null=True, help_text='Defining post where this workshop is written about. ' )
     owners      =   models.ManyToManyField(User, related_name='owned_workshop_set',
                     help_text='future - allow these people to change workshop details',
-                    verbose_name='workshop owners', blank=True,
-                    filter_interface=models.HORIZONTAL)
+                    verbose_name='workshop owners', blank=True)
 
     def __unicode__(self):
         return u'<workshop %s>' % (self.slug)
@@ -113,7 +112,7 @@ class BlogWorkshop(models.Model):
     comments are still related to the post, which is just also related to a workshop.
     """
 
-    blog              = models.ForeignKey(blog, edit_inline=models.STACKED,
+    blog              = models.ForeignKey(Blog, edit_inline=models.STACKED,
             core=True, unique=True, num_in_admin=1,min_num_in_admin=1, max_num_in_admin=1,num_extra_on_change=0)
     is_workshops_blog = models.BooleanField("Is this a workshop blog")
 
@@ -142,8 +141,7 @@ class WorkshopEvent(models.Model):
     workshop    =   models.ForeignKey(Workshop, verbose_name='סדנה', blank=False)
 
     users       =   models.ManyToManyField(User, related_name='registered_workshopevent_set',
-                    verbose_name='registered site users', blank=True,
-                    filter_interface=models.HORIZONTAL)
+                    verbose_name='registered site users', blank=True)
 
     class Admin:
         pass

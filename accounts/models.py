@@ -2,7 +2,6 @@
 
 from django.db import models
 from django.contrib.auth.models import User
-from cityblog.models import post
 
 class CapchaRequest(models.Model):
     hash       = models.CharField(max_length=256, blank=False)

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.syndication.feeds import Feed
-from cityblog.models import post, blog
 from django.views.generic.list_detail import object_list as generic_object_list
+
+from cityblog.models import Post, Blog
 from citytree.utils.hebCalView import *
 
 def LatestPosts_get_feed_url(blog):
@@ -17,14 +18,14 @@ class LatestPosts(Feed):
         """ this is used to return a slug specific feed when bits is length one, like
         """
         if len(bits) == 1:
-            return blog.objects.get(slug=bits[0])
+            return Blog.objects.get(slug=bits[0])
         return None
 
     def items(self, blog=None):
         if blog is None:
-            return post.objects.filter(draft=0).order_by('-post_date')[:10]
+            return Post.objects.filter(draft=0).order_by('-post_date')[:10]
         # return only posts from the same blog
-        return post.objects.filter(draft=0, blog=blog).order_by('-post_date')[:10]
+        return Post.objects.filter(draft=0, blog=blog).order_by('-post_date')[:10]
 
 class DummyList(list):
     def _clone(self):
@@ -41,7 +42,7 @@ def main_page(request):
   bgColorProcessor = makeHebBGColorProcessor( dateToShow )
   dayLinks = makeHebCalLinks( '/?date=%s', date.today() )
   calender = makeHebCalRequestContext(dayLinks, engDate=date.today(), urlType=calLinkType, highlightToday=True)
-  return generic_object_list( request, queryset=blog.objects.all(),
+  return generic_object_list( request, queryset=Blog.objects.all(),
               template_object_name='blog',
               template_name='feeds_main_page.html',
               context_processors =[calender,bgColorProcessor],

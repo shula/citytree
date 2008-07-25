@@ -5,10 +5,11 @@ import itertools
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list as generic_object_list
 from django.views.generic.list_detail import object_detail as generic_object_detail
-from cityblog.models import blog, post, flag, subject
-from frontpage.models import FrontPage
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
+
+from frontpage.models import FrontPage
+from cityblog.models import Blog, Post, Flag, Subject
 from citytree.utils.hebCalView import *
 from cityblog.search import search as cityblog_search
 
@@ -16,11 +17,11 @@ NUM_POSTS_PER_PAGE = 5
 NUM_SUBJECTS_PER_PAGE = 10
 
 def show_blog_or_workshop( request, blog_slug ):
-    b = get_object_or_404(blog, slug=blog_slug)
+    b = get_object_or_404(Blog, slug=blog_slug)
     posts = b.post_set.filter(draft=0)
     
     #------------ Get List of flags in blog ---------
-    flags = flag.objects.filter( post__blog = b.id ).filter( blog__post__draft = 0 ).distinct()
+    flags = Flag.objects.filter( post__blog = b.id ).filter( blog__post__draft = 0 ).distinct()
   
     #------------ If a specific flag was requested, then show only that flag -------
     if( request.method == 'GET' and request.GET.has_key('flag') ):
@@ -74,12 +75,12 @@ def show_blog_or_workshop( request, blog_slug ):
               paginate_by=NUM_POSTS_PER_PAGE)
    
 def subject_view( request, subject_slug ):
-    theSubject = get_object_or_404(subject, slug=subject_slug)
+    theSubject = get_object_or_404(Subject, slug=subject_slug)
     flags = theSubject.flags.all()
     
     cat_ids = [ cat.id for cat in flags ]
     
-    thePosts = post.objects.filter( draft=0, flags__in = cat_ids )
+    thePosts = Post.objects.filter( draft=0, flags__in = cat_ids )
     
     frontpage = FrontPage.objects.filter(draft=False).latest()
     
@@ -95,9 +96,9 @@ def subject_view( request, subject_slug ):
 def display_post( request, post_id, preview = False ):
     
   if( not preview ):
-      p    = get_object_or_404(post, id=post_id, draft=0)
+      p    = get_object_or_404(Post, id=post_id, draft=0)
   else:
-      p    = get_object_or_404(post, id=post_id, author=request.user.id )
+      p    = get_object_or_404(Post, id=post_id, author=request.user.id )
       
   blog    = p.blog
   pImages = p.postimage_set.all().order_by( 'index' )            
@@ -111,7 +112,7 @@ def display_post( request, post_id, preview = False ):
       template_name = "post_short.html"
       
   #------------ Get List of flags in blog ---------
-  flags = flag.objects.filter( post__blog = blog.id ).filter( post__draft = 0 ).distinct()
+  flags = Flag.objects.filter( post__blog = blog.id ).filter( post__draft = 0 ).distinct()
       
   #------------ Create Objects for Hebrew Calender ----
   calLinkType     = FRONTPAGE_URL_TYPE
@@ -127,7 +128,7 @@ def display_post( request, post_id, preview = False ):
   return generic_object_detail(
     request,
     object_id =  post_id,
-    queryset  = post.objects.all(),
+    queryset  = Post.objects.all(),
     template_name = 'cityblog/%s'%template_name,
     #context_processors =[calendar,bgColorProcessor],
     extra_context = { 'blog' : blog, 'flags' : flags, 'galleryImages': pImages },

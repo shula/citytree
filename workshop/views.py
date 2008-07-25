@@ -13,7 +13,7 @@ from django.contrib.sessions.models import Session
 
 import settings
 from workshop.models import Workshop, WorkshopEvent, ExternalParticipant
-from cityblog.models import flag, post
+from cityblog.models import Flag, Post
 from citytree.utils.hebCalView import FRONTPAGE_URL_TYPE, CALENDAR_URL_TYPE_REGISTRY
 
 #------------  Registration to new workshops -------------------
@@ -111,7 +111,7 @@ def display_workshop(request, workshop_slug, preview=False):
     pImages = p.postimage_set.all().order_by( 'index' )
   
     #------------ Get List of flags in blog ---------
-    flags = flag.objects.filter( post__blog = blog.id ).filter( post__draft = 0 ).distinct()
+    flags = Flag.objects.filter( post__blog = blog.id ).filter( post__draft = 0 ).distinct()
       
     #------------ Create Objects for Hebrew Calender ----
     calLinkType     = FRONTPAGE_URL_TYPE

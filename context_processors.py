@@ -6,5 +6,5 @@ def media_url(request):
     }
 
 def citytree_context(request):
-    from cityblog.models import blog, subject
-    return {'blogs': blog.objects.all(), 'subjects' : subject.objects.all() }
+    from cityblog.models import Blog, Subject
+    return {'blogs': Blog.objects.all(), 'subjects' : Subject.objects.all() }

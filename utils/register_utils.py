@@ -4,9 +4,9 @@ from django.core.mail import send_mail, BadHeaderError
 from django.template import Context, loader
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-import settings
 
-from cityblog.models import blog
+import settings
+from cityblog.models import Blog
 
 DUPLICATE_ERROR = 'duplicate error'
 EMAIL_ERROR = 'email_error'
@@ -16,7 +16,7 @@ DEMO_ERROR = 'demo success'
 def register_new_user(donor, really_send_email=False):
     email = str(donor['email'])
     user_exists = User.objects.filter(email=email).count() != 0
-    members_blogs = blog.objects.filter(member_blog=True)
+    members_blogs = Blog.objects.filter(member_blog=True)
     if user_exists and really_send_email:
             return DUPLICATE_ERROR
 

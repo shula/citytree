@@ -4,11 +4,7 @@
 Models for people who just want to be added to the mailing list
 """
 
-from datetime import datetime
-
 from django.db import models
-from django.contrib.auth.models import User
-from cityblog.models import post, blog
 
 class MailingListSubscriber(models.Model):
     """ Someone who is not a User (so not a Member), but wants to be on the mailing list - 
