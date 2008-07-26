@@ -5,6 +5,7 @@ import itertools
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list as generic_object_list
 from django.views.generic.list_detail import object_detail as generic_object_detail
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 
@@ -94,12 +95,15 @@ def subject_view( request, subject_slug ):
                   paginate_by=NUM_SUBJECTS_PER_PAGE)
    
 def display_post( request, post_id, preview = False ):
-    
   if( not preview ):
       p    = get_object_or_404(Post, id=post_id, draft=0)
   else:
       p    = get_object_or_404(Post, id=post_id, author=request.user.id )
       
+  # redirect to workshop (#35)
+  if p.is_workshop():
+      return HttpResponseRedirect(reverse('workshop', args=[p.workshop.slug, preview]))
+
   blog    = p.blog
   pImages = p.postimage_set.all().order_by( 'index' )            
   

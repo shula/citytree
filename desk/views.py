@@ -436,7 +436,7 @@ class WorkshopCreator(PostCreator):
             #todo
 
     def _on_valid_form(s):
-        super(PostCreator, s)._on_valid_form()
+        super(WorkshopCreator, s)._on_valid_form()
         if not s._instance.is_workshop():
             s._instance.post_style = s._instance.POST_STYLE_WORKSHOP
             s._instance.save()
