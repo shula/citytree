@@ -28,10 +28,10 @@
 {% block central_area %}
 	<div class="leafcontainer">
 <div class="capImg" style="clear: none;">
-	<a href="{{post.get_image_url}}" class="thickbox" rel="gallery">
-		<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
-	   width="{{post.get_image_url|thumbnail:"width=156"|image_width}}px"
-	   height="{{post.get_image_url|thumbnail:"width=156"|image_height}}px"
+	<a href="{{post.image.url}}" class="thickbox" rel="gallery">
+		<img src="{{post.image.url|thumbnail:"width=156"}}" 
+	   width="{{post.image.url|thumbnail:"width=156"|image_width}}px"
+	   height="{{post.image.url|thumbnail:"width=156"|image_height}}px"
 	   title="{{post.image_label|escape}}"
 	   border="0"></a><br>
 		<font id="caption">

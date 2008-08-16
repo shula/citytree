@@ -93,8 +93,8 @@ class MockMeta(object):
     def get_many_to_many_fields(self):
         return self._many_to_many.values()
 
-    fields = property(fget=get_fields)
-    many_to_many = property(fget=get_many_to_many_fields)
+    local_fields = property(fget=get_fields)
+    local_many_to_many = property(fget=get_many_to_many_fields)
 
 class MockModel(object):
     """
@@ -426,8 +426,7 @@ class ChangeField(BaseMutation):
                     else:
                         sql_statements.extend(evolver_func(model, self.field_name, attr_value))
                 except AttributeError, ae:
-                    #raise ae
-                    raise NotImplementedError("ChangeField does not support modifying the '%s' attribute." % field_attr)
+                    raise NotImplementedError("ChangeField does not support modifying the '%s' attribute on '%s.%s'." % (field_attr, self.model_name, self.field_name))
 
         return sql_statements
 

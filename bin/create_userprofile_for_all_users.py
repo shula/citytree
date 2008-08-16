@@ -8,5 +8,7 @@ sys.path.append('/home/tamizori/citytree')
 from accounts.models import UserProfile
 
 if __name__=='__main__':
-    UserProfile.create_userprofiles_for_all_users()
+    #UserProfile.create_userprofiles_for_all_users()
+    UserProfile.create_userprofiles_for_all_users(read_litrom_too=True,
+            overwrite_existing=True)
 

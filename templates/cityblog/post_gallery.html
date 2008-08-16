@@ -45,10 +45,10 @@
 				{% endifnotequal %}
 				
 				<td>
-					<a href="{{img.get_image_url}}" class="thickbox" rel="gallery">
-						<img src="{{img.get_image_url|thumbnail:"width=156"}}" 
-					   width="{{img.get_image_url|thumbnail:"width=156"|image_width}}px"
-					   height="{{img.get_image_url|thumbnail:"width=156"|image_height}}px"
+					<a href="{{img.image.url}}" class="thickbox" rel="gallery">
+						<img src="{{img.image.url|thumbnail:"width=156"}}" 
+					   width="{{img.image.url|thumbnail:"width=156"|image_width}}px"
+					   height="{{img.image.url|thumbnail:"width=156"|image_height}}px"
 					   title="{{img.label|escape}}"
 					   border="0">
 					</a>

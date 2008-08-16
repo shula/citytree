@@ -24,7 +24,7 @@
 
 
 {% block  headerImage%}
-<img src="{{theSubject.get_image_url}}" width="{{theSubject.image_width}}px" height="{{theSubject.image_height}}px" title="{{theSubject.label|escape}}" alt="{{theSubject.label|escape}}">
+<img src="{{theSubject.image.url}}" width="{{theSubject.image.width}}px" height="{{theSubject.image.height}}px" title="{{theSubject.label|escape}}" alt="{{theSubject.label|escape}}">
 {% endblock %}
 
 
@@ -87,7 +87,7 @@
 	</a></h1>
 
 	<div class="subImg">
-	        <a href="{{post.get_absolute_url}}">	<img src="{{post.get_image_url|thumbnail:"width=65"}}" width="{{post.get_image_url|thumbnail:"width=65"|image_width}}px" height="{{post.get_image_url|thumbnail:"width=65"|image_height}}px" border="0" alt=""  class="blog" title="{{post.image_label}}"></a>
+	        <a href="{{post.get_absolute_url}}">	<img src="{{post.image.url|thumbnail:"width=65"}}" width="{{post.image.url|thumbnail:"width=65"|image_width}}px" height="{{post.image.url|thumbnail:"width=65"|image_height}}px" border="0" alt=""  class="blog" title="{{post.image_label}}"></a>
 	</div>
 
 	<p class="leaf">

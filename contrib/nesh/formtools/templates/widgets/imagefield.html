@@ -13,7 +13,7 @@
 />
 <input type="hidden" id="{{ FORM_field.get_id }}" name="{{ FORM_field.field_name }}" value="{{ FORM_value }}" />
 {% else %}
-<img src="{{ FORM_DBFIELD.get_image_url }}" alt="{{ FORM_DBFIELD.get_image_url }}" />
+<img src="{{ FORM_DBFIELD.image.url }}" alt="{{ FORM_DBFIELD.image.url }}" />
 {% endif %}
 {% if FORM_help_text %}
 <p class="help">{{ FORM_help_text }}</p>

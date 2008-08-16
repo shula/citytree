@@ -141,7 +141,7 @@
         </h3>
 
         {% if post.image %}
-        <img src="{{post.get_image_url}}" width={{post.image_width}}px height={{post.image_height}}px title="{{post.image_label}}">
+        <img src="{{post.image.url}}" width={{post.image.width}}px height={{post.image.height}}px title="{{post.image_label}}">
         {% else %}				
         <img src="{{media_url}}desk/trees.jpg" width="156" height="120" border="0" alt="pic example">
         {% endif %}

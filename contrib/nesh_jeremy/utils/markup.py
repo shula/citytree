@@ -50,7 +50,7 @@ def render_content(content, text_type, images=None):
         if images is not None:
             try:
                 img = images.get(slug=tag) #IGNORE:E1101
-                new = re.sub(_IMG_REPLACE % tag, '<img src="%s" />' % img.get_image_url(), new)
+                new = re.sub(_IMG_REPLACE % tag, '<img src="%s" />' % img.image.url, new)
             # XXX what if images don't have .model?
             except images.model.DoesNotExist: #IGNORE:E1101
                 new = re.sub(_IMG_REPLACE % tag, '<div class="error">NO IMAGE %s</div>' % tag, new)

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
-# -*- coding: utf-8 -*-
 
 import datetime
 import random
@@ -11,11 +10,12 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template import Context, loader
 from django.contrib.sites.models import Site
-from nesh.thumbnail.field import ImageWithThumbnailField
-from citytree.utils.textUtils import wikiSub
-import settings
 
+from nesh.thumbnail.field import ImageWithThumbnailField
+
+from citytree.utils.textUtils import wikiSub
 from utils.randomUtils import make_random_hash
+import settings
 
 # Javascript stuff - to be moved somewhere more appropriate
 
@@ -96,10 +96,6 @@ class Flag(models.Model):
     def __unicode__(self):
         return self.name
     
-    class Admin:
-        list_display  = ( 'name', 'blog' )
-        pass
-    
 class Post(models.Model):
     DRAFT_CHOICES = (
       ( 1, 'טיוטה'),
@@ -150,27 +146,7 @@ class Post(models.Model):
 
     # fields required by the comment system
     enable_comments = models.BooleanField(default=1, blank=True, help_text='Set to enable comments on post')
-    
-    class Admin:
-        # The real editing is not done here, but in desk. Still, we can reuse
-        # stuff I guess, or just have this as a test bed.
-        #js = fckeditor_textarea_js_list
-
-        fields = (
-        # almost everything is normal
-        (None, {'fields': ('blog', 'author', 'title', 'post_style', 'post_date', 'image',
-            'image_caption', 'image_label', 'flags', 'draft', 'enable_comments')}),
-        # some stuff should be displayed using some rich text editing - we use a class that is later
-        # extracted with a javascript hook, and then the wysiwyg editor (see js above) is used.
-        (None, {
-            'fields':  ('teaser_text', 'text'),
-            'classes': ('wysiwyg'),
-            })
-        )
-        list_display   = ('blog', 'title', 'author', 'time_modified', 'draft' )
-        list_filter    = ('blog', 'time_modified', 'post_style')
-        ordering       = ('-post_date',)
-       
+      
     class Meta:
         ordering = ['-post_date']
     
@@ -252,14 +228,7 @@ class PostImage(models.Model):
                 self.caption = self.label[0:25]
                 
         super( PostImage, self ).save()
-        
-    class Admin:
-      fields = (
-        (None, {'fields': ('post', 'image', 'index', 'label', 'caption' )}),
-       )
-       
-      list_display = ('index', 'label', 'image')
-    
+   
 class Subject(models.Model):
   """
   Reshiymat Nos'iym
@@ -280,12 +249,7 @@ class Subject(models.Model):
   
   flags         = models.ManyToManyField(Flag,verbose_name='flags to include', blank=True, null=True)
   blogs         = models.ManyToManyField(Blog, help_text="currently not in use", verbose_name='blogs to include', blank=True, null=True)
-  
-  class Admin:
-      fields = (
-          (None, {'fields': ('name', 'slug', 'image', 'label', 'ordering', 'flags', 'blogs', 'teaser_text' )}),
-         )
-    
+   
   def get_absolute_url( self ):
       return u'/subjects/%s/' % self.slug
     

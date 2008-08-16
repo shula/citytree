@@ -14,7 +14,7 @@ from django_evolution.diff import Diff
 
 style = color_style()
     
-def evolution(app, created_models, verbosity=1):
+def evolution(app, created_models, verbosity=1, **kw):
     """
     A hook into syncdb's post_syncdb signal, that is used to notify the user
     if a model evolution is necessary.
@@ -97,4 +97,4 @@ def evolution(app, created_models, verbosity=1):
                 old_proj_sig = pickle.loads(str(latest_version.signature))
                 print diff
 
-dispatcher.connect(evolution, signal=signals.post_syncdb)
+signals.post_syncdb.connect(evolution)

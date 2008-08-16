@@ -38,7 +38,7 @@ def replacePostImages( text, postId, theTemplate ):
             idx = str(img.index)
 
             replaceStr =  t.render(Context({
-                'imgUrl': img.get_image_url(),
+                'imgUrl': img.image.url,
                 'imgLabel': img.label,
                 'imgCaption': img.caption
             }))

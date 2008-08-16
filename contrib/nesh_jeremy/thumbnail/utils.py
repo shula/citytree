@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.cache import get_cache
-from django.db.models.fields import ImageField
+from django.db.models.fields.files import ImageField
 from nesh.utils.text import URLify
 import Image
 import re, os, urlparse, fnmatch
@@ -137,7 +137,7 @@ def remove_model_thumbnails(model):
     
     for obj in model._meta.fields:
         if isinstance(obj, ImageField):
-            url = getattr(model, 'get_%s_url' % obj.name)()
+            url = getattr(model, obj.name).url
             _remove_thumbnails(url)
     #
 #
@@ -243,7 +243,11 @@ def _rename(old_name, new_name):
         return old_name
 # _rename
 
-def rename_by_field(file_path, req_name, add_path=None , mask_image='', logo_image=''):
+def rename_by_field(image, req_name, add_path=None , mask_image='', logo_image=''):
+    try:
+        file_path = image.path
+    except ValueError:
+        file_path = ''
     if file_path.strip() == '': return '' # no file uploaded
 
     old_name = os.path.basename(file_path)
@@ -263,18 +267,19 @@ def rename_by_field(file_path, req_name, add_path=None , mask_image='', logo_ima
     dest_path = os.path.join(dest_path, new_name)
 
     if file_path != dest_path:        
-        ret = _rename(file_path, dest_path).replace('\\', '/') # windows fix
+        file_path = _rename(file_path, dest_path).replace('\\', '/') # windows fix
         
+        image._name = file_path # no way to rename through storage. XXXDJANGO
+
         #--------- Very Dirty Hack --------
         if(mask_image != ''): 
             from citytree.utils.imgUtils import maskImage
             fn = os.path.join(settings.MEDIA_ROOT, dest_path )
             maskImage( fn, mask_image, logo_image, fn )
             
-        return ret
-
-    
     else:
-        return file_path.replace('\\', '/') # windows fix
+        file_path = file_path.replace('\\', '/') # windows fix
+
+    return image
     #
 #

@@ -53,10 +53,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'citytree.urls'
 
-TEMPLATE_DIRS = (
-    '/home/tamizori/django/django_projects/citytree/templates'
-)
-
 TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.auth','citytree.context_processors.media_url', 'citytree.context_processors.citytree_context')
 
 INSTALLED_APPS = (

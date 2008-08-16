@@ -27,7 +27,7 @@ class Workshop(models.Model):
                     verbose_name='workshop owners', blank=True)
 
     def __unicode__(self):
-        return u'<workshop %s>' % (self.slug)
+        return u'%s' % (self.name)
 
     def get_events(self):
         return self.workshopevent_set.order_by('workshopeventpart__start_time')
@@ -95,9 +95,6 @@ class Workshop(models.Model):
     def get_header_image_absolute_url(self):
         return self.defining_post.blog.get_header_image_url()
 
-    class Admin:
-        list_filter    = ('owners',)
-
 class BlogWorkshop(models.Model):
     
     """ The dillema is wether to use the existing blog table or not. Decided
@@ -122,9 +119,6 @@ class BlogWorkshop(models.Model):
     def save(self):
         super(BlogWorkshop, self).save()
 
-    class Admin:
-        pass
-
 class WorkshopEvent(models.Model):
     # question: how do I easily allow structured and unstructured together? I want
     # to have both free text and also site users in the instructors field - how do
@@ -142,9 +136,6 @@ class WorkshopEvent(models.Model):
 
     users       =   models.ManyToManyField(User, related_name='registered_workshopevent_set',
                     verbose_name='registered site users', blank=True)
-
-    class Admin:
-        pass
 
     def __unicode__(self):
         return u'%s %s' % (unicode(self.workshop), self.get_start_date() or self.id)
@@ -209,9 +200,6 @@ class WorkshopEventPart(models.Model):
     def __unicode__(self):
         return u'%s %s' % (self.workshop_event.workshop, self.start_time)
 
-    class Admin:
-        pass
-
     class Meta:
         ordering = ['-start_time']
 
@@ -232,7 +220,4 @@ class ExternalParticipant(models.Model):
 
     def get_full_name(self):
         return '%s %s' % (self.first_name, self.last_name)
-
-    class Admin:
-        list_filter    = ('workshop_event',)
 

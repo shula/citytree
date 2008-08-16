@@ -22,9 +22,9 @@
 <div class="leafcontainer">
 		<div class="blogListImage">
 		<a href="{{post.get_absolute_url}}">
-		<img src="{{post.get_image_url|thumbnail:"width=156"}}" 
-		width='{{post.get_image_url|thumbnail:"width=156"|image_width}}px'
-		height='{{post.get_image_url|thumbnail:"width=156"|image_height}}px' 
+		<img src="{{post.image.url|thumbnail:"width=156"}}" 
+		width='{{post.image.url|thumbnail:"width=156"|image_width}}px'
+		height='{{post.image.url|thumbnail:"width=156"|image_height}}px' 
 		border="0" alt=""  class="blog" title="{{post.image_label|escape}}"></a>
 		</div>
 

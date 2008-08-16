@@ -56,8 +56,8 @@
         <input type="file"class="vImageUploadField" name="gallery_image_file{{forloop.counter0}}" size="20" />
     </td>
     <td class="formtabgal">
-        <a href="{{postImage.get_image_url}}" class="thickbox">
-            <img src="{{postImage.get_image_url|thumbnail:"width=65"}}" width="{{postImage.get_image_url|thumbnail:"width=65"|image_width}}px" height="{{postImage.get_image_url|thumbnail:"width=65"|image_height}}px" border="0" alt="{{postImage.label|escape}}" title="{{postImage.label|escape}}" ></a>
+        <a href="{{postImage.image.url}}" class="thickbox">
+            <img src="{{postImage.image.url|thumbnail:"width=65"}}" width="{{postImage.image.url|thumbnail:"width=65"|image_width}}px" height="{{postImage.image.url|thumbnail:"width=65"|image_height}}px" border="0" alt="{{postImage.label|escape}}" title="{{postImage.label|escape}}" ></a>
     </td>
     <td class="formtabgal">
         <textarea id="id_teaser_text" class="vLargeTextField required" name="gallery_image_label{{forloop.counter0}}" rows="6" cols="34">

@@ -355,8 +355,8 @@ class Moderator(object):
         
         """
         for model in (Comment, FreeComment):
-            dispatcher.connect(self.pre_save_moderation, sender=model, signal=signals.pre_save)
-            dispatcher.connect(self.post_save_moderation, sender=model, signal=signals.post_save)
+            signals.pre_save.connect(self.pre_save_moderation, sender=model)
+            signals.post_save.connect(self.post_save_moderation, sender=model)
     
     def register(self, model_or_iterable, moderation_class):
         """
@@ -390,7 +390,7 @@ class Moderator(object):
                 raise NotModerated("The model '%s' is not currently being moderated" % model._meta.module_name)
             del self._registry[model]
     
-    def pre_save_moderation(self, sender, instance):
+    def pre_save_moderation(self, sender, instance, **kw):
         """
         Applies any necessary pre-save moderation steps to new
         comments.
@@ -407,7 +407,7 @@ class Moderator(object):
         if moderation_class.moderate(instance, content_object):
             instance.is_public = False
     
-    def post_save_moderation(self, sender, instance):
+    def post_save_moderation(self, sender, instance, **kw):
         """
         Applies any necessary post-save moderation steps to new
         comments.

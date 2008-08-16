@@ -4,7 +4,13 @@ from django.contrib import admin
 from citytree.cityblog.feeds import LatestPosts
 import settings
 
-admin.autodiscover() # import all app.admin modules
+#admin.autodiscover() # import all app.admin modules
+import accounts.admin
+import cityblog.admin
+import workshop.admin
+import django.contrib.comments.admin
+import django.contrib.flatpages.admin
+import django.contrib.auth.admin
 
 feeds = {
     'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.

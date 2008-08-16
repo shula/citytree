@@ -59,9 +59,9 @@
 {% block body %}
 <div class="top">
     {% block  headerImage%}
-    <img src="{{blog.get_header_image_url}}" 
-    		width="{{blog.header_image_width}}px" 
-    		height="{{blog.header_image_height}}px" 
+    <img src="{{blog.header_image.url}}" 
+    		width="{{blog.header_image.width}}px" 
+    		height="{{blog.header_image.height}}px" 
     		alt="{{blog.header_image_label}}" title="{{blog.header_image_label}}">    
     {% endblock %}
     <div id="logo">

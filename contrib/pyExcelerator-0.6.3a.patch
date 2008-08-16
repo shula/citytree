@@ -1,0 +1,36 @@
+diff -ur -x '*.pyc' pyExcelerator-0.6.3a/pyExcelerator/CompoundDoc.py pyExcelerator-0.6.3a.patched/pyExcelerator/CompoundDoc.py
+--- pyExcelerator-0.6.3a/pyExcelerator/CompoundDoc.py	2005-10-26 11:44:24.000000000 +0200
++++ pyExcelerator-0.6.3a.patched/pyExcelerator/CompoundDoc.py	2008-07-13 01:12:06.010901926 +0300
+@@ -538,6 +538,8 @@
+                                         
+ 
+     def save(self, filename, stream):
++        """ filename can also be a stream (i.e. StringIO or open file)
++        """
+         # 1. Align stream on 0x1000 boundary (and therefore on sector boundary)
+         padding = '\x00' * (0x1000 - (len(stream) % 0x1000))
+         self.book_stream_len = len(stream) + len(padding)
+@@ -546,7 +548,12 @@
+         self.__build_sat()
+         self.__build_header()
+         
+-        f = file(filename, 'wb')
++        close = False
++        if type(filename) == str:
++            f = file(filename, 'wb')
++            close = True
++        else:
++            f = filename
+         f.write(self.header)
+         f.write(self.packed_MSAT_1st)
+         f.write(stream)
+@@ -554,7 +561,8 @@
+         f.write(self.packed_MSAT_2nd)
+         f.write(self.packed_SAT)
+         f.write(self.dir_stream)
+-        f.close()
++        if close:
++            f.close()
+ 
+ 
+ if __name__ == '__main__':

@@ -1,9 +1,9 @@
-from django.db.models.fields import ImageField
+from django.db.models.fields.files import ImageField
 from utils import make_thumbnail, _remove_thumbnails, remove_model_thumbnails, rename_by_field
-from django.dispatch import dispatcher
+from django.dispatch import dispatcher, Signal
 from django.db.models import signals
 
-def _delete(instance=None):
+def _delete(instance=None, **kw):
     if instance:
         print '[thumbnail] DELETE', instance
         remove_model_thumbnails(instance)
@@ -25,7 +25,7 @@ class ImageWithThumbnailField(ImageField):
         self.logo_file   = logo_file
     #
     
-    def _pre_save(self, instance=None):
+    def _pre_save(self, instance=None, **kw):
         # since this is called by the pre_save signal, the pk can be unset.
         self.needs_renaming= False
         if not self.auto_rename: return
@@ -49,8 +49,8 @@ class ImageWithThumbnailField(ImageField):
     
     def contribute_to_class(self, cls, name):
         super(ImageWithThumbnailField, self).contribute_to_class(cls, name)
-        dispatcher.connect(_delete, signals.post_delete, sender=cls)
-        dispatcher.connect(self._pre_save, signals.pre_save, sender=cls)
+        signals.post_delete.connect(_delete, sender=cls)
+        signals.pre_save.connect(self._pre_save, sender=cls)
     #
 
     def get_internal_type(self):
