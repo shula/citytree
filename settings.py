@@ -92,6 +92,9 @@ except:
 AUTH_PROFILE_MODULE='accounts.UserProfile'
 #LOGIN_REDIRECT_URL='/'
 
+#-------------------------- Comments -----------------------
+COMMENTS_HIDE_REMOVED = True
+
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)
 #django.middleware.cache.CacheMiddleware

@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from django.contrib.comments.models import FreeComment
 from django.contrib import admin
 from citytree.cityblog.feeds import LatestPosts
 import settings
@@ -11,6 +10,7 @@ import workshop.admin
 import django.contrib.comments.admin
 import django.contrib.flatpages.admin
 import django.contrib.auth.admin
+import frontpage.admin
 
 feeds = {
     'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.
@@ -35,7 +35,7 @@ urlpatterns = patterns('',
     (r'^subjects/(?P<subject_slug>.*)/$','citytree.cityblog.views.subject_view'),
     (r'^ajax/',       include('citytree.ajax.urls')),
 #     (r'^comments/postfree/$','citytree.cityblog.views.postfree'), # this is the wrong one (move to correct namespace. do not use comments module - already exists in django and django doesn't like two modules with the same name, even if the full name is different)
-    (r'^comments/', include('django.contrib.comments.urls.comments')),
+    (r'^comments/', include('django.contrib.comments.urls')),
     (r'^send_feedback/$', 'cityblog.views.send_feedback'),
     (r'^', include('citytree.frontpage.urls')),
 )

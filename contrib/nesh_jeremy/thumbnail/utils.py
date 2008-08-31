@@ -6,6 +6,10 @@ import Image
 import re, os, urlparse, fnmatch
 import shutil, os
 
+import logging
+logging.root.setLevel(logging.INFO)
+info=logging.root.info
+
 image_cache = get_cache('locmem:///')
 
 _FILE_CACHE_TIMEOUT = 60 * 60 * 60 * 24 * 31 # 1 month
@@ -236,6 +240,7 @@ def get_image_size(photo_url, root=settings.MEDIA_ROOT, url_root=settings.MEDIA_
 
 def _rename(old_name, new_name):
     """ rename image old_name -> name """
+    info('_rename %s to %s' % (old_name, new_name))
     try:
         shutil.move(os.path.join(settings.MEDIA_ROOT, old_name), os.path.join(settings.MEDIA_ROOT, new_name))
         return new_name
@@ -269,7 +274,8 @@ def rename_by_field(image, req_name, add_path=None , mask_image='', logo_image='
     if file_path != dest_path:        
         file_path = _rename(file_path, dest_path).replace('\\', '/') # windows fix
         
-        image._name = file_path # no way to rename through storage. XXXDJANGO
+        image._name = new_name # no way to rename through storage. XXXDJANGO
+        info('new image name is %s' % image._name)
 
         #--------- Very Dirty Hack --------
         if(mask_image != ''): 

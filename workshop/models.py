@@ -109,8 +109,9 @@ class BlogWorkshop(models.Model):
     comments are still related to the post, which is just also related to a workshop.
     """
 
-    blog              = models.ForeignKey(Blog, edit_inline=models.STACKED,
-            core=True, unique=True, num_in_admin=1,min_num_in_admin=1, max_num_in_admin=1,num_extra_on_change=0)
+    blog              = models.ForeignKey(Blog, unique=True)
+            # TODO-REMOVE (after putting in admin), edit_inline=models.STACKED,
+            # num_in_admin=1,min_num_in_admin=1, max_num_in_admin=1,num_extra_on_change=0)
     is_workshops_blog = models.BooleanField("Is this a workshop blog")
 
     def __unicode__(self):

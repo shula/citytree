@@ -4,11 +4,11 @@ Hello {{content_object.author.username}},
 This is an automated email sent to you by citytree.
 
 Your post "{{content_object.title}}" got a new comment.
-{% if comment.is_public %}
-The comment is now public.
-{% else %}
+{% if comment.is_removed %}
 The comment is not public, so it will not be displayed.
  * If you want it to be displayed, please ask one of the administrators.
+{% else %}
+The comment is now public.
 {% endif %}
 
 What to do in case this comment is spam:

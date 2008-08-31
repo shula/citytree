@@ -22,7 +22,7 @@
 	
 	{% for post in post_list %}
 	
-	{% get_free_comment_count for cityblog.post post.id as comment_count %}
+	{% get_comment_count for cityblog.post post.id as comment_count %}
 <div class="leafcontainer">
 		<div class="blogListImage">
 		<a href="{{post.get_absolute_url}}">

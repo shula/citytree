@@ -23,14 +23,10 @@ class CommentedObjectManager(models.Manager):
     managers should have those managers subclass this one.
     
     """
-    def most_commented(self, num=5, free=True):
+    def most_commented(self, num=5):
         """
         Returns the ``num`` objects of a given model with the highest
         comment counts, in order.
-        
-        Pass ``free=False`` if you're using the registered comment
-        model (``Comment``) instead of the anonymous comment model
-        (``FreeComment``).
         
         The return value will be a list of dictionaries, each with the
         following keys::
@@ -43,10 +39,7 @@ class CommentedObjectManager(models.Manager):
         
         """
         qn = connection.ops.quote_name
-        if free:
-            comment_opts = comment_models.FreeComment._meta
-        else:
-            comment_opts = comment_models.Comment._meta
+        comment_opts = comment_models.Comment._meta
         ctype = ContentType.objects.get_for_model(self.model)
         query = """SELECT %s, COUNT(*) AS score
         FROM %s

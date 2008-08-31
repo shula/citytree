@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from django.contrib.comments.models import FreeComment
 from django.views.generic import list_detail
 from django.views.generic.simple import redirect_to
 

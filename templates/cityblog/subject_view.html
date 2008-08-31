@@ -2,7 +2,7 @@
 
 {% load citytree_tags %}
 {% load comments %}
-{% load comment_utils %}
+{# {% load comment_utils %} #}
 {% load thumbnail %}
 
 {% block calendar %}
@@ -51,7 +51,7 @@
 </div>
 	
 	{% for post in post_list %}
-	{% get_public_free_comment_count for cityblog.post post.id as comment_count %}
+	{% get_comment_count for cityblog.post post.id as comment_count %}
 	
 <div class="subcontainer">
 

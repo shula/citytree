@@ -1,7 +1,7 @@
 # Copyright (c) 2007 Brandon Low
 # Licensed under the GPL v2
-from django import newforms as forms
-from django.newforms.util import flatatt,ValidationError
+from django import forms
+from django.forms.util import flatatt,ValidationError
 from models import Captcha
 from settings import BASE_URL, MIN_LENGTH, MAX_LENGTH
 from util import get_string

@@ -20,16 +20,6 @@ class Teaser( models.Model ):
     def __unicode__( self ):
         return self.title
     
-    class Admin:
-       fields = (
-            (None, {'fields': ('image',
-            'url',
-            'label',
-            'title',
-            'teaserText'
-            )}),
-           )
-    
 class FrontpageHeaderImage( models.Model ):
     image          = ImageWithThumbnailField(blank=True,upload_to='frontpage_images/%Y/%m/%d',
                                 width_field='image_width', height_field='image_height',
@@ -42,14 +32,6 @@ class FrontpageHeaderImage( models.Model ):
     def __unicode__( self ):
         return self.image_label
     
-    class Admin:
-         fields = (
-                (None, {'fields': ('image',
-                'image_label'
-                )}),
-               )
-    
-
 class FrontPage(models.Model):
       
     title                 = models.CharField(max_length=255,blank=False, help_text='Title text at top of page - Required' )
@@ -72,21 +54,6 @@ class FrontPage(models.Model):
     
     def __unicode__(self):
       return self.title
-    
-    class Admin:
-      fields = (
-        (None, {'fields': ('draft', 'title', 'main_text', 'date', 
-        'headerImage', 
-        'teaser1',
-        'teaser2',
-        'teaser3',
-        'teaser4',
-        'teaser5', 
-        )}),
-       )
-      list_display   = ('title', 'date', 'draft' )
-      ordering       = ('-date',)
-      search_fields  = ('title',)
     
     class Meta:
         get_latest_by = 'date'

@@ -74,7 +74,7 @@ from django.db.models import signals
 from django.db.models.base import ModelBase
 from django.dispatch import dispatcher
 from django.template import Context, loader
-from django.contrib.comments.models import Comment, FreeComment
+from django.contrib.comments.models import Comment
 from django.contrib.sites.models import Site
 
 class AlreadyModerated(Exception):
@@ -294,7 +294,7 @@ class ModerateFirstTimers(CommentModerator):
     
     """
     kwarg_builder = { Comment: lambda c: { 'user__username__exact': c.user.username },
-                      FreeComment: lambda c: { 'person_name__exact': c.person_name },
+                      #FreeComment: lambda c: { 'person_name__exact': c.person_name },
                       }
     
     def moderate(self, comment, content_object):
@@ -354,7 +354,7 @@ class Moderator(object):
         from the comment models.
         
         """
-        for model in (Comment, FreeComment):
+        for model in (Comment, ):
             signals.pre_save.connect(self.pre_save_moderation, sender=model)
             signals.post_save.connect(self.post_save_moderation, sender=model)
     

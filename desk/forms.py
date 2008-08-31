@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import django.newforms as forms
+from django import forms
 
 from cityblog.models import Post, Blog
 from workshop.models import Workshop, WorkshopEvent
