@@ -71,6 +71,7 @@ INSTALLED_APPS = (
     'citytree.spamdetector',
     'citytree.workshop',
     'citytree.mailinglist',
+    'citytree.citycomments',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -94,6 +95,7 @@ AUTH_PROFILE_MODULE='accounts.UserProfile'
 
 #-------------------------- Comments -----------------------
 COMMENTS_HIDE_REMOVED = True
+COMMENTS_APP = 'citytree.citycomments'
 
 #-------------------------- Cache --------------------------
 # add to MIDDLEWARE_CLASSES (at the correct place!)

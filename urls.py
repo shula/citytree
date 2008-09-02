@@ -7,10 +7,11 @@ import settings
 import accounts.admin
 import cityblog.admin
 import workshop.admin
-import django.contrib.comments.admin
+#import django.contrib.comments.admin # I have my own ModelAdmin
 import django.contrib.flatpages.admin
 import django.contrib.auth.admin
 import frontpage.admin
+import citycomments.admin
 
 feeds = {
     'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.
@@ -36,9 +37,13 @@ urlpatterns = patterns('',
     (r'^ajax/',       include('citytree.ajax.urls')),
 #     (r'^comments/postfree/$','citytree.cityblog.views.postfree'), # this is the wrong one (move to correct namespace. do not use comments module - already exists in django and django doesn't like two modules with the same name, even if the full name is different)
     (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^citycomments/', include('citytree.citycomments.urls')), # post is here
     (r'^send_feedback/$', 'cityblog.views.send_feedback'),
     (r'^', include('citytree.frontpage.urls')),
 )
+
+for y in [x for x in [x.urlconf_name for x in urlpatterns if hasattr(x, 'urlconf_name')] if x == 'django.contrib.comments.urls.comments']:
+    import pdb; pdb.set_trace()
 
 if settings.SERVE_SITEMEDIA_FROM_DJANGO:
     urlpatterns += patterns('',(r'^siteMedia/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/citytree/siteMedia'}))

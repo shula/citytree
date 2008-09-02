@@ -6,7 +6,7 @@ import itertools
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django import newforms as forms
+from django import forms
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list as generic_object_list
 from django.views.generic.create_update import create_object  as generic_create_object

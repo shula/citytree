@@ -1,0 +1,46 @@
+{% load comments %}
+{# if display_form #}
+
+<div class="addcomm">
+<h1>
+הוספת תגובה
+</h1>
+
+<form action="{% comment_form_target %}" method="POST">
+{% comment %}				
+    <input id="eng" type="text" id="id_image_label" class="vTextField" name="image_label" size="40" value="http://" maxlength="200" />
+	<h3>
+        קישור לשם (לא חייבים)
+    </h3>
+{% endcomment %}
+
+{% include "comments/honeypot.html" %}
+
+    <textarea id="id_comment" class="vLargeTextField required" name="comment" rows="8" cols="50">בבקשה רק הערות שקשורות לנושא, בלי שטויות</textarea>
+	<h3>
+    תגובה (אפשר להוסיף תגי html)
+    </h3><br>
+
+    <input type="text" id="id_name" class="vTextField" name="name" size="40" value="" maxlength="200" />
+    <h3>
+    שם אמיתי או בדוי 
+    </h3><br>
+    <input type="text" id="id_email" class="vTextField" name="email" size="40" value="" maxlength="100" />
+    <h3>
+    דואר אלקטרוני. המייל שלך ישאר חסוי והוא אך ורק לצורך יצירת קשר מצידנו למענה אישי.
+    </h3><br>
+    <input type="text" id="id_phone" class="vTextField" name="phone" size="20" value="" maxlength="50" />
+    <h3>
+    מספר הטלפון שלך ישאר חסוי ויעזור לנו ליצור איתך קשר במקרה הצורך.
+    </h3><br>
+                	
+    {# name="preview" #}
+	<input type="submit" name="preview" class="submit-preview" value="Preview comment" />
+
+</form>
+</div>
+					
+<div class="leafspace">
+</div>
+{# endif #} {# display_form #}
+

@@ -399,7 +399,7 @@ class Moderator(object):
         model = instance.content_type.model_class()
         if instance.id or (model not in self._registry):
             return
-        content_object = instance.get_content_object()
+        content_object = instance.content_object
         moderation_class = self._registry[model]
         if not moderation_class.allow(instance, content_object): # Comment will get deleted in post-save hook.
             instance.moderation_disallowed = True
@@ -419,7 +419,7 @@ class Moderator(object):
         if hasattr(instance, 'moderation_disallowed'):
             instance.delete()
             return
-        self._registry[model].email(instance, instance.get_content_object())
+        self._registry[model].email(instance, instance.content_object)
 
 
 # Import this instance in your own code to use in registering

@@ -10,12 +10,12 @@
 דף בית
 </a>
 >
-<a href="{{object.blog.get_absolute_url}}"> 
-{{object.blog.name}}
+<a href="{{comment.content_object.blog.get_absolute_url}}"> 
+{{comment.content_object.blog.name}}
 </a>
 >‏
-<a href="{{object.get_absolute_url}}">
-{{object.title}}
+<a href="{{comment.content_object.get_absolute_url}}">
+{{comment.content_object.title}}
 </a>
 >‏
 תגובה נשלחה בהצלחה
@@ -23,10 +23,10 @@
 
 {% comment %} Header Image must come from comment object {% endcomment %}
 {% block  headerImage%}
-<img src="{{object.blog.get_header_image_url}}" 
-		width="{{object.blog.header_image_width}}px" 
-		height="{{object.blog.header_image_height}}px" 
-		alt="{{object.blog.header_image_label}}" title="{{object.blog.header_image_label}}">
+<img src="{{comment.content_object.blog.header_image.url}}" 
+		width="{{comment.content_object.blog.header_image.width}}px" 
+		height="{{comment.content_object.blog.header_image.height}}px" 
+		alt="{{comment.content_object.blog.header_image_label}}" title="{{comment.content_object.blog.header_image_label}}">
 {% endblock %}
 
 
@@ -39,7 +39,7 @@
 
     <div class="buttContainer">
         <form>
-        <input class="button" type="button" name="post" value="חזרה" onClick="document.location.href='{{ object.get_absolute_url }}';" />
+        <input class="button" type="button" name="post" value="חזרה" onClick="document.location.href='{{ comment.content_object.get_absolute_url }}';" />
         </form>
     </div><br />
 

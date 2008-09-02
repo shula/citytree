@@ -3,6 +3,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from utils.models import create_from_existing_base
+
 class CapchaRequest(models.Model):
     hash       = models.CharField(max_length=256, blank=False)
     letters    = models.CharField(max_length=100)
@@ -92,16 +94,6 @@ class UserProfile(User):
 
     def __unicode__(self):
         return 'UserProfile %s %s' % (self.first_name, self.last_name)
-
-def create_from_existing_base(base_class, inheritor_class, obj):
-    inheritor = inheritor_class()
-    ptr_field = '%s_ptr' % base_class.__name__
-    setattr(inheritor, ptr_field, obj)
-    fields = [x.name for x in obj._meta.fields]
-    for f in fields:
-        if f == inheritor_class.__name__: continue
-        setattr(inheritor, f, getattr(obj, f))
-    return inheritor # caller should .save()
 
 class Member(UserProfile):
     """

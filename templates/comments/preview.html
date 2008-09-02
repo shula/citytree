@@ -1,5 +1,7 @@
 {% extends "base_short_menu.html" %}
 
+{% load comments %}
+
 {% block calendar %}
 {% endblock %}
 
@@ -35,7 +37,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#id_comment').attr({ 'cols': '60', 'rows': '8' } );
+		$('#id_comment').attr({ 'cols': '50', 'rows': '8' } );
 	});
 </script>
 
@@ -43,27 +45,26 @@
 <h1>
 ככה תראה התגובה שלך, והיא תופיע בראש רשימת התגובות:
 </h1></div>
-<form action="../postfree/" method="post">
-	{% if comment_form.has_errors %}
+<form action="{% comment_form_target %}" method="POST">
+	{% if form.has_errors %}
 	    <p><strong style="color: red;">Please correct the following errors.</strong></p>
 	{% else %}
 
         <div class="comm">
         	<div class="icImg">
         <img src="{{media_url}}/cityblog/comment.gif" width="15px" height="15px" border="0" alt="comment"><br>
-        	</div>
-
+        	</div> 
         <p>
-         {{ comment.comment|escape|urlizetrunc:"40"|linebreaks }}
+         {{ comment|escape|urlizetrunc:"40"|linebreaks }}
         </p>
         </div>
         <div class="sig">
         <a href="/">
     
-        -- {{ comment.person_name }},
+        -- {{ form.name.data }},
 
         </a>
-        <font id="sigdate">{{comment.submit_date|date:"d/m/y"}}</font>	
+        <font id="sigdate">{% now "d/m/y" %}</font>	
         </div>
 
         <div class="addcomm">
@@ -72,7 +73,7 @@
         </H3>
 
         <div class="buttContainer">
-        <input class="button" type="submit" name="post" value="שליחת תגובה" />
+        <input class="button" type="submit" name="submit" value="שליחת תגובה" />
         </div>
     {% endif %}
 
@@ -83,34 +84,48 @@
 עריכת התגובה
 </h1>
 	
-	{% if comment_form.comment.errors %}
-		{{ comment_form.comment.html_error_list }}
+	{% if form.comment.errors %}
+		{{ form.comment.error }}
 	{% endif %}
-	{{ comment_form.comment }}
+	{{ form.comment }}
 	<h3>
 	תגובה (אפשר להוסיף תגי html)
 	</h3><br>
 	
-	{% if comment_form.person_name.errors %}
-	    {{ comment_form.person_name.html_error_list }}
+	{% if form.name.errors %}
+	    {{ form.name.error }}
 	{% endif %}
-	{{ comment_form.person_name }}
-
+    {{ form.name }}
 	<h3>
 	שם אמיתי או בדוי 
 	</h3><br>
+
+	{% if form.email.errors %}
+	    {{ form.email.error }}
+	{% endif %}
+	{{ form.email }}
+    <h3>
+    דואר אלקטרוני. המייל שלך ישאר חסוי והוא אך ורק לצורך יצירת קשר מצידנו למענה אישי.
+    </h3><br>
+
+	{% if form.phone.errors %}
+	    {{ form.phone.error }}
+	{% endif %}
+	{{ form.phone }}
+    <h3>
+    מספר הטלפון שלך ישאר חסוי ויעזור לנו ליצור איתך קשר במקרה הצורך.
+    </h3><br>
+
 {% comment %}
     <input id="eng" type="text" id="id_image_label" class="vTextField" name="image_label" size="40" value="http://" maxlength="200" />
 <h3>
 	קישור לשם (לא חייבים)
 	</h3>
 {% endcomment %}
-	
+
+{% include "comments/honeypot.html" %}
 		
 		<div class="buttContainer">
-		    <input type="hidden" name="options" value="{{ options }}" />
-            <input type="hidden" name="target" value="{{ target }}" />
-            <input type="hidden" name="gonzo" value="{{ hash }}" />
             <input class="button" type="submit" name="preview" value="הצגת תגובה" />
         </div>
     </form>
@@ -128,46 +143,3 @@
 
 {% endblock  %}
 
-{% comment %}
-    Original example of free comment form
-{% endcomment %}
-<h1>Preview your comment</h1>
-
-<form action="../postfree/" method="post">
-	{% if comment_form.has_errors %}
-	    <p><strong style="color: red;">Please correct the following errors.</strong></p>
-	{% else %}
-	    <div class="comment">
-	    {{ comment.comment|escape|urlizetrunc:"40"|linebreaks }}
-	    <p class="date small">Posted by <strong>{{ comment.person_name }}</strong></p>
-	    </div>
-
-	    <p><input type="submit" name="post" value="Post public comment" /></p>
-
-	    <h1>Or edit it again</h1>
-	{% endif %}
-
-	{% if comment_form.person_name.errors %}
-	    {{ comment_form.person_name.html_error_list }}
-	{% endif %}
-
-	<p><label for="id_person_name">Your name:</label> {{ comment_form.person_name }}</p>
-
-	{% if comment_form.comment.errors %}
-		{{ comment_form.comment.html_error_list }}
-	{% endif %}
-
-	<p>
-		<label for="id_comment">Comment:</label>
-		<br />
-		{{ comment_form.comment }}
-	</p>
-	
-	<input type="hidden" name="options" value="{{ options }}" />
-	<input type="hidden" name="target" value="{{ target }}" />
-	<input type="hidden" name="gonzo" value="{{ hash }}" />
-	
-	<p>
-		<input type="submit" name="preview" value="Preview revised comment" />
-	</p>
-</form>
