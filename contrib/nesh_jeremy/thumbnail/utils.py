@@ -271,10 +271,10 @@ def rename_by_field(image, req_name, add_path=None , mask_image='', logo_image='
 
     dest_path = os.path.join(dest_path, new_name)
 
-    if file_path != dest_path:        
+    if file_path != dest_path:
         file_path = _rename(file_path, dest_path).replace('\\', '/') # windows fix
         
-        image._name = new_name # no way to rename through storage. XXXDJANGO
+        image._name = os.path.join(os.path.split(image._name)[0], new_name) # no way to rename through storage. XXXDJANGO
         info('new image name is %s' % image._name)
 
         #--------- Very Dirty Hack --------

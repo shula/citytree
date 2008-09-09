@@ -5,6 +5,7 @@ from time import strptime
 import itertools
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db.models import Q
 from django import forms
 from django.shortcuts import render_to_response, get_object_or_404
@@ -22,6 +23,9 @@ from cityblog.models import Blog, Post, Flag, PostImage
 from workshop.models import Workshop, WorkshopEvent, WorkshopEventPart
 from desk.urls import members_csv_absolute_url
 from accounts.models import UserProfile
+
+import pdb
+brk = pdb.set_trace
 
 MAIN_SECTION       = 1
 HELP_SECTION       = 2
@@ -144,30 +148,32 @@ def handleImageUploads( postObject, new_data ):
         #--------- Create Manipulators --------------
         # Due to moving to development django (post 0.96.6) ImageWithThumbnail is broken. The fix
         # is to create the instance (postImage in this case) first, then populate the images fields in it.
-        if not imgLookup.has_key(idx) and new_data.has_key(fileKey):
+        if not imgLookup.has_key(idx) and new_data.get(fileKey, '') != '':
             new_postImage = PostImage()
             new_postImage.index = idx
             new_postImage.post = postObject
             new_postImage.save()
             imgLookup[new_postImage.index] = new_postImage.id
-        if imgLookup.has_key(idx):
-            manipulator = PostImage.ChangeManipulator(imgLookup[idx])
             
-        if( new_data.has_key(fileKey) ):
-            dataToSave.setlist('image_file',new_data.getlist(fileKey) )
+        if( new_data.get(fileKey, '') != '' ):
+            dataToSave.setlist('image',new_data.getlist(fileKey) )
             
         #--------- Load Data --------------
-        if( new_data.has_key(fileKey) or imgLookup.has_key(idx)):
-            dataToSave['image']   = new_data[imgKey]
+        if( new_data.get(fileKey, '') != '' or imgLookup.has_key(idx)):
+            #dataToSave['image']   = new_data[imgKey]
             dataToSave['index']   = new_data[idxKey]
             dataToSave['label']   = new_data[labelKey]
             dataToSave['caption'] = new_data[tsrTxtKey]
             dataToSave['post']    = postObject.id
+
+            class PostImageForm(forms.ModelForm):
+                class Meta:
+                    model = PostImage
+            postimage_form = PostImageForm(data=dataToSave, files=dataToSave, instance=PostImage.objects.get(pk=imgLookup[idx]))
             
-            errors = manipulator.get_validation_errors(dataToSave)
-            manipulator.do_html2python(dataToSave)
-            if not errors:
-                manipulator.save(dataToSave)
+            #manipulator.do_html2python(dataToSave) # translation into 1.0 forms?
+            if postimage_form.is_valid():
+                postimage_form.save()
                 
     #------ Hack To Maintain Image order ------------
     #if( imgWasDeleted ):
