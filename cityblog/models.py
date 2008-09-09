@@ -146,8 +146,9 @@ class Post(models.Model):
 
     # fields required by the comment system
     enable_comments = models.BooleanField(default=1, blank=True, help_text='Set to enable comments on post')
-      
+    
     class Meta:
+        get_latest_by = 'post_date'
         ordering = ['-post_date']
     
     def get_workshop(self):
