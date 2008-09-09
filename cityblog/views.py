@@ -102,7 +102,7 @@ def display_post( request, post_id, preview = False ):
       
   # redirect to workshop (#35)
   if p.is_workshop():
-      return HttpResponseRedirect(reverse('workshop', args=[p.workshop.slug, preview]))
+      return HttpResponseRedirect(reverse('workshop', args=[p.workshop.slug]))
 
   blog    = p.blog
   pImages = p.postimage_set.all().order_by( 'index' )            

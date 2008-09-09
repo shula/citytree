@@ -336,7 +336,8 @@ class PostCreator(Responder):
         s.errors = {}
 
     def _handle_post(s):
-        fix_boolean_fields(s.new_data, ['draft', 'enable_comments'])
+        # so do I need this or not?
+        #fix_boolean_fields(s.new_data, ['draft', 'enable_comments'])
         
         def isSet( theHash, theKey ):
             return (theHash.has_key( theKey ) and len( theHash[theKey] ) > 0 )
