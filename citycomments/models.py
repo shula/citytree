@@ -12,6 +12,8 @@ class CityCommentManager(CommentManager):
 class CityComment(Comment):
     phone = models.CharField(max_length=30)
 
-    objects = CityCommentManager()
-    citycomments = models.Manager()
+    class Meta:
+        get_latest_by = 'submit_date'
+    #objects = CityCommentManager()
+    #citycomments = models.Manager()
 

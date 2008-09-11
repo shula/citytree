@@ -54,7 +54,12 @@ class CityCommentForm(CommentForm):
 
         new = create_from_existing_base(base_class=Comment,
                 inheritor_class=CityComment, obj=new_comment)
-        new.phone = self.cleaned_data["comment"]
+        new.phone = self.cleaned_data["phone"]
 
         return new
 
+    def example_clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if self.cleaned_data['phone'] == '':
+            raise forms.ValidationError('בבקשה מלאו מספר טלפון שנוכל לחזור אליכם. המספר לא יופיע באתר')
+        return phone

@@ -46,8 +46,8 @@
 ככה תראה התגובה שלך, והיא תופיע בראש רשימת התגובות:
 </h1></div>
 <form action="{% comment_form_target %}" method="POST">
-	{% if form.has_errors %}
-	    <p><strong style="color: red;">Please correct the following errors.</strong></p>
+	{% if form.errors %}
+	    <p><strong style="color: red;">בבקשה תקנו את השגיאות ונסו שוב</strong></p>
 	{% else %}
 
         <div class="comm">
@@ -85,7 +85,8 @@
 </h1>
 	
 	{% if form.comment.errors %}
-		{{ form.comment.error }}
+    {# {{ form.comment.error }} #}
+	    <p><strong style="color: red;">בבקשה מלאו את גוף ההערה</strong></p>
 	{% endif %}
 	{{ form.comment }}
 	<h3>
@@ -93,7 +94,8 @@
 	</h3><br>
 	
 	{% if form.name.errors %}
-	    {{ form.name.error }}
+    {#{{ form.name.errors }} #}
+        <p><strong style="color: red;">בבקשה מלאו שם</strong></p>
 	{% endif %}
     {{ form.name }}
 	<h3>
@@ -101,7 +103,8 @@
 	</h3><br>
 
 	{% if form.email.errors %}
-	    {{ form.email.error }}
+    {# {{ form.email.errors }} #}
+        <p><strong style="color: red;">בבקשה מלאו דואל תקין</strong></p>
 	{% endif %}
 	{{ form.email }}
     <h3>
@@ -109,7 +112,7 @@
     </h3><br>
 
 	{% if form.phone.errors %}
-	    {{ form.phone.error }}
+	    {{ form.phone.errors }}
 	{% endif %}
 	{{ form.phone }}
     <h3>
