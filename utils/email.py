@@ -18,5 +18,7 @@ def send_email_to(template, to, subject, context_dict, fail_silently=True):
     t = loader.get_template(template)
     c = Context(context_dict)
     message = t.render(c)
+    # can't have eol chars in subject
+    subject = subject.strip().replace('\n', '. ')
     send_mail(subject, message, DEFAULT_FROM_EMAIL, recipient_list, fail_silently=fail_silently)
 
