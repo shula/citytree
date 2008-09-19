@@ -32,7 +32,7 @@ def register_new_user(donor, really_send_email=False):
                 user.first_name = first_name
                 user.last_name = last_name
                 user.save()
-                for b in members_blogs:
+                for b in member_blogs:
                     user.blog_set.add(b)
                 user.save()
         else:
