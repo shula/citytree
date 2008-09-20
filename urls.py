@@ -12,6 +12,7 @@ import django.contrib.flatpages.admin
 import django.contrib.auth.admin
 import frontpage.admin
 import citycomments.admin
+import spamdetector.admin
 
 feeds = {
     'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.

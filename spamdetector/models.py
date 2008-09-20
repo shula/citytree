@@ -17,6 +17,9 @@ class AllowedBanRequests(models.Model):
     hash          = models.CharField(max_length=256, blank=False)
     ip_address    = models.IPAddressField('ip address')
 
+    def __unicode__(self):
+        return self.ip_address
+
     class Admin:
         list_display = ('hash', 'ip_address')
 
