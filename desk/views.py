@@ -194,6 +194,11 @@ def create_edit_blog_post( request, post_id=None, blog_slug=None ):
     if post_id is None:
         theBlog = get_object_or_404(Blog, slug=blog_slug)
     else:
+        try:
+            post_id = int(post_id)
+        except:
+            referer = request.META.get('HTTP_REFERER', '/desk/')
+            return HttpResponseRedirect(referer)
         theBlog = get_object_or_404(Post, id=post_id).blog
     if theBlog.is_workshop():
         clazz = WorkshopCreator
