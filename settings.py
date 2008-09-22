@@ -66,12 +66,15 @@ INSTALLED_APPS = (
     'citytree.cityblog',
     'citytree.desk',
     'citytree.frontpage',
-    'citytree.nesh.thumbnail',
     'citytree.ajax',
     'citytree.spamdetector',
     'citytree.workshop',
     'citytree.mailinglist',
     'citytree.citycomments',
+    # contrib apps
+    'citytree.nesh.thumbnail',
+    'citytree.batchadmin',
+    # back to django (XXX: move upward? does it matter?)
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',

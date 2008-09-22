@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.comments.models import Comment
+from batchadmin.admin import BatchModelAdmin
 
 from models import CityComment
 
@@ -10,7 +11,7 @@ from models import CityComment
 # manager=
 # property
 
-class CityCommentAdmin(admin.ModelAdmin):
+class CityCommentAdmin(BatchModelAdmin):
     #manager = CityComment.citycomments
 
     def post(self, obj):
