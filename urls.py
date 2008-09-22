@@ -14,6 +14,8 @@ import frontpage.admin
 import citycomments.admin
 import spamdetector.admin
 
+handler500 = 'citytree.views.handler500'
+
 feeds = {
     'posts' : LatestPosts # the actual url may be posts/tami and that filters by slug.
 }

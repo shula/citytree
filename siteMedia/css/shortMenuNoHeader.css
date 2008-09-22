@@ -89,7 +89,7 @@ ul.menuList {
 /* Writers menu */
 
 li.title1 {
-    background-image: url("writersTitle.gif");
+/*    background-image: url("writersTitle.gif");*/
     background-repeat: no-repeat;
     border-top: 1px solid #9C8602;
     border-right: 8px solid #898F01;
@@ -144,7 +144,7 @@ li.list3 {
 /* Shop menu */
 
 li.title4 {
-    background-image: url("shopTitle.gif");
+    /*background-image: url("shopTitle.gif");*/
     background-repeat: no-repeat;
     border-top: 1px solid #770660;
     border-right: 8px solid #AD3AC9;
@@ -163,7 +163,7 @@ li.list4 {
 /* About menu */
 
 li.title5 {
-    background-image: url("aboutTitle.gif");
+    /*background-image: url("aboutTitle.gif");*/
     background-repeat: no-repeat;
     border-top: 1px solid #093378;
     border-bottom: 1px solid #2D85CA;

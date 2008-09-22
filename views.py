@@ -26,3 +26,5 @@ def uptime_openacs(request):
         return HttpResponse(str(e))
     return HttpResponse("success")
 
+def handler500(request):
+    return render_to_response('500.html', context_instance=RequestContext(request))
