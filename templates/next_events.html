@@ -1,0 +1,11 @@
+<div class="nextevents">
+    <table>
+        <thead></thead>
+        <tbody>
+            {% for event in events %}
+            <tr><td><a href="{{event.workshop.get_absolute_url}}">{{event.workshop.name}}</a> בתאריך {{event.start_date}}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
