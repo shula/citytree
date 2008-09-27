@@ -193,6 +193,13 @@ class WorkshopEvent(models.Model):
         super(WorkshopEvent, self).save() # really needed?
         print "saving WorkshopEvent id=%s" % self.id
 
+    # TODO - move into a "objects" like thing I forget the name of right now
+    @staticmethod
+    def future_events(now_date=None):
+        if now_date is None:
+            now_date = datetime.now()
+        return [wep.workshop_event for wep in WorkshopEventPart.objects.filter(start_time__gte=now_date).order_by('start_time')][:3]
+
 class WorkshopEventPart(models.Model):
     workshop_event = models.ForeignKey(WorkshopEvent, verbose_name='מופע הסדנה', blank=False)
     start_time     = models.DateTimeField()
@@ -203,6 +210,8 @@ class WorkshopEventPart(models.Model):
 
     class Meta:
         ordering = ['-start_time']
+        get_latest_by = 'start_time'
+
 
 class ExternalParticipant(models.Model):
     """ A Participant that isn't a registered user of the site. No support for the same

@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 from citytree.cityblog.models  import Blog, Subject
 from citytree.utils.hebCalView import *
 from frontpage.models import FrontPage
+from workshop.models import WorkshopEvent
 
 admin_only = user_passes_test(lambda u: (not u.is_anonymous() and u.is_staff), login_url='/')
 
@@ -53,7 +54,8 @@ def show_front_page( request, front_page = None ):
                                         urlType=calLinkType, highlightToday=True)
   
   return render_to_response('frontpage/frontpage.html', 
-    {'content':pageObj, 'blogs': Blog.objects.all(), 'subjects' : Subject.objects.all() },
+    {'content':pageObj, 'blogs': Blog.objects.all(), 'subjects' : Subject.objects.all(),
+        'events': WorkshopEvent.future_events()},
     context_instance=RequestContext(request, {}, [calender,bgColorProcessor]))
     
 

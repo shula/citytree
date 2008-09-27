@@ -141,7 +141,6 @@ def display_post( request, post_id, preview = False ):
   
   #return render_to_response('cityblog/%s'%template_name, {'post': p, 'blog' : b})
   
-  
 def send_feedback( request ):
     from django.core.mail import send_mail, BadHeaderError
     
@@ -168,64 +167,6 @@ def send_feedback( request ):
         return HttpResponseRedirect(redirect_url)
     else:
         return HttpResponse('Make sure all fields are entered and valid.')
-
-################# Comments #####################
-# mostly comments are just using django.contrib.comments
-# but since I want some extra features, these are implemented here
-#, and the urls are redirected here by the right urlpatters
-# the extra features are:
-#  * email blog owner on comment (caution: will generate spam)
-
-
-def cityblog_post_free_comment(request):
-    """
-    implementation rant:
-    using an implementation detail of post_free_comment - that it returns a redirect object
-    when the comment has actually been posted.
-    """
-    if not request.POST:
-        raise Http404, _("Only POSTs are allowed")
-    try:
-        options, target, security_hash = request.POST['options'], request.POST['target'], request.POST['gonzo']
-    except KeyError:
-        raise Http404, _("One or more of the required fields wasn't submitted")
-    if Comment.objects.get_security_hash(options, '', '', target) != security_hash:
-        raise Http404, _("Somebody tampered with the comment form (security violation)")
-    content_type_id, object_id = target.split(':') # target is something like '52:5157'
-    content_type = ContentType.objects.get(pk=content_type_id)
-    try:
-        obj = content_type.get_object_for_this_type(pk=object_id)
-    except ObjectDoesNotExist:
-        raise Http404, _("The comment form had an invalid 'target' parameter -- the object ID was invalid")
-    option_list = options.split(',')
-    new_data = request.POST.copy()
-    new_data['content_type_id'] = content_type_id
-    new_data['object_id'] = object_id
-    new_data['ip_address'] = request.META['REMOTE_ADDR']
-    new_data['is_public'] = IS_PUBLIC in option_list
-    manipulator = PublicFreeCommentManipulator()
-    errors = manipulator.get_validation_errors(new_data)
-    if errors or request.POST.has_key('preview'):
-        comment = errors and '' or manipulator.get_comment(new_data)
-        return render_to_response('comments/free_preview.html', {
-            'comment': comment,
-            'comment_form': forms.FormWrapper(manipulator, new_data, errors),
-            'options': options,
-            'target': target,
-            'hash': security_hash,
-        }, context_instance=RequestContext(request))
-    elif request.POST.has_key('post'):
-        # If the IP is banned, mail the admins, do NOT save the comment, and
-        # serve up the "Thanks for posting" page as if the comment WAS posted.
-        if request.META['REMOTE_ADDR'] in settings.BANNED_IPS:
-            from django.core.mail import mail_admins
-            mail_admins("Practical joker", str(request.POST) + "\n\n" + str(request.META))
-        else:
-            manipulator.do_html2python(new_data)
-            comment = manipulator.save(new_data)
-        return HttpResponseRedirect("../posted/?c=%s:%s" % (content_type_id, object_id))
-    else:
-        raise Http404, _("The comment form didn't provide either 'preview' or 'post'")
 
 def search(request):
     terms = request.GET['q']
