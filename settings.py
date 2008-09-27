@@ -124,6 +124,7 @@ SITE_LOGO   = '' #site logo
 SHOW_WORKSHOPS_WITH_NO_EVENTS = False # True will add them at after the workshops with events - not very visible, but there.
 CITYTREE_FEEDBACK_CONTACTS = ['tree@citytree.net']
 NEW_MEMBERS_FRONTPAGE_TITLE = 'ברוכים המצטרפים לעץבעיר,'
+MAX_NEXT_EVENTS = 3
 
 # -------------------------- Development Stuff -------------
 # Leave this as None for default - sending to the blog author

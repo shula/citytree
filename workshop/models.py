@@ -11,7 +11,9 @@
     WorkshopEventPart       ExternalParticipant
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
+
+from settings import MAX_NEXT_EVENTS
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -196,9 +198,15 @@ class WorkshopEvent(models.Model):
     # TODO - move into a "objects" like thing I forget the name of right now
     @staticmethod
     def future_events(now_date=None):
+        """ Return not all future events, just those in the coming week.
+        """
         if now_date is None:
             now_date = datetime.now()
-        return [wep.workshop_event for wep in WorkshopEventPart.objects.filter(start_time__gte=now_date).order_by('start_time')][:3]
+        next_week = now_date + timedelta(days=7)
+        return [wep.workshop_event for wep in
+                WorkshopEventPart.objects.filter(
+                    start_time__gte=now_date).filter(
+                        start_time__lte=next_week).order_by('start_time')][:MAX_NEXT_EVENTS]
 
 class WorkshopEventPart(models.Model):
     workshop_event = models.ForeignKey(WorkshopEvent, verbose_name='מופע הסדנה', blank=False)
