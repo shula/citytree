@@ -10,7 +10,7 @@ class CityCommentManager(CommentManager):
 # Create your models here.
 
 class CityComment(Comment):
-    phone = models.CharField(max_length=30)
+    phone = models.CharField(max_length=30, blank=True)
 
     class Meta:
         get_latest_by = 'submit_date'

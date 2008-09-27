@@ -91,6 +91,7 @@ class UserProfile(User):
         print "As Member: ", mem
         print "As UP: ", self
         #fields = ['handled', 'campaign', 'amount', 'date', 'first', 'last', 'address', 'city', 'mikud', 'email', 'comment']
+        return mem
 
     def __unicode__(self):
         return 'UserProfile %s %s' % (self.first_name, self.last_name)
