@@ -30,6 +30,15 @@ table.calen{
 .nextevents
 {
     width:  138px;
+}
+
+.nextevents thead
+{
+	font-size: 9pt;
+}
+
+.nextevents tbody
+{
 	font-size: 7pt;
 }
 
