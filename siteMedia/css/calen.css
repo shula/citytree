@@ -30,16 +30,18 @@ table.calen{
 .nextevents
 {
     width:  138px;
+    color:#160066;
 }
 
 .nextevents thead
 {
-	font-size: 9pt;
+	font-size: 10pt;
+    font-weight: bold;
 }
 
 .nextevents tbody
 {
-	font-size: 7pt;
+	font-size: 8pt;
 }
 
 div.cellday
