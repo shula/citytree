@@ -7,7 +7,7 @@ from django.contrib.sites.models import Site
 
 import settings
 from cityblog.models import Blog
-from accounts.models import Member, UserProfile
+from accounts.models import Member
 
 DUPLICATE_ERROR = 'duplicate error'
 EMAIL_ERROR = 'email_error'
@@ -25,23 +25,16 @@ def register_new_user(donor, really_send_email=False):
         if not user_exists:
             password = User.objects.make_random_password(6)
             if really_send_email:
-                user = User()
-                user.username = email
-                user.email = email
-                user.password = password
+                user = Member.create_member(username=email, email=email, password=password,
+                        )
                 first_name = donor['first']
                 last_name = donor['last']
                 user.first_name = first_name
                 user.last_name = last_name
                 user.save()
-                user_profile = UserProfile.create_from_existing_user(user)
-                user_profile.save()
-                user_profile.create_member_from_litrom(donor)
-                member = user_profile.create_member_from_litrom(donor)
-                member.save()
                 for b in members_blogs:
-                    member.blog_set.add(b)
-                member.save()
+                    user.blog_set.add(b)
+                user.save()
         else:
             user = User.objects.get(email=email)
             password = 'user already exists - hope you know it!'

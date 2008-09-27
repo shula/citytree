@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.comments.models import Comment
-from batchadmin.admin import BatchModelAdmin, CHECKBOX_NAME, model_ngettext
+from batchadmin.admin import BatchModelAdmin
 
 from models import CityComment
 
@@ -14,27 +14,6 @@ from models import CityComment
 class CityCommentAdmin(BatchModelAdmin):
     #manager = CityComment.citycomments
 
-    batch_actions=['hide_selected']
-    def hide_selected(self, request, changelist):
-        if self.has_delete_permission(request):
-            selected = request.POST.getlist(CHECKBOX_NAME)
-            objects = changelist.get_query_set().filter(pk__in=selected)
-            n = objects.count()
-            if n:
-                for obj in objects:
-                    obj.is_removed = True
-                    obj.is_public = False
-                    obj.save()
-                    # TODO - log this.
-                    #object_repr = str(obj)
-                    #self.log_deletion(request, obj, object_repr)
-                # TODO - update should work. using iteration instead
-                #objects.update(is_removed=True, is_public=False)
-                self.message_user(request, "Successfully hidden %d %s." % (
-                    n, model_ngettext(self.opts, n)
-                ))
-    hide_selected.short_description = "Hide selected %(verbose_name_plural)s"
- 
     def post(self, obj):
         return obj.content_object
 
