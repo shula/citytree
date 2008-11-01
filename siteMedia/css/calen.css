@@ -27,11 +27,26 @@ table.calen{
 	color: #1A0080;
 }
 
+/* next events */
+
 .nextevents
 {
     width:  138px;
-	font-size: 7pt;
+	font-size: 8pt;
+    font-weight: bold;
 }
+
+.nextevents table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid #B9D9AE;
+}
+
+.nextevents td {
+    border: 1px dashed #B9D9AE;
+    padding: 2px 0px 2px 0px;
+}
+
 
 div.cellday
 {

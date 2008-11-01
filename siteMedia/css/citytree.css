@@ -518,8 +518,6 @@ div.search_results {
 	font-size: 9pt;
 }
 
-
-
 /* For Pagination  */
 .paginator { padding: .25em .25em .6em .25em; }
 .paginate-pages { padding: 2px 3px; border: 1px solid #ddd; cursor: pointer; text-decoration: underline; }
