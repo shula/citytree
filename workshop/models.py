@@ -11,7 +11,7 @@
     WorkshopEventPart       ExternalParticipant
 """
 
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 
 from settings import MAX_NEXT_EVENTS
 
@@ -154,10 +154,6 @@ class WorkshopEvent(models.Model):
             return None
         return self.workshopeventpart_set.order_by('-start_time')[0].start_time.date()
     end_date = property(get_end_date)
-
-    def get_today(self):
-        return self.start_date == date.today()
-    today = property(get_today)
 
     def get_eventparts(self):
         return self.workshopeventpart_set.order_by('start_time')

@@ -1,19 +1,9 @@
-{% load hebrewtime %}
-
 <div class="nextevents">
     <table>
-        <thead><tr><td colspan="2">השבוע בעץ</td></tr>
-        </thead>
+        <thead></thead>
         <tbody>
             {% for event in events %}
-            <tr><td><a href="{{event.workshop.get_absolute_url}}">{{event.workshop.name}}</a></td>
-            <td>
-            {% if event.today %}
-            היום
-            {% else %}
-            {{event.start_date|hebrew_weekday}}
-            {% endif %}
-            </td></tr>
+            <tr><td><a href="{{event.workshop.get_absolute_url}}">{{event.workshop.name}}</a></td><td>{{event.start_date}}</td></tr>
             {% endfor %}
         </tbody>
     </table>

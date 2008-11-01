@@ -50,7 +50,7 @@ div.bottom {
 	font-size: 8pt;
 	direction: rtl;
 	text-align: center;
-	}
+}
 	
 div.commentnumber { 
 	margin-top: 8px;
@@ -60,7 +60,7 @@ div.commentnumber {
 	font-size: 8pt;
 	direction: rtl;
 	text-align: left;
-	}
+}
 	
 div.centralContentWrapper {
   margin: 0 auto; 
@@ -68,7 +68,7 @@ div.centralContentWrapper {
 	min-height: 230px;
 	border-left: 1px dashed #4521CF;
 	border-right: 1px dashed #4521CF;
-	}	
+}	
 	
 	
 /*  Goes inside centralContentWrapper
@@ -97,7 +97,7 @@ div.leafspace {
 	width: 161px;
 	height: 28px;
 	clear: both;
-	}
+}
 	
 div.date { 
   float: left;
@@ -105,7 +105,7 @@ div.date {
 	color: #160066;
 	font-size: 9pt;
 	font-weight: bold;
-	}
+}
 
 	
 
@@ -141,7 +141,7 @@ div.gallery{
 	
 div.comm {
  	margin: 14px 0 20px 2px;
-	}
+}
 	
 
 	
@@ -160,7 +160,7 @@ div.sig {
 	font-size: 9pt;
 	font-weight: normal;
 	text-align: left;
-	}
+}
 	
 #sigdate	{ 
 	color: #493B7D;
@@ -273,7 +273,7 @@ div.addcomm {
 	margin: 0 30px 0 16px;
 	direction: rtl;
 	text-align: right;
-	}
+}
 	
 .addcomm h1 {
 	font-weight: bold;
@@ -321,13 +321,13 @@ div.nav {
 	direction: rtl;
 	text-align: center;
 	padding-bottom: 4px;
-	}
+}
  
 div.teaser { 
 	margin: 0 auto;
 	clear: both;
 	width: 808px;
-	} 
+} 
 	
 .teaser p {
 	line-height: 11pt;
@@ -339,25 +339,25 @@ div.teaser {
 div.teaserunit { 
 	padding-top: 0;
 	width: 143px;
-	} 	
+} 	
  
 img.teaser { 
 	display: inline;
 	float: right;
-	}
+}
 	
 
 div.teaserline {
  	top: 0;
 	border-top: 1px dashed #6044D0;
 	width: 160px;
- }
+}
  
  div.teaserlinebott {
  	top: 20px;
 	border-top: 1px dashed #6044D0;
 	width: 144px;
- }
+}
 
 div.rightnav {
  	float:right;
@@ -368,7 +368,7 @@ div.rightnav {
  	font-size: 9pt;
  	font-size: 9pt;
  	line-height: 9pt;
- 	}
+ }
 
 
 
@@ -381,18 +381,18 @@ div.leftnav {
 	font-size: 9pt;
 	font-size: 9pt;
 	line-height: 9pt;
-	}
+}
 	
 div.lineleft {
 	border-top: 1px dashed #493B7D;
 	position: relative; left: 2px;
 	width: 144px;
- }
+}
  
 .leftnav td {
 	width: 146px;
 	height: 20px;
-	}
+}
 
 div.belowmenu {
 	position: relative;
@@ -410,7 +410,7 @@ div.crumbs {
 	font-weight: bold;
 	line-height: 16pt;
 	text-align: right;
-	}	
+}	
 	
 div.userlogin { 
 	position: relative; right: -8px; top: 0px;
@@ -423,8 +423,12 @@ div.userlogin {
 	font-weight: bold;
 	line-height: 16pt;
 	text-align: right;
-	}	
+}	
 	
+div.userlogin a:visited, a:active {
+    color: #029135;
+}
+
 /* For Tooltip */
 #tooltip {
 	border: 1px solid #B6E3AB;
@@ -438,7 +442,7 @@ color: #61775B;
 	font-size: 8pt;
 	direction: rtl;
 	font-weight: bold;
- }
+}
 
 #tooltip p.body{ 
 background-color: #DAFDD1;
@@ -446,7 +450,7 @@ font-weight: normal;
 color: #61775B;
 	font-size: 8pt;
 	direction: rtl;
- }
+}
  
  div.ident { 
 	direction: rtl;
