@@ -429,6 +429,33 @@ div.userlogin a:visited, a:active {
     color: #029135;
 }
 
+div.userlogin a:hover {
+    color: #14CB55;
+}
+
+/* Frontpage left up side */
+
+form#search {
+    padding-bottom: 10px;
+}
+
+form#search, form#joinlist {
+    font-weight: bold;
+}
+
+form#search input, form#joinlist input {
+    margin-top: 2px;
+    padding-left: 0px;
+    padding-right: 0px;
+    color: #029135;
+    background-color: #CAEBB7;
+    font-size: 9pt;
+}
+
+input.navform-submit {
+    font-weight: bold;
+}
+
 /* For Tooltip */
 #tooltip {
 	border: 1px solid #B6E3AB;
@@ -517,6 +544,8 @@ div.search_title {
 div.search_results {
 	font-size: 9pt;
 }
+
+
 
 /* For Pagination  */
 .paginator { padding: .25em .25em .6em .25em; }
