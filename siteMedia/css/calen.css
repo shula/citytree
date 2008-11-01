@@ -27,10 +27,11 @@ table.calen{
 	color: #1A0080;
 }
 
-/* next events */
+/* next events - the links css is in citytree.css */
 
 .nextevents
 {
+	color: #493B7D;
     width:  138px;
 	font-size: 8pt;
     font-weight: bold;

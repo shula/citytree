@@ -40,7 +40,6 @@ div.mainWrapper {
 }
 
 
-	
 div.bottom { 
 	clear: both;
 	margin: 0 auto;
@@ -423,13 +422,17 @@ div.userlogin {
 	font-weight: bold;
 	line-height: 16pt;
 	text-align: right;
-}	
-	
-div.userlogin a:visited, a:active {
+}
+
+div.userlogin a, .nextevents a {
     color: #029135;
 }
 
-div.userlogin a:hover {
+div.userlogin a:visited, div.userlogin a:active, .nextevents a:visited, .nextevents a:active {
+    color: #029135;
+}
+
+div.userlogin a:hover, .nextevents a:hover {
     color: #14CB55;
 }
 
