@@ -12,6 +12,17 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
 
+# TODO: would be nicer to do a UniqueSlugField, but then we need to know
+# which class we should 'uniquify' on, and what's the field name - that
+# info is in the Meta class of the Form (almost), but we need some metaclass
+# magic to get it?
+class WorkshopSlugField(forms.SlugField):
+    def clean(self, value):
+        if Workshop.objects.filter(slug=value).count() > 0:
+            p = Post.objects.get(workshop__slug=value)
+            raise forms.ValidationError('The slug field already exists in post <a href="%s">%s</a> (<a href="%s">edit</a>)' % (p.get_absolute_url(), p.title, p.get_absolute_edit_url()))
+        return super(UniqueSlugField, self).clean()
+
 #class WorkshopForm(forms.Form):
 class WorkshopForm(forms.ModelForm):
     class Meta:
@@ -23,7 +34,7 @@ class WorkshopForm(forms.ModelForm):
     
     # Workshop stuff
     name        = forms.CharField()
-    slug        = forms.CharField()
+    slug        = WorkshopSlugField()
     description = forms.CharField()
 
     # post stuff

@@ -110,7 +110,7 @@
     </td>
     <td>
         {{ form.slug }}
-        {% if form.slug.errors %}*** {{ form.slug.errors|join:", " }}{% endif %}
+        {% if form.slug.errors %}*** {{ form.slug.errors|join:", "|safe }}{% endif %}
         <h3> שם השדה הוא בכוונה באנגלית. השדה הזה לא יופיע על האתר עצמו, אבל יהיה השם בשורת הכתובת של האתר. לכן זה ידידותי לבחור מילה בודדת בלי רווחים, באנגלית, לדוגמא economy, rawfood, ecohome, וכו'.
         </h3>
     </td>
