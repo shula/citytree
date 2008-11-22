@@ -18,13 +18,11 @@ class PostForm(forms.ModelForm):
 # magic to get it?
 class WorkshopSlugField(forms.SlugField):
     def clean(self, value):
-        if self.form.instance == None: # TODO: ugly hack
-            max_num = 1
-        else:
-            max_num = 0
-        if Workshop.objects.filter(slug=value).count() > max_num:
-            p = Post.objects.get(workshop__slug=value)
-            raise forms.ValidationError('The slug field already exists in post <a href="%s">%s</a> (<a href="%s">edit</a>)' % (p.get_absolute_url(), p.title, p.get_absolute_edit_url()))
+        this_slug_workshops = Workshop.objects.filter(slug=value)
+        if this_slug_workshops.count() > 0:
+            if this_slug_workshops[0] != self.form.instance.workshop:
+                p = Post.objects.get(workshop__slug=value)
+                raise forms.ValidationError('The slug field already exists in post <a href="%s">%s</a> (<a href="%s">edit</a>)' % (p.get_absolute_url(), p.title, p.get_absolute_edit_url()))
         return super(forms.SlugField, self).clean(value)
 
 #class WorkshopForm(forms.Form):
