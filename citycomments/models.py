@@ -3,7 +3,10 @@ from django.db import models
 from django.contrib.comments.models import Comment
 from django.contrib.comments.managers import CommentManager
 
-from utils.collections import muldict
+try:
+    from utils.collections import muldict
+except:
+    pass
 
 class CityCommentManager(CommentManager):
     def get_query_set(self):
