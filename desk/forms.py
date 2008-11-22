@@ -18,10 +18,14 @@ class PostForm(forms.ModelForm):
 # magic to get it?
 class WorkshopSlugField(forms.SlugField):
     def clean(self, value):
-        if Workshop.objects.filter(slug=value).count() > 0:
+        if self.form.instance == None: # TODO: ugly hack
+            max_num = 1
+        else:
+            max_num = 0
+        if Workshop.objects.filter(slug=value).count() > max_num:
             p = Post.objects.get(workshop__slug=value)
             raise forms.ValidationError('The slug field already exists in post <a href="%s">%s</a> (<a href="%s">edit</a>)' % (p.get_absolute_url(), p.title, p.get_absolute_edit_url()))
-        return super(UniqueSlugField, self).clean()
+        return super(forms.SlugField, self).clean(value)
 
 #class WorkshopForm(forms.Form):
 class WorkshopForm(forms.ModelForm):
@@ -65,6 +69,11 @@ class WorkshopForm(forms.ModelForm):
                 #print "wform: reading %s=%s" % (field, value)
                 s.initial[field] = value
 
+    def full_clean(s):
+        # TODO - hack. Need to tell the slug field what the form is
+        s.fields['slug'].form = s
+        super(WorkshopForm, s).full_clean()
+
     def save(s):
         s.create_or_update_workshop_from_dict(s.cleaned_data)
         return super(WorkshopForm, s).save()
@@ -72,7 +81,6 @@ class WorkshopForm(forms.ModelForm):
     def create_or_update_workshop_from_dict(s, d):
         # NOTE: should this be in the model? but it depends on the fields I choose for the form. But
         # those are chosen to match the names in the models. I'm almost convinced.
-
         p = s.instance
         p.make_sure_workshop_exists()
         w = p.workshop_set.get()
