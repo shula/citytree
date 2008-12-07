@@ -1,0 +1,9 @@
+Hello,
+
+This is an Automated message from citytree.net: You have a new registration.
+
+User {{ user_name }} registered to workshop event {{ workshop_event }}.
+
+Including the new user, you now have:
+{{ workshop_event.externalparticipant_set.count }} external participants.
+{{ workshop_event.users.count }} registered users.
