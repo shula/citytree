@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 
 import settings
+from utils.email import send_email_to
 from workshop.models import Workshop, WorkshopEvent, ExternalParticipant
 from cityblog.models import Flag, Post
 from citytree.utils.hebCalView import FRONTPAGE_URL_TYPE, CALENDAR_URL_TYPE_REGISTRY
@@ -62,12 +63,27 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
 
     form = registerForm(workshop=workshop, workshop_event_id=workshop_event_id, request=request)
 
+    def notify_on_registration(workshop, user_name, workshop_event):
+        send_email_to(template='workshop/user_registered_email.txt',
+                to=settings.WORKSHOP_REGISTRATION_NOTIFICATION_EMAIL,
+                subject="citytree: workshop %s, on the %s: '%s' registered" %
+                    (workshop_event.workshop.name,
+                     workshop_event.start_date.isoformat(),
+                     user_name),
+                context_dict = {
+                    'workshop': workshop,
+                    'user_name': user_name,
+                    'workshop_event' : workshop_event
+                    },
+                fail_silently = True)
+
     # we present one form for authenticated users, another for anonymous users:
     if request.user.is_authenticated():
         if request.method == 'GET':
             status = 'authenticated GET'
         elif request.method == 'POST':
             workshop_event.users.add(request.user)
+            notify_on_registration(workshop, request.user.get_full_name(), workshop_event)
             template = registration_complete_template
     else:
         if request.method == 'GET':
@@ -76,6 +92,7 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
             if form.is_valid():
                 participant = form.save()
                 template = registration_complete_template
+                notify_on_registration(workshop, '(external) %s' % participant.get_full_name(), workshop_event)
 
     return render_to_response(template,
             {
