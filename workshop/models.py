@@ -212,6 +212,9 @@ class WorkshopEvent(models.Model):
                     start_time__gte=now_date).filter(
                         start_time__lte=next_week).order_by('start_time')][:MAX_NEXT_EVENTS]
 
+    def total_participants(self):
+        return self.externalparticipant_set.count() + self.users.count()
+
 class WorkshopEventPart(models.Model):
     workshop_event = models.ForeignKey(WorkshopEvent, verbose_name='מופע הסדנה', blank=False)
     start_time     = models.DateTimeField()

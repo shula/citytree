@@ -63,7 +63,8 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
 
     form = registerForm(workshop=workshop, workshop_event_id=workshop_event_id, request=request)
 
-    def notify_on_registration(workshop, user_name, workshop_event):
+    def notify_on_registration(workshop_event, user_name, phone_number,
+            email):
         send_email_to(template='workshop/user_registered_email.txt',
                 to=settings.WORKSHOP_REGISTRATION_NOTIFICATION_EMAIL,
                 subject="citytree: workshop %s, on the %s: '%s' registered" %
@@ -71,9 +72,10 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
                      workshop_event.start_date.isoformat(),
                      user_name),
                 context_dict = {
-                    'workshop': workshop,
                     'user_name': user_name,
-                    'workshop_event' : workshop_event
+                    'workshop_event' : workshop_event,
+                    'phone_number' : phone_number,
+                    'email' : email,
                     },
                 fail_silently = True)
 
@@ -83,7 +85,15 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
             status = 'authenticated GET'
         elif request.method == 'POST':
             workshop_event.users.add(request.user)
-            notify_on_registration(workshop, request.user.get_full_name(), workshop_event)
+            user = request.user
+            phone = ''
+            if hasattr(user, 'userprofile'):
+                if hasattr(user.userprofile, 'phone'):
+                    phone = user.userprofile.phone
+            notify_on_registration(workshop_event,
+                    user.get_full_name(),
+                    phone_number=phone,
+                    email=user.email)
             template = registration_complete_template
     else:
         if request.method == 'GET':
@@ -92,7 +102,10 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
             if form.is_valid():
                 participant = form.save()
                 template = registration_complete_template
-                notify_on_registration(workshop, '(external) %s' % participant.get_full_name(), workshop_event)
+                notify_on_registration(workshop_event,
+                        user_name='(external) %s' % participant.get_full_name(),
+                        phone_number = participant.phone,
+                        email = participant.email)
 
     return render_to_response(template,
             {

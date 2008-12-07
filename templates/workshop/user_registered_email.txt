@@ -1,9 +1,18 @@
-Hello,
+ברכותיי!
 
-This is an Automated message from citytree.net: You have a new registration.
+ התקבלה הרשמה לארוע {{ workshop_event.workshop.name }} בתאריך {{ workshop_event.start_date.isoformat }}:
 
-User {{ user_name }} registered to workshop event {{ workshop_event }}.
+ שם: {{ user_name }}
+ טלפון: {{ phone_number }}
+ מייל: {{ email }}
 
-Including the new user, you now have:
-{{ workshop_event.externalparticipant_set.count }} external participants.
-{{ workshop_event.users.count }} registered users.
+מספר נרשמים, כולל ההרשמה הנוכחית: {{ workshop_event.total_participants }}
+מתוכם:
+{{ workshop_event.externalparticipant_set.count }} חיצוניים
+{{ workshop_event.users.count }} משתמשים רשומים
+
+
+כן ריבו!
+
+עץבעיר
+
