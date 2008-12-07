@@ -7,6 +7,7 @@ import settings
 import accounts.admin
 import cityblog.admin
 import workshop.admin
+import citymail.admin
 #import django.contrib.comments.admin # I have my own ModelAdmin
 import django.contrib.flatpages.admin
 import django.contrib.auth.admin

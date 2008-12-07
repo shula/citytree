@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     # contrib apps
     'citytree.nesh.thumbnail',
     'citytree.batchadmin',
+    'citytree.citymail',
     # back to django (XXX: move upward? does it matter?)
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -125,6 +126,9 @@ SHOW_WORKSHOPS_WITH_NO_EVENTS = False # True will add them at after the workshop
 CITYTREE_FEEDBACK_CONTACTS = ['tree@citytree.net']
 NEW_MEMBERS_FRONTPAGE_TITLE = 'ברוכים המצטרפים לעץבעיר,'
 MAX_NEXT_EVENTS = 3
+
+# This user gets an email every time someone registers to a workshop.
+WORKSHOP_REGISTRATION_NOTIFICATION_EMAIL = 'tree@citytree.net'
 
 # -------------------------- Development Stuff -------------
 # Leave this as None for default - sending to the blog author
