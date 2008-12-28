@@ -202,7 +202,8 @@ class Post(models.Model):
             if self.teaser_text is None: self.teaser_text = u''
           #if( len(self.text) == 0 ):
           #    self.text = self.teaser_text
-          
+        
+        import datetime
         self.time_modified        = datetime.date.today()
         self.rendered_text        = wikiSub(self.text)
         self.teaser_rendered_text = wikiSub(self.teaser_text)
