@@ -81,7 +81,7 @@ def get_comment_cls():
     if not hasattr(settings, 'COMMENTS_APP'):
         import django.contrib.comments.models
         return django.contrib.comments.models.Comment
-    return __import__(settings.COMMENTS_APP, fromlist=['']).get_model()
+    return __import__(settings.COMMENTS_APP, {}, {}, ['']).get_model()
 
 comment_cls = get_comment_cls()
 
