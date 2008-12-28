@@ -9,11 +9,17 @@
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/shortMenu.css">
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/links.css">
 {% endblock %}
-
 <style type="text/css">
 	div.main[class] { 	background-image: url('{{media_url}}/cityblog/main_tall.png'); }
 	
-	div.leafspace[class] { background-image: url("{{media_url}}/cityblog/leaf.png"); }
+    /*
+	div.main {
+		filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/cityblog/main_tall.png', sizingMethod='crop' );
+		background-repeat: repeat-y;
+	}
+	
+    */
+    div.leafspace[class] { background-image: url("{{media_url}}/cityblog/leaf.png"); }
 	div.leafspace { 
 		filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src="{{media_url}}/cityblog/leaf.png", sizingMethod='image');
 		}
@@ -27,7 +33,6 @@
 	background-image:none;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/cityblog/menu_top.png', sizingMethod='image');
 	}
-
 	.calendarHolder{
 		background-image: url('{{media_url}}/calendar/calen.png');
 	}
@@ -36,10 +41,6 @@
 	background-image:none;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/calendar/calen.png', sizingMethod='image');
 	}
-
-
-}
-
 </style>
 
 {% block scripts %}

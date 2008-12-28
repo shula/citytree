@@ -7,7 +7,6 @@ import random
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings 
-from django.core.mail import send_mail
 from django.template import Context, loader
 from django.contrib.sites.models import Site
 
@@ -15,6 +14,7 @@ from nesh.thumbnail.field import ImageWithThumbnailField
 
 from citytree.utils.textUtils import wikiSub
 from utils.randomUtils import make_random_hash
+from utils.email import send_email_to
 import settings
 
 # Javascript stuff - to be moved somewhere more appropriate
@@ -291,7 +291,6 @@ class PostModerator(CommentModerator):
             recipient_list = [post.author.email]
         else:
             recipient_list = [self.really_send_email_to_this_person]
-        t = loader.get_template('cityblog/post_comment_notification_email.txt')
         site = Site.objects.get_current().name
         from spamdetector.models import AllowedBanRequests
         AllowedBanRequests(ip_address = comment.ip_address, hash=self._hash).save()
@@ -300,8 +299,9 @@ class PostModerator(CommentModerator):
                       'site': site,
                       'hash': self._hash})
         subject = u'[%s] New comment posted on "%s"' % (site, content_object)
-        message = t.render(c)
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)
+        send_email_to(template='cityblog/post_comment_notification_email.txt',
+                to=recipient_list, subject=subject, context_dict=c,
+                fail_silently=True)
         
 # This is annoying - but for some reason this file gets loaded
 # more then once - so I'm forced to catch the AlreadyModerated

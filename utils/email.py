@@ -14,15 +14,22 @@ def check_email(email):
     return email_re.match(email)
 
 def send_email_to(template, to, subject, context_dict, fail_silently=True):
-    recipient_list = [to]
+    if isinstance(to, str):
+        recipient_list = [to]
+    else:
+        recipient_list = to
+    del to
     t = loader.get_template(template)
     c = Context(context_dict)
     message = unicode(t.render(c))
     # can't have eol chars in subject
     subject = unicode(subject.strip().replace('\n', '. '))
     mail_from = DEFAULT_FROM_EMAIL
-    sent_email_log = SentEmail(mail_to=to, mail_from=mail_from,
-        mail_subject=subject, mail_contents=message)
+    for to in recipient_list:
+        # TODO - store emails seperately from to, to make this more consise
+        # for cases with multiple to's?
+        sent_email_log = SentEmail(mail_to=to, mail_from=mail_from,
+            mail_subject=subject, mail_contents=message)
     sent_email_log.save()
     send_mail(subject, message, mail_from, recipient_list, fail_silently=fail_silently)
 

@@ -1,6 +1,6 @@
 {% extends "base_short_menu.html" %}
 {% block central_area %}
-<h2>נרשמתם בהצלחה לסדנה {{ workshop.name }}
+<h2>נרשמת בהצלחה לסדנת {{ workshop.name }} בתאריך {{ workshop_event.start_date|hebrew_weekday}}
     {% if user.is_authenticated %}
     , תודה {{ user.get_full_name }}
     {% else %}

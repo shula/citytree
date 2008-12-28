@@ -11,7 +11,6 @@ import citymail.admin
 #import django.contrib.comments.admin # I have my own ModelAdmin
 import django.contrib.flatpages.admin
 import django.contrib.auth.admin
-import django.contrib.redirects.admin
 import frontpage.admin
 import citycomments.admin
 import spamdetector.admin

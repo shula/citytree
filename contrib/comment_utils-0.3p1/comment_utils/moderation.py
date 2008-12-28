@@ -74,8 +74,16 @@ from django.db.models import signals
 from django.db.models.base import ModelBase
 from django.dispatch import dispatcher
 from django.template import Context, loader
-from django.contrib.comments.models import Comment
 from django.contrib.sites.models import Site
+
+def get_comment_cls():
+    import settings
+    if not hasattr(settings, 'COMMENTS_APP'):
+        import django.contrib.comments.models
+        return django.contrib.comments.models.Comment
+    return __import__(settings.COMMENTS_APP, fromlist=['']).get_model()
+
+comment_cls = get_comment_cls()
 
 class AlreadyModerated(Exception):
     """
@@ -293,7 +301,7 @@ class ModerateFirstTimers(CommentModerator):
     approved, while allowing all other comments to skip moderation.
     
     """
-    kwarg_builder = { Comment: lambda c: { 'user__username__exact': c.user.username },
+    kwarg_builder = { comment_cls: lambda c: { 'user__username__exact': c.user.username },
                       #FreeComment: lambda c: { 'person_name__exact': c.person_name },
                       }
     
@@ -354,7 +362,8 @@ class Moderator(object):
         from the comment models.
         
         """
-        for model in (Comment, ):
+        for model in (comment_cls, ):
+            print "comment utils: registering model %s" % model
             signals.pre_save.connect(self.pre_save_moderation, sender=model)
             signals.post_save.connect(self.post_save_moderation, sender=model)
     

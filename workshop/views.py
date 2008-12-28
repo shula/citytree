@@ -110,8 +110,9 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
     return render_to_response(template,
             {
                 'form':form,
-                'participant':participant,
-                'workshop':workshop,
+                'participant':      participant,
+                'workshop':         workshop,
+                'workshop_event':   workshop_event,
                 'blog':workshop.defining_post.blog, # used for header image in base_short_menu.html
             },
             context_instance=RequestContext(request))

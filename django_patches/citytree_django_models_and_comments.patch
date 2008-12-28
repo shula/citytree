@@ -1,0 +1,82 @@
+Index: django/db/models/fields/files.py
+===================================================================
+--- django/db/models/fields/files.py	(revision 9072)
++++ django/db/models/fields/files.py	(working copy)
+@@ -38,19 +38,20 @@
+             raise ValueError("The '%s' attribute has no file associated with it." % self.field.name)
+ 
+     def _get_file(self):
+-        self._require_file()
++        if not self:
++            self._file = None
+         if not hasattr(self, '_file'):
+             self._file = self.storage.open(self.name, 'rb')
+         return self._file
+     file = property(_get_file)
+ 
+     def _get_path(self):
+-        self._require_file()
++        if not self: return ''
+         return self.storage.path(self.name)
+     path = property(_get_path)
+ 
+     def _get_url(self):
+-        self._require_file()
++        if not self: return ''
+         return self.storage.url(self.name)
+     url = property(_get_url)
+ 
+Index: django/contrib/comments/__init__.py
+===================================================================
+--- django/contrib/comments/__init__.py	(revision 9072)
++++ django/contrib/comments/__init__.py	(working copy)
+@@ -38,13 +38,20 @@
+     """
+     return getattr(settings, 'COMMENTS_APP', 'django.contrib.comments')
+ 
++
+ def get_model():
+-    from django.contrib.comments.models import Comment
+-    return Comment
++    if get_comment_app_name() != __name__ and hasattr(get_comment_app(), "get_model"):
++        return get_comment_app().get_model()
++    else:
++        from django.contrib.comments.models import Comment
++        return Comment
+ 
+ def get_form():
+-    from django.contrib.comments.forms import CommentForm
+-    return CommentForm
++    if get_comment_app_name() != __name__ and hasattr(get_comment_app(), "get_form"):
++        return get_comment_app().get_form()
++    else:
++        from django.contrib.comments.forms import CommentForm
++        return CommentForm
+ 
+ def get_form_target():
+     return urlresolvers.reverse("django.contrib.comments.views.comments.post_comment")
+Index: django/contrib/admin/options.py
+===================================================================
+--- django/contrib/admin/options.py	(revision 9072)
++++ django/contrib/admin/options.py	(working copy)
+@@ -167,6 +167,8 @@
+     ordering = None
+     inlines = []
+ 
++    manager = None
++
+     # Custom templates (designed to be over-ridden in subclasses)
+     change_form_template = None
+     change_list_template = None
+@@ -240,7 +242,10 @@
+         Returns a QuerySet of all model instances that can be edited by the
+         admin site. This is used by changelist_view.
+         """
+-        qs = self.model._default_manager.get_query_set()
++        if self.manager is None:
++            qs = self.model._default_manager.get_query_set()
++        else:
++            qs = self.manager.get_query_set()
+         # TODO: this should be handled by some parameter to the ChangeList.
+         ordering = self.ordering or () # otherwise we might try to *None, which is bad ;)
+         if ordering:

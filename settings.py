@@ -47,7 +47,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
 #    'staticgenerator.middleware.StaticGeneratorMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 # TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
 #    'django.middleware.cache.CacheMiddleware',
 )
@@ -61,7 +60,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.comments',
     'django.contrib.markup',
-    'django.contrib.redirects',
     'citytree.accounts',
     'citytree.forum',
     'citytree.comment_utils',
