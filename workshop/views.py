@@ -60,6 +60,7 @@ def register( request, workshop_slug = None, workshop_event_id = None ):
             workshop = get_object_or_404(Workshop, slug=workshop_slug)
         else:
             workshop = None
+        workshop_event = get_object_or_404(WorkshopEvent, id=workshop_event_id)
 
     form = registerForm(workshop=workshop, workshop_event_id=workshop_event_id, request=request)
 
