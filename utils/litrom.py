@@ -25,12 +25,21 @@ def get_csv_html():
     b=get_browser()
 
     go('https://www.litrom.com/mng/')
-    formvalue('1', 'U', LITROM_USERNAME)
-    formvalue('1', 'P', LITROM_PASSWORD)
-    submit()
-    code('200')
-    go('https://www.printmall.co.il/Artists/Don_TDons.asp')
-    formvalue('1','SEP',',')
+    done = False
+    tries = 4
+    while not done and tries > 0:
+        formvalue('1', 'U', LITROM_USERNAME)
+        formvalue('1', 'P', LITROM_PASSWORD)
+        submit()
+        code('200')
+        go('https://www.printmall.co.il/Artists/Don_TDons.asp')
+        try: # retry several times
+            formvalue('1','SEP',',')
+            done = True
+        except:
+            pass
+        tries -= 1
+    assert(done)
     submit()
 
     data = b.get_html()
