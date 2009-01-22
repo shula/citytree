@@ -1,4 +1,6 @@
 {% extends "base_short_menu.html" %}
+{% load hebrewtime %}
+
 {% block central_area %}
 <h2>נרשמת בהצלחה לסדנת {{ workshop.name }} בתאריך {{ workshop_event.start_date|hebrew_weekday}}
     {% if user.is_authenticated %}
