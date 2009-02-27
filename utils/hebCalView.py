@@ -82,7 +82,8 @@ def makeHebBGColorProcessor( engDate ):
 def hebCal( request, urls, engDate=None, urlType=None, 
                                 hebDay=None, hebMonth=None, hebYear = None,
                                 highlightToday = False):
-    
+    """ urls - dictionary month_day->link. 0 based.
+    """
     h           = HebDate()
     
     hebDateToday = HebDate()
@@ -135,7 +136,7 @@ def hebCal( request, urls, engDate=None, urlType=None,
         (r,g,b) = hsvToRgb(hC,s,v)
         
         theDay     = i+1
-        theLink    = urls[i]
+        theLink    = urls.get(i, None)
         theColor   = rgbToWebColor(r,g,b)
         outDays.append(Day( theDay, theColor, theLink ))
         
@@ -143,7 +144,7 @@ def hebCal( request, urls, engDate=None, urlType=None,
 
     #Insert remaining days in month without background
     for i in range(daysToDraw, hebDaysInMonth):
-        outDays.append( Day(dayNum=i+1) )
+        outDays.append( Day(dayNum=i+1, linkUrl=urls.get(i, None)) )
         total += 1
     
     while( total < 7*6 ):

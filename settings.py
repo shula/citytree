@@ -40,7 +40,7 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -50,13 +50,21 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 # TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
 #    'django.middleware.cache.CacheMiddleware',
-)
+]
+
+try:
+    import debug_toolbar
+    use_debug_toolbar = True
+except:
+    print "no debug toolbar"
+    use_debug_toolbar = False
+
 
 ROOT_URLCONF = 'citytree.urls'
 
 TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.auth','citytree.context_processors.media_url', 'citytree.context_processors.citytree_context')
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.comments',
@@ -82,14 +90,17 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    ## evolution of schema
-)
+]
 
 try:
     import django_evolution
-    INSTALLED_APPS = tuple(list(INSTALLED_APPS)+['django_evolution'])
+    INSTALLED_APPS.append('django_evolution')
 except:
     pass
+
+if use_debug_toolbar:
+    MIDDLEWARE_CLASSES.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+    INSTALLED_APPS.append('debug_toolbar')
 
 #LOGIN_URL = '/'
 
@@ -136,6 +147,10 @@ WORKSHOP_REGISTRATION_NOTIFICATION_EMAIL = 'tree@citytree.net'
 # Leave this as None for default - sending to the blog author
 SEND_EMAIL_ON_COMMENT = None
 SERVE_SITEMEDIA_FROM_DJANGO = False
+
+# -------------------------- Debug Toolbar -------------------
+INTERNAL_IPS = ('127.0.0.1',)
+
 
 #---------------------- DEVELOPMENT COMPROMISE ---------------
 # this is the only difference between a development environment

@@ -108,28 +108,37 @@ class HebDate( object ):
         return ret
          
 #-------------------------- Utility Functions -----------------------
-        
+
+def date2hebdate(date):
+    hebdate = HebDate()
+    hebdate.setEngDate(date.day, date.month, date.year)
+    return hebdate
+
 def makeHebCalLinks( urlPattern, engDate=None, hebMonth=None, hebYear=None ):
     h        = HebDate()
     
     if( engDate ):
         h.setEngDate( engDate.day, engDate.month, engDate.year )
+        truncate_at_day = h.hebDayOfMonth
     else:
         h.setHebDate( 1, hebMonth, hebYear )
+        truncate_at_day = False
     
-    retLinks = []
+    retLinks = {}
     
     curYear     = h.getHebYear()
     curMonth    = h.getHebMonth()
     daysInMonth = h.getDaysInHebMonth()
+    if truncate_at_day:
+        daysInMonth = min(daysInMonth, truncate_at_day)
     
     for i in range(1,daysInMonth+1) :
         hebDateObj = HebDate()
         hebDateObj.setHebDate( i, curMonth, curYear )
         
         theEngDate = hebDateObj.getEngDate()
-        retLinks.append( urlPattern % theEngDate.strftime("%d-%m-%Y") )
-        
+        retLinks[i - 1] = urlPattern % theEngDate.strftime("%d-%m-%Y")
+
     return retLinks
     
 def getHebFractionalDayOfYear( theDate ):

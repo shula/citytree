@@ -9,6 +9,7 @@ from citytree.cityblog.models  import Blog, Subject
 from citytree.utils.hebCalView import *
 from frontpage.models import FrontPage
 from workshop.models import WorkshopEvent
+import workshop.util as workshop_util
 
 admin_only = user_passes_test(lambda u: (not u.is_anonymous() and u.is_staff), login_url='/')
 
@@ -50,6 +51,8 @@ def show_front_page( request, front_page = None ):
   
   bgColorProcessor = makeHebBGColorProcessor( dateToShow )
   dayLinks = makeHebCalLinks( calLinkTemplate, engDate=dateToShow )
+  workshopLinks = workshop_util.makeHebCalLinks(dateToShow)
+  dayLinks.update(workshopLinks)
   calender = makeHebCalRequestContext(dayLinks, engDate=dateToShow, 
                                         urlType=calLinkType, highlightToday=True)
   

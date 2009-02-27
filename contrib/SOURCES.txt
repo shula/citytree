@@ -3,3 +3,4 @@ http://code.google.com/p/django-forum/source/checkout
 svn checkout http://django-evolution.googlecode.com/svn/trunk/ django-evolution
 http://dfn.dl.sourceforge.net/sourceforge/pyexcelerator/pyexcelerator-0.6.3a.zip
 http://django-batchadmin.googlecode.com/svn/trunk/ django-batchadmin-read-only (revision 76)
+git://github.com/robhudson/django-debug-toolbar.git

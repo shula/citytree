@@ -74,6 +74,11 @@
         {% endif %}
     </p>
 </div>
-	{% endfor %}	
-	
+	{% endfor %}
+    {% if not post_list %}
+        <div class="workshopLeafContainer" style="min-height: 220px">
+            אין סדנאות בענף הזה, נסו שוב מאוחר יותר, תודה.
+        </div>
+	{% endif %}
+
 {% endblock %}

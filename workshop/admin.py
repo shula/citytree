@@ -4,6 +4,7 @@ from models import Workshop, BlogWorkshop, WorkshopEvent, WorkshopEventPart, Ext
 
 class WorkshopAdmin(admin.ModelAdmin):
     list_filter    = ('owners',)
+    list_display = ('name', 'slug', 'description')
 
 class BlogWorkshopAdmin(admin.ModelAdmin):
     pass

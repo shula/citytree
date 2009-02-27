@@ -78,8 +78,14 @@
             {% for part in event.parts %}
             <tr><th>זמן</th><td>{{part.start_time.date|date:"d/m/y"}}, {{part.start_time.time|time:"G:i"}}, {{part.start_time|hebrew_timeuntil:part.end_time}}</td></tr>
             {% endfor %}
-            <tr><td>מנחים:</td><td>{{post.workshop.next_event.instructors}}</td></tr>
-            <tr><td>איש קשר:</td><td>{{post.workshop.next_event.contact}}</td></td>
+            <tr><th>משך</th>
+                    <td>{{post.workshop.next_event.duration}}</td></tr>
+            <tr><th>מיקום</th>
+                    <td>{{post.workshop.next_event.location}}</td></tr>
+            <tr><th>עלות</th>
+                    <td>{{post.workshop.next_event.cost}}</td></tr>
+            <tr><th>מנחים:</th><td>{{post.workshop.next_event.instructors}}</td></tr>
+            <tr><th>איש קשר:</th><td>{{post.workshop.next_event.contact}}</td></td>
             <tr><th><a href="{{event.get_registration_absolute_url}}">להרשמה לארוע</a></th></tr>
             {% endfor %}
         </table>

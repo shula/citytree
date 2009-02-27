@@ -12,6 +12,7 @@ from django.template import RequestContext
 from frontpage.models import FrontPage
 from cityblog.models import Blog, Post, Flag, Subject
 from citytree.utils.hebCalView import *
+from citytree.utils.hebDate import date2hebdate
 from cityblog.search import search as cityblog_search
 
 NUM_POSTS_PER_PAGE = 5
