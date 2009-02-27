@@ -1,3 +1,5 @@
+import datetime
+
 from hdate import *
 
 class HebDate( object ):
@@ -117,14 +119,25 @@ def date2hebdate(date):
 def makeHebCalLinks( urlPattern, engDate=None, hebMonth=None, hebYear=None ):
     h        = HebDate()
     
+    today = datetime.datetime.today()
+    htoday = date2hebdate(today)
+    
+    truncate_at_day = False
     if( engDate ):
         h.setEngDate( engDate.day, engDate.month, engDate.year )
         truncate_at_day = h.hebDayOfMonth
     else:
-        h.setHebDate( 1, hebMonth, hebYear )
-        truncate_at_day = False
-    
+        if htoday.getHebMonth() == hebMonth and htoday.getHebYear() == hebYear:
+            # back to this month hack - should be done at caller
+            h = htoday
+            truncate_at_day = h.hebDayOfMonth
+        else:
+            h.setHebDate( 1, hebMonth, hebYear )
     retLinks = {}
+    if truncate_at_day:
+        import citytree.workshop.util
+        retlinks = citytree.workshop.util.makeHebCalLinks()
+        print "bll"
     
     curYear     = h.getHebYear()
     curMonth    = h.getHebMonth()
