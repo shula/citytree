@@ -1,4 +1,4 @@
-from datetime import datetime, date
+import datetime
 import re
 import itertools
 
@@ -44,8 +44,8 @@ def show_blog_or_workshop( request, blog_slug ):
             p.make_sure_workshop_exists()
     #------------- Takes care of workshops --------
         no_events = posts.filter(workshop__workshopevent=None)
-        now = datetime.now()
-        start_of_today = datetime(now.year, now.month, now.day)
+        now = datetime.datetime.now()
+        start_of_today = datetime.datetime(now.year, now.month, now.day)
         _have_events = posts.filter(
                 workshop__workshopevent__workshopeventpart__start_time__gte=start_of_today
                 ).order_by('workshop__workshopevent__workshopeventpart__start_time')
