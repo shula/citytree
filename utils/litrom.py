@@ -8,6 +8,7 @@ from datetime import datetime
 
 from twill.commands import *
 from twill import get_browser
+from twill.errors import TwillException
 
 from litrom_settings import LITROM_PASSWORD, LITROM_USERNAME
 
@@ -28,20 +29,17 @@ def get_csv_html():
     done = False
     tries = 4
     while not done and tries > 0:
+        tries -= 1
         try:
             formvalue('1', 'U', LITROM_USERNAME)
             formvalue('1', 'P', LITROM_PASSWORD)
+            submit()
         except TwillException, e:
-            break
-        submit()
-        code('200')
-        go('https://www.litrom.com/my/Don_TXTRep_Excel.asp')
-        try: # retry several times
-            formvalue('1','SEP',',')
-            done = True
-        except:
             pass
-        tries -= 1
+        code('200')
+        go('https://www.litrom.com/my/Don_TDons_REP.asp')
+        go('https://www.litrom.com/my/Don_TXTRep_Excel.asp')
+        done = True
     assert(done)
 
     data = b.get_html()
@@ -54,35 +52,11 @@ CITYTREE_CAMPAIGN = '266'
 re_fields=re.compile('(?P<field>[^,]*),\s*')
 
 def get_donors(txt):
-    import pdb; pdb.set_trace()
-    fields = ['handled', 'campaign', 'amount', 'date', 'first', 'last', 'address', 'city', 'mikud', 'email', 'comment']
-    start_fields = fields[:6] # up to and including last
-    n = len(fields)
-    lines_1 = [l for l in [l.strip() for l in txt[txt.index('>', txt.index('body'))+1:txt.index('_____')].split('\r')] if l not in ['', '<br>']]
-    lines_u=[[unicode(s, 'windows-1255') for s in re.findall(re_fields, line)] for line in lines_1]
-    lines = [lines_u[0], []] # header is a single line
-    for line in lines_u[1:]:
-        if len(lines[-1]) < n:
-            lines[-1].extend(line)
-        else:
-            lines.append(line)
-    # there may be superfluous carriage returns - count the ',' 
-    #טופל  קמפיין  סכום  תאריך  שם פרטי  שם משפחה  כתובת  עיר  מיקוד  דואר אלקטרוני
-    # new tactic: the first four, handled+campaign+amount+date+first+last are always
-    # there. The last (email) is always there. Everything in the middle is taken as
-    # address+city+mikud, not very intelligently - we can edit it later. Nothing automatic
-    # relies on it (but automatic stuff does rely on email being the actuall email address).
-    donors = []
-    for line in lines[1:]:
-        donor = {}
-        for i, f in enumerate(start_fields):
-            donor[f] = line[i]
-        donor['email'], donor['comment'] = line[-2:]
-        mid = line[len(start_fields):len(fields)-2]
-        donor['address'], donor['city'], donor['mikud'] = mid[:-2], mid[-2], mid[-1]
-        donors.append(donor)
-    donors = [d for d in donors if d['campaign'] == CITYTREE_CAMPAIGN]
-    
+    from BeautifulSoup import BeautifulSoup
+    soup = BeautifulSoup(txt)
+    fields = ['action_number', 'handled', 'campaign', 'amount', 'date', 'first', 'last', 'address', 'city', 'mikud', 'email', 'comment']
+    # [1:] - remove header
+    donors = [dict(zip(fields, [d.string for d in r.findAll('td')])) for r in soup.body.table.findAll('tr')[1:]]
     return donors
 	
 if __name__ == '__main__':
