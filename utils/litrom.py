@@ -28,11 +28,14 @@ def get_csv_html():
     done = False
     tries = 4
     while not done and tries > 0:
-        formvalue('1', 'U', LITROM_USERNAME)
-        formvalue('1', 'P', LITROM_PASSWORD)
+        try:
+            formvalue('1', 'U', LITROM_USERNAME)
+            formvalue('1', 'P', LITROM_PASSWORD)
+        except TwillException, e:
+            break
         submit()
         code('200')
-        go('https://www.printmall.co.il/Artists/Don_TDons.asp')
+        go('https://www.litrom.com/my/Don_TXTRep_Excel.asp')
         try: # retry several times
             formvalue('1','SEP',',')
             done = True
@@ -40,7 +43,6 @@ def get_csv_html():
             pass
         tries -= 1
     assert(done)
-    submit()
 
     data = b.get_html()
     fd = open(get_csv_html_cache, 'w+')
@@ -52,6 +54,7 @@ CITYTREE_CAMPAIGN = '266'
 re_fields=re.compile('(?P<field>[^,]*),\s*')
 
 def get_donors(txt):
+    import pdb; pdb.set_trace()
     fields = ['handled', 'campaign', 'amount', 'date', 'first', 'last', 'address', 'city', 'mikud', 'email', 'comment']
     start_fields = fields[:6] # up to and including last
     n = len(fields)

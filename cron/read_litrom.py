@@ -28,7 +28,12 @@ if __name__ == '__main__':
     else:
         log('# contacting litrom - %s' % (datetime.now()))
         print ">>> contacting litrom"
-        txt = litrom.get_csv_html()
+        try:
+            txt = litrom.get_csv_html()
+        except Exception,e:
+            log("# error - problem getting csv from litrom. probably site updated.")
+            log("# %s" % repr(e))
+            raise SystemExit
         print "<<<"
     print "start out:", User.objects.count()
     log('# registring - %s - %s users' % (datetime.now(), User.objects.count()))
