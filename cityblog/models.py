@@ -261,6 +261,29 @@ class Subject(models.Model):
   class Meta:
     ordering = ['ordering']
 
+# This model doesn't need to be here. It is meant to be a general way to do the following flow:
+# site does something -> sends email -> user does something
+# the user something should be connected to the original. So we use a hash - it is not easy to guess,
+# and allows us to determine the 'thread' of thought. should actually add something deterministic too
+# to prevent conflicts, but as long as the hash is long enough it won't happen ;)
+class HashPoint(models.Model):
+  """
+  Allows continueing from a point in the process through user interaction by email (or anything)
+  you use with the new method:
+  new(data)
+  you make sure you give the user by email the correct url, you do the parsing and get back your data
+  from the hash.
+  The data can be whatever you want - use cPickle or json or whatever.
+  """
+  data          = models.TextField(blank=False)
+  comment       = models.TextField(blank=True) # helps, not required
+  @classmethod
+  def new(data, comment = ''):
+        hash = make_random_hash()
+        hp = HashPoint(hash=hash, data=data, comment=comment)
+        hp.save()
+        return hash
+
 # Coments moderation using comment_util
 from comment_utils.moderation import CommentModerator, moderator, AlreadyModerated
 
@@ -287,6 +310,7 @@ class PostModerator(CommentModerator):
 
     def email(self, comment, content_object):
         self._hash = make_random_hash()
+        hide_hash = HashPoint.new(data=str(comment.id), comment='hide_comment')
         post = content_object # same thing
         if self.really_send_email_to_this_person is None:
             recipient_list = [post.author.email]
@@ -298,7 +322,8 @@ class PostModerator(CommentModerator):
         c = Context({ 'comment': comment,
                       'content_object': content_object,
                       'site': site,
-                      'hash': self._hash})
+                      'ban_hash': self._hash,
+                      'hide_hash': hide_hash})
         subject = u'[%s] New comment posted on "%s"' % (site, content_object)
         send_email_to(template='cityblog/post_comment_notification_email.txt',
                 to=recipient_list, subject=subject, context_dict=c,

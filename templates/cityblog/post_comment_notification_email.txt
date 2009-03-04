@@ -12,8 +12,9 @@ The comment is now public.
 {% endif %}
 
 What to do in case this comment is spam:
- 1. Turn off enable_comments for this post: http://{{site}}{{content_object.get_absolute_edit_url}}
- 2. Ban this ip, {{comment.ip_address}}: http://{{site}}/spamdetector/ban_request/{{hash}}/
+ 1. Hide this comment (won't be shown - delete through admin): http://{{site}}/spamdetector/hide_comment/{{hide_hash}}/
+ 2. Ban this ip, {{comment.ip_address}}: http://{{site}}/spamdetector/ban_request/{{ban_hash}}/
+ 3. Turn off enable_comments for this post: http://{{site}}{{content_object.get_absolute_edit_url}}
 
 ------
 
