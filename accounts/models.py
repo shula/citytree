@@ -85,11 +85,15 @@ class UserProfile(User):
         mem.payment_amount = data['amount']
         mem.payment_method = 'litrom'
         mem.payment_number_of_payments = 0
-        mem.address = data['address'][0] # bug in address parsing?
+        mem.address = data['address'] or (data['address'] is None and '') # data['address'] can be None
+        mem.address = unicode.encode(unicode(mem.address), 'utf-8')
         mem.save()
         self.save()
-        print "As Member: ", mem
-        print "As UP: ", self
+        try:
+            print "As Member: ", mem
+            print "As UP: ", self
+        except:
+            print "Created a new member/up, but can't print it.."
         #fields = ['handled', 'campaign', 'amount', 'date', 'first', 'last', 'address', 'city', 'mikud', 'email', 'comment']
         return mem
 

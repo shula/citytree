@@ -29,8 +29,8 @@ def register_new_user(donor, really_send_email=False):
                 user.username = email
                 user.email = email
                 user.password = password
-                first_name = donor['first']
-                last_name = donor['last']
+                first_name = unicode.encode(donor['first'], 'utf-8')
+                last_name = unicode.encode(donor['last'], 'utf-8')
                 user.first_name = first_name
                 user.last_name = last_name
                 user.save()

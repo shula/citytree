@@ -56,7 +56,8 @@ def get_donors(txt):
     soup = BeautifulSoup(txt)
     fields = ['action_number', 'handled', 'campaign', 'amount', 'date', 'first', 'last', 'address', 'city', 'mikud', 'email', 'comment']
     # [1:] - remove header
-    donors = [dict(zip(fields, [d.string for d in r.findAll('td')])) for r in soup.body.table.findAll('tr')[1:]]
+    all_donors = [dict(zip(fields, [d.string for d in r.findAll('td')])) for r in soup.body.table.findAll('tr')[1:]]
+    donors = [x for x in all_donors if x['campaign'] == CITYTREE_CAMPAIGN]
     return donors
 	
 if __name__ == '__main__':
