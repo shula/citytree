@@ -275,10 +275,11 @@ class HashPoint(models.Model):
   from the hash.
   The data can be whatever you want - use cPickle or json or whatever.
   """
+  hash          = models.CharField(max_length=256, blank=False)
   data          = models.TextField(blank=False)
   comment       = models.TextField(blank=True) # helps, not required
   @classmethod
-  def new(data, comment = ''):
+  def new(clazz, data, comment = ''):
         hash = make_random_hash()
         hp = HashPoint(hash=hash, data=data, comment=comment)
         hp.save()
