@@ -14,7 +14,18 @@ from models import CityComment
 class CityCommentAdmin(BatchModelAdmin):
     #manager = CityComment.citycomments
 
-    batch_actions=['hide_selected']
+    batch_actions=['hide_selected', 'delete_selected']
+    def delete_selected(self, request, changelist):
+        if self.has_delete_permission(request):
+            selected = request.POST.getlist(CHECKBOX_NAME)
+            objects = changelist.get_query_set().filter(pk__in=selected)
+            n = objects.count()
+            if n:
+                for obj in objects:
+                    obj.delete()
+                self.message_user(request, "Successfully deleted %d %s." % (
+                    n, model_ngettext(self.opts, n)
+                ))
     def hide_selected(self, request, changelist):
         if self.has_delete_permission(request):
             selected = request.POST.getlist(CHECKBOX_NAME)
@@ -34,6 +45,7 @@ class CityCommentAdmin(BatchModelAdmin):
                     n, model_ngettext(self.opts, n)
                 ))
     hide_selected.short_description = "Hide selected %(verbose_name_plural)s"
+    delete_selected.short_description = "Delete selected %(verbose_name_plural)s (Please be careful!)"
  
     def post(self, obj):
         return obj.content_object
