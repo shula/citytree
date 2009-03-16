@@ -54,6 +54,7 @@ class CityCommentAdmin(BatchModelAdmin):
     list_filter = ('submit_date', 'site', 'is_public', 'is_removed')
     date_hierarchy = 'submit_date'
     search_fields = ('comment', 'user__username', 'user_name', 'user_email', 'user_url', 'ip_address', 'phone')
+    ordering = ('-submit_date',)
 
 class CommentAdmin(admin.ModelAdmin):
     def post(self, obj):
