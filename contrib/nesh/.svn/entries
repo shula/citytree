@@ -1,83 +1,0 @@
-8
-
-dir
-117
-svn://trac.studioquattro.biz/django-utils/trunk/nesh
-svn://trac.studioquattro.biz/django-utils
-
-
-
-2007-02-17T12:29:46.072743Z
-116
-nesh
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-e3d54399-ea17-0410-b588-9e8e34331349
-
-utils
-dir
-
-counters
-dir
-
-LICENCE
-file
-
-
-
-
-2008-05-03T15:32:11.000000Z
-dbc1b0dc3559d671215071a0e80a88b4
-2006-07-06T17:01:22.597632Z
-7
-nesh
-
-thumbnail
-dir
-
-formtools
-dir
-
-YUI
-dir
-
-articles
-dir
-
-__init__.py
-file
-
-
-
-
-2008-05-03T15:32:11.000000Z
-d41d8cd98f00b204e9800998ecf8427e
-2006-07-06T17:01:22.597632Z
-7
-nesh
-has-props
-
-localization
-dir
-
-news
-dir
-
-contacts
-dir
-
-translation
-dir
-
