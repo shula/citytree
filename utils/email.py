@@ -14,7 +14,7 @@ def check_email(email):
     return email_re.match(email)
 
 def send_email_to(template, to, subject, context_dict, fail_silently=True):
-    if isinstance(to, str):
+    if isinstance(to, str) or isinstance(to, unicode):
         recipient_list = [to]
     else:
         recipient_list = to
