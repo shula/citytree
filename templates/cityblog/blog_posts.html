@@ -25,11 +25,16 @@
 	{% get_comment_count for cityblog.post post.id as comment_count %}
 <div class="leafcontainer">
 		<div class="blogListImage">
+        {% if post.image %}
 		<a href="{{post.get_absolute_url}}">
 		<img src="{{post.image.url|thumbnail:"width=156"}}" 
 		width='{{post.image.url|thumbnail:"width=156"|image_width}}px'
 		height='{{post.image.url|thumbnail:"width=156"|image_height}}px' 
-		border="0" alt=""  class="blog" title="{{post.image_label|escape}}"></a>
+		border="0" alt=""  class="blog" title="{{post.image_label|escape}}">
+        {% else %}
+        {{post.name}}
+        {% endif %}
+        </a>
 		</div>
 
 		<h1>

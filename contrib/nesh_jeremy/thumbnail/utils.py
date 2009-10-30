@@ -141,6 +141,7 @@ def remove_model_thumbnails(model):
     
     for obj in model._meta.fields:
         if isinstance(obj, ImageField):
+            if not getattr(model, obj.name): continue
             url = getattr(model, obj.name).url
             _remove_thumbnails(url)
     #

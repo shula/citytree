@@ -42,6 +42,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/ci
 {% block central_area %}
 	<div class="leafcontainer">
 <div class="capImg" style="clear: none;">
+        {% if post.image %}
 		<a href="{{post.image.url}}" class="thickbox" rel="gallery">
 			<img src="{{post.image.url|thumbnail:"width=156"}}" 
 		   width="{{post.image.url|thumbnail:"width=156"|image_width}}px"
@@ -51,6 +52,8 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( src='{{media_url}}/ci
 		<font id="caption">
 		{{post.image_caption}}
 		</font>
+        {% else %}
+        {% endif %}
 				
 				</div>
 
