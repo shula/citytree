@@ -87,7 +87,11 @@
 	</a></h1>
 
 	<div class="subImg">
+    {% if post.image %}
 	        <a href="{{post.get_absolute_url}}">	<img src="{{post.image.url|thumbnail:"width=65"}}" width="{{post.image.url|thumbnail:"width=65"|image_width}}px" height="{{post.image.url|thumbnail:"width=65"|image_height}}px" border="0" alt=""  class="blog" title="{{post.image_label}}"></a>
+    {% else %}
+            <a href="{{post.get_absolute_url}}">{{post.name}}</a>
+    {% endif %}
 	</div>
 
 	<p class="leaf">
