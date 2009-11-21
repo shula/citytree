@@ -282,8 +282,7 @@ def rename_by_field(image, req_name, add_path=None , mask_image='', logo_image='
         #--------- Very Dirty Hack --------
         if(mask_image != ''): 
             from citytree.utils.imgUtils import maskImage
-            fn = os.path.join(settings.MEDIA_ROOT, dest_path )
-            maskImage( fn, mask_image, logo_image, fn )
+            image = maskImage( image, mask_image, logo_image )
             
     else:
         file_path = file_path.replace('\\', '/') # windows fix
