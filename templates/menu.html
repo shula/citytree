@@ -7,7 +7,7 @@
             </li>
             
             {% for blog in blogs  %}
-	            {% if forloop.counter0|lessthan:"3" %}
+	            {% if forloop.counter0|lessthan:"5" %}
 					{% if blog.display_in_menu %}
 						<li class="list1Fold">
 			                &nbsp;{{blog.name}}
