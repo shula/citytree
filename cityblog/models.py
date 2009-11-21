@@ -134,7 +134,7 @@ class Post(models.Model):
     image_height  = models.PositiveIntegerField(blank=True,null=True)
     image_width   = models.PositiveIntegerField(blank=True,null=True)
     
-    teaser_text          = models.TextField(blank=False, null=True, help_text='הבקיצור יופיע בעמוד הראשי של הבלוג, ויכול גם להוות את העלה כולו (במקרב של "עלה קטן")')
+    teaser_text          = models.TextField(blank=True, null=True, help_text='הבקיצור יופיע בעמוד הראשי של הבלוג, ויכול גם להוות את העלה כולו (במקרב של "עלה קטן")')
     teaser_rendered_text = models.TextField(blank=True, null=True)
     
     text          = models.TextField(help_text="If left blank then Text is copied here", blank=True, null=True)
