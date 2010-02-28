@@ -55,10 +55,14 @@
 {% block body %}
 <div class="top">
     {% block  headerImage%}
+    {% if blog.header_image %}
     <img src="{{blog.header_image.url}}" 
     		width="{{blog.header_image.width}}px" 
     		height="{{blog.header_image.height}}px" 
     		alt="{{blog.header_image_label}}" title="{{blog.header_image_label}}">    
+    {% else %}
+    <p>Missing Header Image for {{blog.slug}}</p>
+    {% endif %}
     {% endblock %}
     <div id="logo">
         <a href="http://www.citytree.net">
