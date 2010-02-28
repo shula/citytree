@@ -5,4 +5,5 @@ if [ $? == "0" ]; then
 else
     PYTHON=python
 fi
+echo using python=$PYTHON
 $PYTHON manage.py runserver 0.0.0.0:9155
