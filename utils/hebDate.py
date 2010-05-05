@@ -137,7 +137,6 @@ def makeHebCalLinks( urlPattern, engDate=None, hebMonth=None, hebYear=None ):
     if truncate_at_day:
         import citytree.workshop.util
         retlinks = citytree.workshop.util.makeHebCalLinks()
-        print "bll"
     
     curYear     = h.getHebYear()
     curMonth    = h.getHebMonth()
