@@ -25,7 +25,7 @@ class UserProfile(User):
     phone = models.CharField(max_length=200) # core=True
     address = models.CharField(max_length=400, default='not set') # core=True
     admin_notes = models.TextField(blank=True, null=True, help_text="Admin only (not for user) notes about the user")
-    in_citytree_list = models.BooleanField(blank=True, default=True, null=True)
+    in_citytree_list = models.NullBooleanField(blank=True, default=True, null=True)
 
     def is_gardener(self):
         """ after talking to tami we agreed on the following definition:
