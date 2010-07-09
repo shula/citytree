@@ -8,7 +8,7 @@ to manipulate these images.
 # Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 #
 
-import Image
+from PIL import Image
 
 __all__ = ['ImageCaptcha', 'Layer']
 

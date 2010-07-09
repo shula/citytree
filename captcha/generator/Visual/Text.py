@@ -10,7 +10,7 @@ Text generation for visual CAPTCHAs.
 import random, os
 from captcha.generator import Visual, File
 from captcha.settings import MIN_FONT_SIZE, MAX_FONT_SIZE
-import ImageFont, ImageDraw
+from PIL import ImageFont, ImageDraw
 
 class FontFactory(File.RandomFileFactory):
     """Picks random fonts and/or sizes from a given list.

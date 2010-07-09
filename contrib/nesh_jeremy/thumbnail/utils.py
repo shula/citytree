@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.cache import get_cache
 from django.db.models.fields.files import ImageField
 from nesh.utils.text import URLify
-import Image
+from PIL import Image
 import re, os, urlparse, fnmatch
 import shutil, os
 

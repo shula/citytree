@@ -7,7 +7,7 @@
 """
 
 from random import randint
-import PIL.Image
+from PIL import Image
 import os
 from StringIO import StringIO
 import struct
@@ -30,7 +30,7 @@ def write_hebrew_alphabet():
     for i, letter in enumerate(alphabet):
         filename='hebrew_%s.png' % i
         make_font_png.render_title(letter, size=20, filename=filename)
-        img = PIL.Image.open(filename)
+        img = Image.open(filename)
         s = binascii.b2a_base64(img.tostring('raw'))
         os.unlink(filename)
         fd.write('(%s, r"%s"),\n' % (repr(img.size), s.strip()))
@@ -46,7 +46,7 @@ def make_alphabet_dict():
     d = {}
     for i, letter in enumerate(alphabet):
         d[i] = dict(letter=letter,
-          image=PIL.Image.fromstring('RGBA', images[i][0],
+          image=Image.fromstring('RGBA', images[i][0],
               binascii.a2b_base64(images[i][1]), 'raw'))
         d[i]['width'] = d[i]['image'].size[0]
     return d
@@ -59,7 +59,7 @@ def make_alphabet_dict_old():
         if not os.path.exists(filename):
             import make_font_png
             make_font_png.render_title(letter,size=20, filename = filename)
-        d[i] = dict(letter=letter, image=PIL.Image.open(filename))
+        d[i] = dict(letter=letter, image=Image.open(filename))
         d[i]['width'] = d[i]['image'].size[0]
     return d
 
@@ -85,8 +85,8 @@ def generate_capcha(letters):
     capcha = [d[rev_alphabet[c]] for c in letters]
     width = sum([x['width']+x_sep for x in capcha])
 
-    #target=PIL.Image.new('RGB',(width, height))
-    target=PIL.Image.fromstring('RGB',(width, height), '\xff\xff\xff'*width*height)
+    #target=Image.new('RGB',(width, height))
+    target=Image.fromstring('RGB',(width, height), '\xff\xff\xff'*width*height)
     x = 0
     for l in capcha:
         target.paste(l['image'], (x, 0))
