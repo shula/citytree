@@ -54,11 +54,16 @@ def show_front_page( request, front_page = None ):
   workshopLinks = workshop_util.makeHebCalLinks(dateToShow)
   dayLinks.update(workshopLinks)
   calender = makeHebCalRequestContext(dayLinks, engDate=dateToShow, 
-                                        urlType=calLinkType, highlightToday=True)
+                            urlType=calLinkType, highlightToday=True)
   
+  displayed_blogs = Blog.objects.filter(display_in_menu=True)
+
   return render_to_response('frontpage/frontpage.html', 
-    {'content':pageObj, 'blogs': Blog.objects.all(), 'subjects' : Subject.objects.all(),
-        'events': WorkshopEvent.future_events()},
+    {'content':pageObj, 'blogs': Blog.objects.all(),
+     'subjects' : Subject.objects.all(),
+     'events': WorkshopEvent.future_events(),
+     'displayed_blogs': displayed_blogs
+    },
     context_instance=RequestContext(request, {}, [calender,bgColorProcessor]))
     
 
