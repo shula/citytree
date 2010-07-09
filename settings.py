@@ -150,6 +150,13 @@ SERVE_SITEMEDIA_FROM_DJANGO = False
 # -------------------------- Debug Toolbar -------------------
 INTERNAL_IPS = ('127.0.0.1',)
 
+#---------------------- PIL fix Hack ---------------
+# Workaround for PIL importing Image with two
+# different names, causing AccessInit error
+import sys
+import PIL.Image
+sys.modules['Image'] = PIL.Image
+
 
 #---------------------- DEVELOPMENT COMPROMISE ---------------
 # this is the only difference between a development environment
