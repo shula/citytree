@@ -55,7 +55,7 @@ def show_front_page( request, front_page = None ):
   dayLinks.update(workshopLinks)
   calender = makeHebCalRequestContext(dayLinks, engDate=dateToShow, 
                             urlType=calLinkType, highlightToday=True)
-  
+
   displayed_blogs = Blog.objects.filter(display_in_menu=True)
 
   return render_to_response('frontpage/frontpage.html', 

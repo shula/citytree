@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.core.mail import send_mail
 from django.db import models
 from django import forms
 from django.template import Context, loader
@@ -16,6 +15,8 @@ from utils.email import send_email_to
 from workshop.models import Workshop, WorkshopEvent, ExternalParticipant
 from cityblog.models import Flag, Post
 from citytree.utils.hebCalView import FRONTPAGE_URL_TYPE, CALENDAR_URL_TYPE_REGISTRY
+
+from citytree_util import add_render_variables
 
 #------------  Registration to new workshops -------------------
 
@@ -155,8 +156,9 @@ def display_workshop(request, workshop_slug, preview=False):
         queryset  = Workshop.objects.all(),
         template_name = "workshop/workshop.html",
         #context_processors =[calendar,bgColorProcessor],
-        extra_context = { 'post':p, 'workshop':workshop, 'blog':blog,
-            'flags':flags, 'galleryImages':pImages },
+        extra_context = add_render_variables(
+            { 'post':p, 'workshop':workshop, 'blog':blog,
+            'flags':flags, 'galleryImages':pImages }, obj=p),
         template_object_name = 'post'
     )
  

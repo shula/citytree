@@ -15,6 +15,8 @@ from citytree.utils.hebCalView import *
 from citytree.utils.hebDate import date2hebdate
 from cityblog.search import search as cityblog_search
 
+from citytree_util import add_render_variables
+
 NUM_POSTS_PER_PAGE = 5
 NUM_SUBJECTS_PER_PAGE = 10
 
@@ -39,6 +41,10 @@ def show_blog_or_workshop( request, blog_slug ):
     dayLinks = makeHebCalLinks( '/?date=%s', date.today() )
     calender = makeHebCalRequestContext(dayLinks, engDate=date.today(), urlType=calLinkType, highlightToday=True)
 
+    render_dict = add_render_variables({
+        'blog': b, 'flags': flags
+        }, obj=b)
+
     if b.is_workshop():
         for p in posts:
             p.make_sure_workshop_exists()
@@ -59,12 +65,11 @@ def show_blog_or_workshop( request, blog_slug ):
             posts = itertools.chain(have_events, no_events)
         else:
             posts = have_events
+        render_dict['post_list'] = posts
 
         # don't show no_events for now
-        return render_to_response('cityblog/blog_workshops.html', {
-            'post_list': posts,
-            'blog': b, 'flags': flags
-            }, context_instance = RequestContext(request, {}, [calender, bgColorProcessor])
+        return render_to_response('cityblog/blog_workshops.html',
+            render_dict, context_instance = RequestContext(request, {}, [calender, bgColorProcessor])
             )
     else:
     #------------ Standard blog with normal, non workshop, posts --------
@@ -72,7 +77,7 @@ def show_blog_or_workshop( request, blog_slug ):
               template_object_name='post',
               template_name='cityblog/blog_posts.html',
               allow_empty=True, 
-              extra_context={'blog' : b, 'flags' : flags },
+              extra_context=render_dict,
               context_processors =[calender,bgColorProcessor],
               paginate_by=NUM_POSTS_PER_PAGE)
    
@@ -90,8 +95,9 @@ def subject_view( request, subject_slug ):
                   template_object_name='post',
                   template_name='cityblog/subject_view.html',
                   allow_empty=True, 
-                  extra_context={ 'theSubject' : theSubject,
-                                  'frontpage' : frontpage },
+                  extra_context=add_render_variables(
+                                { 'theSubject' : theSubject,
+                                  'frontpage' : frontpage }, obj=theSubject),
                   context_processors =[],
                   paginate_by=NUM_SUBJECTS_PER_PAGE)
    
@@ -136,7 +142,8 @@ def display_post( request, post_id, preview = False ):
     queryset  = Post.objects.all(),
     template_name = 'cityblog/%s'%template_name,
     #context_processors =[calendar,bgColorProcessor],
-    extra_context = { 'blog' : blog, 'flags' : flags, 'galleryImages': pImages },
+    extra_context = add_render_variables({
+        'blog' : blog, 'flags' : flags, 'galleryImages': pImages }, obj=p),
     template_object_name = 'post'
   )
   
