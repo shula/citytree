@@ -30,6 +30,7 @@
 </p>
 
 <form method="post" action=".">
+{% csrf_token %}
 <table class="formtab">
 <tr><td width="90"><label for="id_username">שם משתמש:</label></td><td><input type="text" id="id_username" class="vTextField required" name="username" size="15" value="" maxlength="30" />
 </td></tr>
