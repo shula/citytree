@@ -48,6 +48,7 @@ MIDDLEWARE_CLASSES = [
 #    'staticgenerator.middleware.StaticGeneratorMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 # TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
 #    'django.middleware.cache.CacheMiddleware',
 ]
@@ -58,7 +59,6 @@ try:
 except:
     print "no debug toolbar"
     use_debug_toolbar = False
-
 
 ROOT_URLCONF = 'citytree.urls'
 
