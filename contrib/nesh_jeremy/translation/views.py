@@ -1,5 +1,5 @@
 # Generic admin views, with admin templates created dynamically at runtime.
-from django.template import RequestContext as Context
+from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from nesh.translation.models import Message, Translation
 from django.http import HttpResponseRedirect, HttpResponseNotFound
@@ -11,7 +11,7 @@ from django.utils.translation import gettext as _
 # XXX if Message does not exists add it automatically?? What about Registry?
 def add(request, digest):
     msg = get_object_or_404(Message, digest__exact=digest)
-    return render_to_response('translation/translate.html', context_instance=Context(request, {'message': msg, 'path': request.GET.get('path', '/')} ))
+    return render_to_response('translation/translate.html', context_instance=RequestContext(request, {'message': msg, 'path': request.GET.get('path', '/')} ))
 #
 
 def edit(request, digest):
@@ -26,7 +26,7 @@ def edit(request, digest):
         return add(request, digest)
     #
 
-    return render_to_response('translation/translate.html', context_instance=Context(request, {'message': msg, 'path': request.GET.get('path', '/'), 'translated': tr,} ))
+    return render_to_response('translation/translate.html', context_instance=RequestContext(request, {'message': msg, 'path': request.GET.get('path', '/'), 'translated': tr,} ))
 #
 
 def save(request, digest):

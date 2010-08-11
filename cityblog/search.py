@@ -3,7 +3,7 @@ import operator
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
-from django.template import loader, Context
+from django.template import loader
 
 from cityblog.models import Post
 

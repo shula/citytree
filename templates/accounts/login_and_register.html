@@ -34,7 +34,7 @@
     {% endifequal %}
 </h3>
 
-    <form method="post" action="/accounts/login_and_register/?login=1">
+    <form method="post" action="/accounts/login_and_register/?login=1">{% csrf_token %}
         <table class="formtab">
             {{ lform }}
         </table>
@@ -48,7 +48,7 @@
 {% comment %}
 <div class="content_left">
     <h2>יצירת חשבון תאפשר הרשמה פשוטה לסדנאות.</h2>
-    <form method="post" action="/accounts/login_and_register/">
+    <form method="post" action="/accounts/login_and_register/">{% csrf_token %}
         <table>
             {{ rform }}
             <input id="capcha" type="hidden" name="hash2" value="{{hash}}"/>

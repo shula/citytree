@@ -1,6 +1,5 @@
 # pylint: disable-msg=R0913,W0612,W0613
 from django.conf import settings
-from django.template import RequestContext as Context
 from django.db.models.fields import FieldDoesNotExist, NOT_PROVIDED
 from django.template import (
                              TemplateSyntaxError, 

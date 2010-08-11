@@ -6,8 +6,7 @@
 הוספת תגובה
 </h1>
 
-<form action="{% comment_form_target %}" method="POST">
-{% csrf_token %}
+<form action="{% comment_form_target %}" method="POST">{% csrf_token %}
 {% comment %}				
     <input id="eng" type="text" id="id_image_label" class="vTextField" name="image_label" size="40" value="http://" maxlength="200" />
 	<h3>

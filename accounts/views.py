@@ -4,9 +4,8 @@ from django.db import models
 from django import forms
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import Context, loader
+from django.template import RequestContext, loader
 from django.core.mail import send_mail
-from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User

@@ -34,21 +34,21 @@ function set_text(text) {
 
 <div class="module">
 	<h2>Original</h2>
-	<p><a href="#translate_form" onclick="javascript:set_text('{{ message.message|addslashes }}');" title="Iskopiraj"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="" /> Iskopiraj</a></p>
+	<p><a href="#translate_form" onclick="javascript:set_text('{{ message.message|addslashes }}');" title="Iskopiraj"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="" /> Iskopiraj</a></p>{% csrf_token %}
 	<div class="message">{{ message.message }}</div>
 </div>
 
 {% if translated %}
 <div class="module">
 	<h2>Prevedeno</h2>
-	<p><a href="#translate_form" onclick="javascript:set_text('{{ translated.translation|addslashes }}');" title="Iskopiraj"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="" /> Iskopiraj</a> <img src="/media/img/flags/{{ language }}.png" alt="{{ language }}" title="{% language_name %}" /></p>
+	<p><a href="#translate_form" onclick="javascript:set_text('{{ translated.translation|addslashes }}');" title="Iskopiraj"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="" /> Iskopiraj</a> <img src="/media/img/flags/{{ language }}.png" alt="{{ language }}" title="{% language_name %}" /></p>{% csrf_token %}
 	<div class="message">{{ translated.translation }}</div>
 </div>
 {% endif %}
 
-<form action="../../save/{{ message.digest }}/" method="post" id="translate_form">
+<form action="../../save/{{ message.digest }}/" method="post" id="translate_form">{% csrf_token %}
 	<fieldset class="module aligned ()">
-		<div class="form-row">
+		<div class="form-row">{% csrf_token %}
 			<label for="id_message" class="required">
 				<img src="/media/img/flags/{{ language }}.png" alt="{{ language }}" title="{% language_name %}" />
 			</label>
@@ -60,7 +60,7 @@ function set_text(text) {
 		<input type="submit" value="Save" class="default" />
 		<input type="reset" value="Reset" />
 	</div>
-</form>
+</form>{% csrf_token %}
 
 <div class="module">
 	<h2>Slične poruke</h2>
@@ -77,12 +77,12 @@ function set_text(text) {
 		</thead>
 		{% for s in sim %}
 			<tr>
-				<td>{{ s.0|stringformat:".2f" }}%</td>
+				<td>{{ s.0|stringformat:".2f" }}%</td>{% csrf_token %}
 				<td>{{ s.1.message }}</td>
 				<td>{% diff message.message s.1.message %}</td>
 				<td>{% translate s.1.message %}</td>
 				<td>
-					<a href="#translate_form" onclick="javascript:set_text('{% filter addslashes %}{% translate s.1.message no_action %}{% endfilter %}');" title="Iskopiraj poruku"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="Iskopiraj poruku" /></a>
+					<a href="#translate_form" onclick="javascript:set_text('{% filter addslashes %}{% translate s.1.message no_action %}{% endfilter %}');" title="Iskopiraj poruku"><img src="/media/img/icons/edit-copy.png" width="16" height="16" alt="Iskopiraj poruku" /></a>{% csrf_token %}
 				</td>
 			</tr>
 		{% endfor %}

@@ -4,7 +4,7 @@ import sha
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from django.template import RequestContext as Context
+from django.template import RequestContext
 from django.utils.translation import check_for_language
 from django.utils.translation import gettext as _
 # nesh
@@ -39,7 +39,7 @@ def set_language(request, lang_code=settings.LANGUAGE_CODE):
 # XXX if Message does not exists add it automatically?? What about Registry?
 def add(request, digest):
     msg = get_object_or_404(Message, digest__exact=digest)
-    return render_to_response('translation/translate.html', context_instance=Context(request, {'message': msg, 'path': request.GET.get('path', '/')} ))
+    return render_to_response('translation/translate.html', context_instance=RequestContext(request, {'message': msg, 'path': request.GET.get('path', '/')} ))
 
 def edit(request, digest):
     lang = request.LANGUAGE_CODE
@@ -51,7 +51,7 @@ def edit(request, digest):
         # add new translation
         return add(request, digest)
 
-    return render_to_response('translation/translate.html', context_instance=Context(request, {'message': msg, 'path': request.GET.get('path', '/'), 'translated': tr,} ))
+    return render_to_response('translation/translate.html', context_instance=RequestContext(request, {'message': msg, 'path': request.GET.get('path', '/'), 'translated': tr,} ))
 
 def save(request, digest):
     message = request.POST.get('message', None)

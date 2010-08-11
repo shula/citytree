@@ -34,7 +34,7 @@
     שינוי פרטים אישיים
 </h3>
 
-<form method="post" action=".">
+<form method="post" action=".">{% csrf_token %}
     <table>
         <tr><td>{{form.username.label}}</td><td>{{form.username}}</td></tr>
         <tr><td>{{form.first_name.label}}</td><td>{{form.first_name}}</td></tr>

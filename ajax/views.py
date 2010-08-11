@@ -2,7 +2,6 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import Http404, HttpResponse
 from citytree.utils.hebCalView import *
 from datetime import date
-from django.template import Context, loader
 from citytree.utils.hebDate import HebDate
 
 def calendar( request ):

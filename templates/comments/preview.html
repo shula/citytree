@@ -45,8 +45,7 @@
 <h1>
 ככה תראה התגובה שלך, והיא תופיע בראש רשימת התגובות:
 </h1></div>
-<form action="{% comment_form_target %}" method="POST">
-{% csrf_token %}
+<form action="{% comment_form_target %}" method="POST">{% csrf_token %}
 
 	{% if form.errors %}
 	    <p><strong style="color: red;">בבקשה תקנו את השגיאות ונסו שוב</strong></p>
