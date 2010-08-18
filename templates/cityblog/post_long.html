@@ -1,5 +1,9 @@
 {% extends "base_short_noheaderimg.html" %}
 
+{% block title %}
+{{post.title}} - {{post.post_date|date:"d/m/y"}} - עץבעיר
+{% endblock %}
+
 {% block customStyleSheets %}
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/shortMenuNoHeader.css">
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/links.css">
