@@ -7,7 +7,7 @@ import random
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings 
-from django.template import RequestContext, loader
+from django.template import RequestContext, Context, loader
 from django.contrib.sites.models import Site
 
 from nesh.thumbnail.field import ImageWithThumbnailField
@@ -320,7 +320,7 @@ class PostModerator(CommentModerator):
         site = Site.objects.get_current().name
         from spamdetector.models import AllowedBanRequests
         AllowedBanRequests(ip_address = comment.ip_address, hash=self._hash).save()
-        c = RequestContext({ 'comment': comment,
+        c = Context({ 'comment': comment,
                       'content_object': content_object,
                       'site': site,
                       'ban_hash': self._hash,
