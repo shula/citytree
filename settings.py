@@ -49,6 +49,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.middleware.csrf.CsrfResponseMiddleware'
 # TODO: django is killing my cache, says anon means having to put auth first. well it is! wtf?!
 #    'django.middleware.cache.CacheMiddleware',
 ]

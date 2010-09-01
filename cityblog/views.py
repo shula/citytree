@@ -8,6 +8,7 @@ from django.views.generic.list_detail import object_detail as generic_object_det
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 
 from frontpage.models import FrontPage
 from cityblog.models import Blog, Post, Flag, Subject
@@ -148,7 +149,8 @@ def display_post( request, post_id, preview = False ):
   )
   
   #return render_to_response('cityblog/%s'%template_name, {'post': p, 'blog' : b})
-  
+
+@csrf_exempt
 def send_feedback( request ):
     from django.core.mail import send_mail, BadHeaderError
     

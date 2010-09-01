@@ -1,4 +1,5 @@
 #!/bin/bash
+export PYTHONPATH=:/home/tamizori/lib/python2.5/site-packages/:/home/tamizori/django/django_projects
 python -c "import sys; sys.exit(sys.version_info[0] >= 3 or (sys.version_info[0] == 2 and sys.version_info[1] >= 4))"
 if [ $? == "0" ]; then
     PYTHON=python2.4
