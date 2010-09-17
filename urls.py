@@ -51,5 +51,5 @@ for y in [x for x in [x.urlconf_name for x in urlpatterns if hasattr(x, 'urlconf
     import pdb; pdb.set_trace()
 
 if settings.SERVE_SITEMEDIA_FROM_DJANGO:
-    urlpatterns += patterns('',(r'^siteMedia/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/citytree/siteMedia'}))
+    urlpatterns += settings.LOCAL_URLPATTERNS
 
