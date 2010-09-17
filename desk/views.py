@@ -239,6 +239,10 @@ class Responder(object):
                 if s._instance is None:
                     s._post_new()
                     s._form.instance = s._instance
+                # TODO: django 1.2 broke s._form.save(), it doesn't take the
+                # clean_data to populate the instance. calling _post_clean is a
+                # hack. what's the correct way?
+                s._form._post_clean()
                 s._instance = s._form.save()
                 s._on_valid_form()
             else: # form is not valid
