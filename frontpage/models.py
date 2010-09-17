@@ -5,8 +5,8 @@ from nesh.thumbnail.field import ImageWithThumbnailField
 from django.conf import settings 
 
 DRAFT_CHOICES = (
-  ( 1, 'טיוטה'),
-  ( 0, 'מאושר') )
+  ( True, 'טיוטה'),
+  ( False, 'מאושר') )
   
 class Teaser( models.Model ):
     image          = ImageWithThumbnailField('Teaser Image', blank=True,upload_to='frontpage_images/%Y/%m/%d',width_field='image_width', height_field='image_height')
@@ -39,7 +39,7 @@ class FrontPage(models.Model):
     
     date                  = models.DateTimeField( blank=False, help_text='Required' )
     
-    draft                 = models.BooleanField(blank=False,help_text='Uncheck to make this live on site', default=1, choices=DRAFT_CHOICES)
+    draft                 = models.BooleanField(blank=False,help_text='Uncheck to make this live on site', default=True, choices=DRAFT_CHOICES)
     
     headerImage           = models.ForeignKey(FrontpageHeaderImage, blank=False, help_text='Required')
     

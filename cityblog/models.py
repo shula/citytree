@@ -98,8 +98,8 @@ class Flag(models.Model):
     
 class Post(models.Model):
     DRAFT_CHOICES = (
-      ( 1, 'טיוטה'),
-      ( 0, 'מאושר') )
+      ( True, 'טיוטה'),
+      ( False, 'מאושר') )
     
     POST_STYLE_SMALL_LEAF = 1
     POST_STYLE_ARTICLE = 2
@@ -141,11 +141,11 @@ class Post(models.Model):
     rendered_text = models.TextField('Entry body as HTML', blank=True, null=True)
     
     flags         = models.ManyToManyField( Flag, blank=True, null=True )
-    draft         = models.BooleanField(help_text='Set to post to make post live on site', default=1, choices=DRAFT_CHOICES, blank=True)
+    draft         = models.BooleanField(help_text='Set to post to make post live on site', default=True, choices=DRAFT_CHOICES, blank=True)
     post_style    = models.PositiveIntegerField('Post Style', help_text='Style in which post is displayed' , blank=False, default=1, choices=POST_STYLE_TYPES )
 
     # fields required by the comment system
-    enable_comments = models.BooleanField(default=1, blank=True, help_text='Set to enable comments on post')
+    enable_comments = models.BooleanField(default=True, blank=True, help_text='Set to enable comments on post')
     
     class Meta:
         get_latest_by = 'post_date'
