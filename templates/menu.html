@@ -38,7 +38,11 @@
 	        </li>
 	
 			{% for subject in subjects %}
-          	  {% if forloop.counter0|lessthan:"3" %}
+             {% comment %}
+                XXX: if Tree in English is one of the subjects it must
+             not be in the first three.
+             {% endcomment %}
+				{% if forloop.counter0|lessthan:"3" %}
 					<li class="list2Fold">
 			        &nbsp;{{subject.name}}
 			        </li>
@@ -54,9 +58,11 @@
 	        </li>
 	
 			{% for subject in subjects %}
+				{% if subject.name != "Tree in English" %}
                 <li class="list2">
                 	&nbsp;<a href="{{subject.get_absolute_url}}">{{subject.name}}</a>
                 </li>
+				{% endif %}
             {% endfor %}
 	    </ul>
 	</div>
