@@ -24,9 +24,6 @@ from workshop.models import Workshop, WorkshopEvent, WorkshopEventPart
 from desk.urls import members_csv_absolute_url
 from accounts.models import UserProfile
 
-import pdb
-brk = pdb.set_trace
-
 MAIN_SECTION       = 1
 HELP_SECTION       = 2
 
