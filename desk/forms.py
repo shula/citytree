@@ -25,7 +25,6 @@ class WorkshopSlugField(forms.SlugField):
                 raise forms.ValidationError('The slug field already exists in post <a href="%s">%s</a> (<a href="%s">edit</a>)' % (p.get_absolute_url(), p.title, p.get_absolute_edit_url()))
         return super(forms.SlugField, self).clean(value)
 
-#class WorkshopForm(forms.Form):
 class WorkshopForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -44,8 +43,6 @@ class WorkshopForm(forms.ModelForm):
     image_label   = forms.CharField(widget=forms.widgets.Textarea, required=False)
     image_caption = forms.CharField(max_length=200, required=False)
     
-    #teaser_text          = models.TextField()
-    
     text          = forms.CharField(widget=forms.widgets.Textarea, required=False)
     
     draft         = forms.BooleanField(initial=1, required=False) #TODO, choices=DRAFT_CHOICES)
@@ -53,8 +50,6 @@ class WorkshopForm(forms.ModelForm):
     # fields required by the comment system
     enable_comments = forms.BooleanField(initial=1, required=False)
     
-    #post_date = forms.DateField(widget = forms.widgets.SplitDateTimeWidget())
-
     def fill_other_fields_from_instance(s):
         # reality check
         s.instance.make_sure_workshop_exists()
