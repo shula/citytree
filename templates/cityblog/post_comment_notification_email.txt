@@ -3,7 +3,7 @@ Hello {{content_object.author.username}},
 
 This is an automated email sent to you by citytree.
 
-Your post "{{content_object.title}}" got a new comment.
+Your post "{{content_object.title}}" at {{content_object.get_absolute_url}} got a new comment.
 {% if comment.is_removed %}
 The comment is not public, so it will not be displayed.
  * If you want it to be displayed, please ask one of the administrators.
