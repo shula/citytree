@@ -4,6 +4,10 @@
 {{post.title}} - {{post.post_date|date:"d/m/y"}} - עץבעיר
 {% endblock %}
 
+{% block description %}
+{% include "cityblog/blog_post_description.html" %}
+{% endblock %}
+
 {% block customStyleSheets %}
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/shortMenuNoHeader.css">
 <link rel=stylesheet type="text/css" href="{{media_url}}/css/links.css">

@@ -7,6 +7,14 @@
 ענף {{blog.name}} בעץבעיר
 {% endblock %}
 
+{% block description %}
+{% if blog.teaser_text|length > 0 %}
+<meta name="description" content="{{blog.teaser_text}}">
+{% else %}
+<meta name="description" content="ענף '{{blog.name}}'. {% include "short_site_description.txt" %}">
+{% endif %}
+{% endblock %}
+
 {% block rss %}
 <link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/posts/{{blog.slug}}"/>
 {% endblock %}

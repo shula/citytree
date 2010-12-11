@@ -3,6 +3,10 @@
 
 {% load comments %}
 
+{% block description %}
+{% include "cityblog/blog_post_description.html" %}
+{% endblock %}
+
 {% block title %}
 {{post.title}} - {{post.post_date|date:"d/m/y"}} - עץבעיר
 {% endblock %}
