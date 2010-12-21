@@ -327,7 +327,7 @@ div.teaser {
 	clear: both;
 	width: 808px;
 } 
-	
+
 .teaser p {
 	line-height: 11pt;
 	font-weight: normal;
@@ -338,13 +338,12 @@ div.teaser {
 div.teaserunit { 
 	padding-top: 0;
 	width: 143px;
-} 	
+}
  
 img.teaser { 
 	display: inline;
 	float: right;
 }
-	
 
 div.teaserline {
  	top: 0;
@@ -352,22 +351,22 @@ div.teaserline {
 	width: 160px;
 }
  
- div.teaserlinebott {
- 	top: 20px;
+div.teaserlinebott {
+	top: 20px;
 	border-top: 1px dashed #6044D0;
 	width: 144px;
 }
 
 div.rightnav {
- 	float:right;
- 	margin: 0 auto; 
- 	width: 146px;
- 	font-weight: normal;
- 	color: #493B7D;
- 	font-size: 9pt;
- 	font-size: 9pt;
- 	line-height: 9pt;
- }
+	float:right;
+	margin: 0 auto;
+	width: 146px;
+	font-weight: normal;
+	color: #493B7D;
+	font-size: 9pt;
+	font-size: 9pt;
+	line-height: 9pt;
+}
 
 
 
@@ -381,7 +380,7 @@ div.leftnav {
 	font-size: 9pt;
 	line-height: 9pt;
 }
-	
+
 div.lineleft {
 	border-top: 1px dashed #493B7D;
 	position: relative; left: 2px;
@@ -409,8 +408,8 @@ div.crumbs {
 	font-weight: bold;
 	line-height: 16pt;
 	text-align: right;
-}	
-	
+}
+
 div.userlogin { 
 	position: relative; right: -8px; top: 0px;
     float: left;
