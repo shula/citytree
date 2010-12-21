@@ -460,6 +460,9 @@ input.navform-submit {
 
 /* For Tooltip */
 #tooltip {
+	position: absolute;
+	z-index: 3000;
+	display: none;
 	border: 1px solid #B6E3AB;
 	background-color: #DAFDD1;
 	opacity: 0.85;
