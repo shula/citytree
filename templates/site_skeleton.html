@@ -24,10 +24,15 @@ $('img').tooltip({
     delay: 0,
     showURL: false,
     showBody: " - ",
-    fade: 250
 });
 if ($("a[rel='gallery']").colorbox) {
-    $("a[rel='gallery']").colorbox({transition:'none'});
+    $("a[rel='gallery']").colorbox({
+        transition:'none',
+        opacity:0.6,
+        maxWidth:'80%',
+        initialWidth:'200',
+        initialHeight:'200',
+    });
 }
 });
 </script>
